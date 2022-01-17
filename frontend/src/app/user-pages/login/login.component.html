@@ -1,0 +1,42 @@
+<div class="d-flex align-items-center h-100">
+    <div class="row flex-grow ">
+
+
+        <div class="col-lg-7 mx-auto text-white row ">
+
+            <div class="col-lg-3 col-sm-12"></div>
+            <div class="col-lg-6 col-sm-12 padding">
+
+                <div class="brand-logo">
+                    <img src="assets/images/logo-elite-afrique.png" alt="logo">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7 mx-auto text-white row ">
+
+            <div class="col-lg-3 col-sm-12"></div>
+            <div class="col-lg-6 col-sm-12 bg-info padding">
+                <h4 class="font-weight-light">Connectez-vous pour continuer</h4>
+                <form class="">
+                    <div class="form-group auth padding-no">
+                        <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username" name="login" [(ngModel)]="user.login" ngModel>
+                    </div>
+                    <div class="form-group auth">
+                        <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password" name="password" [(ngModel)]="user.password" ngModel>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a class="btn btn-primary btn-lg" (click)="login(f)">Connexion</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between py-2">
+        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © elite-afrique.com 2021</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Designe by <a href="https://www.linkedin.com/in/hamadou-dao/" target="_blank">  Hamadou DAO </a> </span>
+    </div>
+</footer>
