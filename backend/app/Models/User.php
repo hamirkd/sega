@@ -27,19 +27,9 @@ class User extends Authenticatable implements JWTSubject
     
    protected $attributes = [
     'occupation' => '',
-    'physical_address' => '',
-    'country'=>'',
-    'postal_code'=>'',
-    'town'=>'',
-    'country'=>'',
-    's_first_name'=>'',
-    's_last_name'=>'',
-    's_town'=>'',
-    's_country'=>'',
-    's_postal_code'=>'',
-    's_telephone'=>'',
-    'description'=>''
+    'physical_address' => ''
 ];
+
 
     /**
      * The attributes that should be hidden for arrays.

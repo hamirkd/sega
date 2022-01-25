@@ -21,6 +21,7 @@ import { ToastrModule } from 'ng6-toastr-notifications';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { RoleGuardService } from './auth/role-guard.service';
 import { AuthService } from './auth/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { AuthService } from './auth/auth.service';
     NgbModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,HttpClientModule,
     ChartsModule,
     ToastrModule.forRoot()
   ],

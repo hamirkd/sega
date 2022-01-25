@@ -35,8 +35,6 @@ Route::group([
     Route::get('/bloquerUser/{user}',[AuthController::class,'bloquerUser']);
 });
 
-    // Route::get('findAllUser',[AuthController::class,'findAllUser']);
-    Route::get('/achats_/nombre_titre_acheter/{titre}', [AchatController::class, 'nombre_titre_acheter']);
 
 Route::middleware('auth:api')->group(function() {
     Route::apiResource('titres', 'App\Http\Controllers\TitreController');
