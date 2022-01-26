@@ -22,6 +22,7 @@ const routes: Routes = [
   },
   { path: 'participant', loadChildren: () => import('./participant/participant.module').then(m => m.ParticipantModule) },
   { path: 'societes', loadChildren: () => import('./societes/societes.module').then(m => m.SocietesModule) },
+  { path: 'rubriques', loadChildren: () => import('./rubriques/rubriques.module').then(m => m.RubriquesModule) },
   { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
   { path: 'forms', loadChildren: () => import('./forms/form.module').then(m => m.FormModule) },
   { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
