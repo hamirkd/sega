@@ -3,7 +3,8 @@
     "version": "4.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve --open",
+        "start all": "ng serve && php artisan ../backend/serve.php",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",

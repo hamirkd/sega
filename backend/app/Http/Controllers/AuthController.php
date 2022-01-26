@@ -68,7 +68,6 @@ class AuthController extends Controller
      */
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:6',
             'first_name' => 'required|string|between:2,100',
@@ -84,7 +83,7 @@ class AuthController extends Controller
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
-        $to = $user->email;
+     /*   $to = $user->email;
         $subject = "Création de compte";
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
@@ -92,7 +91,7 @@ class AuthController extends Controller
         
         $txt = $this->email_bienvenue($user->first_name.' '.$user->last_name,"https://v2.panel.paongo-trading.com");
         // die($txt);
-        mail($to,$subject,$txt,$headers);
+        mail($to,$subject,$txt,$headers);*/
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $user,

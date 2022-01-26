@@ -26,7 +26,9 @@ export class LoginComponent implements OnInit {
       .loginUserByLoginAndPassword(this.user.login, this.user.password)
       .subscribe(
         (data) => {
+          console.log(data)
           localStorage.setItem("user_access", JSON.stringify(data));
+          localStorage.setItem("token", data.token);
           this.loading = false;
           this.toastr.successToastr(
             "Bienvenue parmis nous",

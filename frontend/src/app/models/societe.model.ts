@@ -1,0 +1,43 @@
+export class Societe{
+    code : string;
+    regime : string;
+    raison_sociale : string;
+    sigle : string;
+    rccm : string;
+    cnss : string;
+    contribuable : string;
+    statistique : string;
+    activite : string;
+    date_creation : string;
+    date_mise_service : string;
+    date_effet : string;
+    date_immatriculation : string;
+    adresse : string;
+    code_postal : string;
+    ville : string;
+    telephone : string;
+    fax : string;
+    email : string;
+    nif : string;
+}
+
+// code;
+// regime;
+// raison_sociale;
+// sigle;
+// rccm;
+// cnss;
+// contribuable;
+// statistique;
+// activite;
+// date_creation;
+// date_mise_service;
+// date_effet;
+// date_immatriculation;
+// adresse;
+// code_postal;
+// ville;
+// telephone;
+// fax;
+// email;
+// nif;

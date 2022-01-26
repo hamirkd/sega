@@ -1,0 +1,94 @@
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-header">
+                <label> Liste des salaries </label>
+                <span class="mdi mdi-account-plus btn btn-xs btn-primary" style="float: right;cursor: pointer;" (click)="add()"></span>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nom
+                                </th>
+                                <th>
+                                    Prenom
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Derniere modification
+                                </th>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let l of listes">
+                                <td>
+                                    <img [src]="l.img" class="mr-2" alt="image"> {{l.nom}}
+                                </td>
+                                <td>
+                                    {{l.prenom}}
+                                </td>
+                                <td>
+                                    <label class="badge badge-gradient-warning" *ngIf="l.status=='PROGRESS'">{{l.status}}</label>
+                                    <label class="badge badge-gradient-info" *ngIf="l.status=='ON HOLD'">{{l.status}}</label>
+                                    <label class="badge badge-gradient-success" *ngIf="l.status=='DONE'">{{l.status}}</label>
+                                    <label class="badge badge-gradient-danger" *ngIf="l.status=='REJECTED'">{{l.status}}</label>
+                                </td>
+                                <td>
+                                    {{l.lastUpdate}}
+                                </td>
+                                <td>
+                                    {{l.id}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-gradient-primary btn-rounded btn-icon">
+                                        <i class="mdi mdi-lead-pencil" (click)="edit()"></i>
+                                      </button>
+                                    <button type="button" class="btn btn-danger btn-rounded btn-icon">
+                                        <i class="mdi mdi-account-remove" (click)="delete(smallModalContentDelete)"></i>
+                                      </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class=" card text-center" *ngIf="listes.length==0">
+                        <div class="card-body ">
+                            <h4 class="font-weight-normal mb-3 ">Pas de donnees
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #smallModalContentDelete let-modal class="modal fade" aria-labelledby="exampleModalLabel-3">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel-3">Participant</h5>
+            <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+        </div>
+        <div class="modal-body">
+            <p>Voulez vous supprimer ce participant?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="modal.close()">Oui</button>
+            <button type="button" class="btn btn-light" (click)="modal.close()">Non</button>
+        </div>
+    </div>
+</ng-template>

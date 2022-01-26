@@ -7,15 +7,21 @@ import { RoleGuardService as RoleGuard } from './auth/role-guard.service';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard]  },
+  // { 
+  //   path: 'basic-ui', 
+  //   loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule),
+  //   canActivate: [RoleGuard], 
+  //   data: { 
+  //     expectedRole: 'admin'
+  //   } 
+  // },
   { 
     path: 'basic-ui', 
     loadChildren: () => import('./basic-ui/basic-ui.module').then(m => m.BasicUiModule),
-    canActivate: [RoleGuard], 
-    data: { 
-      expectedRole: 'admin'
-    } 
+    canActivate: [AuthGuard], 
   },
   { path: 'participant', loadChildren: () => import('./participant/participant.module').then(m => m.ParticipantModule) },
+  { path: 'societes', loadChildren: () => import('./societes/societes.module').then(m => m.SocietesModule) },
   { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsDemoModule) },
   { path: 'forms', loadChildren: () => import('./forms/form.module').then(m => m.FormModule) },
   { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },

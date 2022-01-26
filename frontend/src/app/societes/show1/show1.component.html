@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-header">
+                <label> Identifications </label>
+                <span class="mdi mdi-lead-pencil" style="float: right;cursor: pointer;" (click)="_d.isEdit=!_d.isEdit"></span>
+
+            </div>
+            <div class="card-body" *ngIf="!_d.isEdit">
+
+                <div class="row">
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+
+                        <label class="col-form-label text-right col-md-2">Code : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.code }}</div>
+
+                        <label class="col-form-label text-right col-md-2">Regime : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.regime }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+
+                        <label class="col-form-label text-right col-md-2">Raison Sociale : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.raison_sociale }}</div>
+
+                        <label class="col-form-label text-right col-md-2">Sigle : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.sigle }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+
+                        <label class="col-form-label text-right col-md-2">N registre (RCCM) : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.rccm }}</div>
+
+                        <label class="col-form-label text-right col-md-2">Matricule CNSS : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.cnss }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Numero contribuable : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.contribuable }}</div>
+                        <label class="col-form-label text-right col-md-2">Numero statistique : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.statistique }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Activite : </label>
+                        <div class="col-form-label text-left col-md-8">{{ data.activite }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Date de creation : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.date_creation }}</div>
+                        <label class="col-form-label text-right col-md-2">Date mise en service : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.date_mise_service }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Date effet : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.date_effet }}</div>
+                        <label class="col-form-label text-right col-md-2">Date immatriculation : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.date_immatriculation }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Adresse : </label>
+                        <div class="col-form-label text-left col-md-8">{{ data.adresse }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Code Postal : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.code_postal }}</div>
+                        <label class="col-form-label text-right col-md-2">Ville : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.ville }}</div>
+                    </div>
+
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Telephone : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.telephone }}</div>
+                        <label class="col-form-label text-right col-md-2">Fax : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.fax }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Email : </label>
+                        <div class="col-form-label text-left col-md-8">{{ data.email }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">NIF : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.nif }}</div>
+                        <label class="col-form-label text-right col-md-2">Matricule CNAMGS : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.fax }}</div>
+                    </div>
+
+                </div>
+            </div>
+            <app-edit-identification2 *ngIf="_d.isEdit" [isEdit]="_d"></app-edit-identification2>
+        </div>
+    </div>
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-header">
+
+                <label> Localisation </label>
+                <span class="mdi mdi-lead-pencil" style="float: right;cursor: pointer;"></span>
+
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+
+                        <label class="col-form-label text-right col-md-2">Province : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.province }}</div>
+
+                        <label class="col-form-label text-right col-md-2">Departement : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.departement }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+
+                        <label class="col-form-label text-right col-md-2">Arrondissement : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.arrondissement }}</div>
+
+                        <label class="col-form-label text-right col-md-2">Quartier : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.quartier }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+
+                        <label class="col-form-label text-right col-md-2">Lieu dit : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.lieu_dit }}</div>
+
+                        <label class="col-form-label text-right col-md-2">Rue : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.rue }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Adresse N° : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.adressen }}</div>
+                        <label class="col-form-label text-right col-md-2">Code residence : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.code_residence }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-header">
+                <label> Source de donnees de la societe </label>
+                <span class="mdi mdi-lead-pencil" style="float: right;cursor: pointer;"></span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Source de donnees : </label>
+                        <div class="col-form-label text-left col-md-12">{{ data.source_donnees }}</div>
+                    </div>
+                    <div class="row col-md-12 no-padding-side no-margin-side">
+                        <label class="col-form-label text-right col-md-2">Source de donnees : </label>
+                        <div class="col-form-label text-left col-md-4">{{ data.source_donnees }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

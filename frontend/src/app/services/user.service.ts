@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { AuthGuardService } from '../auth/auth-guard.service';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -17,7 +16,6 @@ export class UserService extends AuthService{
   baseUrl = environment.urlapi + "/";
    
   loginUserByLoginAndPassword(login: string, password: string): Observable<any> {
-    console.log(login,password)
     return this.http.post(this.baseUrl + 'api/auth/login', { email: login, password: password });
   }
 

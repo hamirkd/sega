@@ -18,6 +18,10 @@ export class AuthService {
     // return !this.jwtHelper.isTokenExpired(token);
     return token!=undefined;
   }
+
+  get userData() {
+    return JSON.parse(localStorage.getItem("user_access")).user;
+  }
   
   logout() {
     localStorage.removeItem('token')

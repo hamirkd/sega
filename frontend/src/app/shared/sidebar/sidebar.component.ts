@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,9 +10,11 @@ export class SidebarComponent implements OnInit {
   public uiBasicCollapsed = false;
   public samplePagesCollapsed = false;
   
-  public show = false;
+  public show = true;
+  full_name = '';
   
-  constructor() { }
+  constructor(private userService:UserService) {
+    this.full_name = this.userService.userData.last_name + ' '+ this.userService.userData.first_name; }
 
   ngOnInit() {
     const body = document.querySelector('body');

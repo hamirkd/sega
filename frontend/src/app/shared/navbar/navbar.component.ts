@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,15 +12,18 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 export class NavbarComponent implements OnInit {
   public iconOnlyToggled = false;
   public sidebarToggled = false;
+  full_name = '';
   
-  constructor(config: NgbDropdownConfig,public router:Router) {
-    config.placement = 'bottom-right';
+  constructor(config: NgbDropdownConfig,public router:Router,private userService:UserService) {
+    config.placement = 'bottom-left';
+    this.full_name = this.userService.userData.last_name + ' '+ this.userService.userData.first_name;
   }
 
   ngOnInit() {
   }
   loginOut(){
     localStorage.removeItem("token");
+    localStorage.removeItem("user_access");
     this.router.navigate(['user-pages/login']);
   }
 
