@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ParticipantComponent } from './societes.component';
 import { ListComponent } from './list/list.component';
+import { ListComponent as ListSalariesComponent } from './list-salaries/list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AddComponent } from './add/add.component';
 import { ShowComponent } from './show/show.component';
@@ -33,6 +34,7 @@ import { FuseCardModule } from '@fuse/components/card';
 
 const routes: Routes = [
     { path: '', component: ListComponent },
+    { path: ':id/salaries', component: ListSalariesComponent },
     { path: 'add', component: AddComponent },
     { path: ':id', component: ShowComponent },
 ];
@@ -46,7 +48,7 @@ const routes: Routes = [
         EditIdentificationComponent,
         EditIdentification2Component,
         Show1Component,
-        SalariesComponent,
+        SalariesComponent,ListSalariesComponent
     ],
     imports: [
         CommonModule,
