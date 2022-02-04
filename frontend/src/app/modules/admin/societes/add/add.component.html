@@ -1,0 +1,123 @@
+<h2 mat-dialog-title>Ajouter une société</h2>
+<mat-dialog-content class="  sm:p-6 w-200">
+
+
+    <form class=" " [formGroup]="societeForm">
+
+        <div class="flex flex-col w-full ">
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Code</mat-label>
+                    <input matInput [formControlName]="'code'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Regime</mat-label>
+                    <input matInput [formControlName]="'regime'" required>
+                </mat-form-field>
+            </div>
+
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Raison sociale</mat-label>
+                    <input matInput [formControlName]="'raison_sociale'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Sigle</mat-label>
+                    <input matInput [formControlName]="'sigle'" required>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>N registre (RCCM)</mat-label>
+                    <input matInput [formControlName]="'rccm'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Matricule CNSS</mat-label>
+                    <input matInput [formControlName]="'cnss'">
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Numero contribuable</mat-label>
+                    <input matInput [formControlName]="'contribuable'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Numero statistique</mat-label>
+                    <input matInput [formControlName]="'statistique'">
+                </mat-form-field>
+            </div>
+            <mat-form-field class="w-full">
+                <mat-label>Activite</mat-label>
+                <input matInput [formControlName]="'activite'">
+            </mat-form-field>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Date de creation</mat-label>
+                    <input matInput [formControlName]="'date_creation'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Date mise en service</mat-label>
+                    <input matInput [formControlName]="'date_mise_service'">
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Date effet</mat-label>
+                    <input matInput [formControlName]="'date_effet'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Date immatriculation</mat-label>
+                    <input matInput [formControlName]="'date_immatriculation'">
+                </mat-form-field>
+            </div>
+
+            <mat-form-field class="w-full">
+                <mat-label>Adresse</mat-label>
+                <input matInput [formControlName]="'adresse'">
+            </mat-form-field>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Code Postal</mat-label>
+                    <input matInput [formControlName]="'code_postal'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Ville</mat-label>
+                    <input matInput [formControlName]="'ville'">
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>Telephone</mat-label>
+                    <input matInput [formControlName]="'telephone'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Fax</mat-label>
+                    <input matInput [formControlName]="'fax'">
+                </mat-form-field>
+            </div>
+            <mat-form-field class="w-full">
+                <mat-label>E-mail</mat-label>
+                <input matInput [formControlName]="'email'">
+            </mat-form-field>
+
+
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>NIF</mat-label>
+                    <input matInput [formControlName]="'nif'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Matricule CNAMGS</mat-label>
+                    <input matInput [formControlName]="'fax'">
+                </mat-form-field>
+            </div>
+
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Annuler</button>
+    <button mat-button (click)="onSubmit()" [disabled]="!societeForm.valid" cdkFocusInitial>Enregister</button>
+</mat-dialog-actions>

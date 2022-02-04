@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-header">
+                <label> Liste des salaries </label>
+                <span class="mdi mdi-account-plus btn btn-xs btn-primary" style="float: right;cursor: pointer;"></span>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nom
+                                </th>
+                                <th>
+                                    Prenom
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Derniere modification
+                                </th>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let l of listes">
+                                <td>
+                                    <img [src]="l.img" class="mr-2" alt="image"> {{l.nom}}
+                                </td>
+                                <td>
+                                    {{l.prenom}}
+                                </td>
+                                <td>
+                                    <label class="badge badge-gradient-warning" *ngIf="l.status=='PROGRESS'">{{l.status}}</label>
+                                    <label class="badge badge-gradient-info" *ngIf="l.status=='ON HOLD'">{{l.status}}</label>
+                                    <label class="badge badge-gradient-success" *ngIf="l.status=='DONE'">{{l.status}}</label>
+                                    <label class="badge badge-gradient-danger" *ngIf="l.status=='REJECTED'">{{l.status}}</label>
+                                </td>
+                                <td>
+                                    {{l.lastUpdate}}
+                                </td>
+                                <td>
+                                    {{l.id}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-gradient-primary btn-rounded btn-icon">
+                                        <i class="mdi mdi-lead-pencil" ></i>
+                                      </button>
+                                    <button type="button" class="btn btn-danger btn-rounded btn-icon">
+                                        <i class="mdi mdi-account-remove" ></i>
+                                      </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class=" card text-center" *ngIf="listes.length==0">
+                        <div class="card-body ">
+                            <h4 class="font-weight-normal mb-3 ">Pas de donnees
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

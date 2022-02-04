@@ -1,0 +1,236 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6  pt-10">
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full">
+            <div>
+                <div class="text-3xl font-semibold tracking-tight leading-8">{{data.raison_sociale}}</div>
+                <div class="font-medium tracking-tight text-secondary"> </div>
+            </div>
+            <div class="flex items-center ml-6">
+                <button class="hidden sm:inline-flex" mat-flat-button [color]="'primary'">
+                    <mat-icon svgIcon="heroicons_solid:library"></mat-icon>
+
+                    <span class="ml-2">Societe</span>
+                </button>
+                <button class="hidden sm:inline-flex ml-3" mat-stroked-button>
+                    <mat-icon svgIcon="heroicons_solid:users"></mat-icon>
+
+                    <span class="ml-2">Salarie</span>
+                </button>
+                <button class="hidden sm:inline-flex ml-3" mat-stroked-button>
+                    <mat-icon svgIcon="heroicons_solid:archive"></mat-icon>
+
+                    <span class="ml-2">Rubrique</span>
+                </button>
+
+                <!-- Actions menu (visible on xs) -->
+                <div class="sm:hidden">
+                    <button [matMenuTriggerFor]="actionsMenu" mat-icon-button>
+                <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
+            </button>
+                    <mat-menu #actionsMenu="matMenu">
+                        <button mat-menu-item>Export</button>
+                        <button mat-menu-item>Settings</button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- CONTENT GOES HERE -->
+        <div class="border-dashed border-gray-300 rounded-2xl mt-10">
+
+            <!-- Card #25 -->
+            <fuse-card class="flex flex-col max-w-300 w-full px-8 pt-6 pb-4 filter-list">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-semibold leading-tight">Identifications</div>
+                    <div class="-mr-3">
+                        <button mat-icon-button [matMenuTriggerFor]="listCard03Menu">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
+                        </button>
+                        <mat-menu #listCard03Menu="matMenu">
+                            <button mat-menu-item>Modifier</button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-5">
+                    <div class="flex flex-col w-full ">
+                        <div class="flex mb-3">
+                            <div class="w-1/2 pr-2 flex">
+                                <mat-label class="w-1/2 pr-2">Code : </mat-label>
+                                <mat-label class="w-1/2 pr-2">{{data.code}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2 flex">
+                                <mat-label class="w-1/2 pr-2">Regime : </mat-label>
+                                <mat-label class="w-1/2 pr-2">{{data.regime}}</mat-label>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <div class="w-1/2 pr-2 flex">
+                                <mat-label class="w-1/2 pr-2">Raison sociale : </mat-label>
+                                <mat-label class="w-1/2 pr-2">{{data.raison_sociale}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Sigle : </mat-label>
+                                <mat-label>{{data.sigle}}</mat-label>
+                            </div>
+                        </div>
+                        <div class="flex mb-3">
+                            <div class="w-1/2 pr-2 flex">
+                                <mat-label class="w-1/2 pr-2">N registre (RCCM) : </mat-label>
+                                <mat-label class="w-1/2 pr-2">{{data.rccm}}d</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Matricule CNSS : </mat-label>
+                                <mat-label>{{data.cnss}}</mat-label>
+                            </div>
+                        </div>
+
+                        <div class="flex mb-3">
+                            <div class="w-1/2 pr-2">
+                                <mat-label>Numero contribuable : </mat-label>
+                                <mat-label>{{data.contribuable}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Numero statistique : </mat-label>
+                                <mat-label>{{data.statistique}}</mat-label>
+                            </div>
+                        </div>
+                        <div class="w-full mb-3">
+                            <mat-label>Activite : </mat-label>
+                            <mat-label>{{data.activite}}</mat-label>
+                        </div>
+                        <div class="flex  mb-3">
+                            <div class="w-1/2 pr-2">
+                                <mat-label>Date de creation : </mat-label>
+                                <mat-label>{{data.date_creation}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Date mise en service : </mat-label>
+                                <mat-label>{{data.date_mise_service}}</mat-label>
+                            </div>
+                        </div>
+                        <div class="flex  mb-3">
+                            <div class="w-1/2 pr-2">
+                                <mat-label>Date effet : </mat-label>
+                                <mat-label>{{data.date_effet}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Date immatriculation : </mat-label>
+                                <mat-label>{{data.date_immatriculation}}</mat-label>
+                            </div>
+                        </div>
+
+                        <div class="w-full mb-3">
+                            <mat-label>Adresse : </mat-label>
+                            <mat-label>{{data.adresse}}</mat-label>
+                        </div>
+                        <div class="flex mb-3">
+                            <div class="w-1/2 pr-2">
+                                <mat-label>Code Postal : </mat-label>
+                                <mat-label>{{data.code_postal}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Ville : </mat-label>
+                                <mat-label>{{data.ville}}</mat-label>
+                            </div>
+                        </div>
+                        <div class="flex  mb-3">
+                            <div class="w-1/2 pr-2">
+                                <mat-label>Telephone : </mat-label>
+                                <mat-label>{{data.telephone}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Fax : </mat-label>
+                                <mat-label>{{data.fax}}</mat-label>
+                            </div>
+                        </div>
+                        <div class="w-full  mb-3">
+                            <mat-label>E-mail : </mat-label>
+                            <mat-label>{{data.email}}</mat-label>
+                        </div>
+
+
+                        <div class="flex  mb-3">
+                            <div class="w-1/2 pr-2">
+                                <mat-label>NIF : </mat-label>
+                                <mat-label>{{data.nif}}</mat-label>
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <mat-label>Matricule CNAMGS : </mat-label>
+                                <mat-label>{{data.fax}}</mat-label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </fuse-card>
+            <!-- Card #25 -->
+            <fuse-card class="flex flex-col max-w-300 w-full px-8 pt-6 pb-4 filter-list mt-5">
+                <div class="flex items-center justify-between">
+                    <div class="text-2xl font-semibold leading-tight">Localisation</div>
+                    <div class="-mr-3">
+                        <button mat-icon-button [matMenuTriggerFor]="listCard03Menu">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
+                        </button>
+                        <mat-menu #listCard03Menu="matMenu">
+                            <button mat-menu-item>Modifier</button>
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-5">
+                    <div class="flex  mb-3">
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Province : </mat-label>
+                            <mat-label>{{ data.province }}</mat-label>
+                        </div>
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Departement : </mat-label>
+                            <mat-label>{{ data.departement }}</mat-label>
+                        </div>
+                    </div>
+                    <div class="flex  mb-3">
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Arrondissement : </mat-label>
+                            <mat-label>{{ data.arrondissement }}</mat-label>
+                        </div>
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Quartier : </mat-label>
+                            <mat-label>{{ data.quartier }}</mat-label>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Lieu dit : </mat-label>
+                            <mat-label>{{ data.lieu_dit }}</mat-label>
+                        </div>
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Rue : </mat-label>
+                            <mat-label>{{ data.rue }}</mat-label>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Adresse N° : </mat-label>
+                            <mat-label>{{ data.adressen }}</mat-label>
+                        </div>
+                        <div class="w-1/2 pr-2">
+                            <mat-label>Code residence : </mat-label>
+                            <mat-label>{{ data.code_residence }}</mat-label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </fuse-card>
+        </div>
+
+    </div>
+
+</div>
