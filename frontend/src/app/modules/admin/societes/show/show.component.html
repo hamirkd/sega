@@ -9,13 +9,14 @@
                 <div class="font-medium tracking-tight text-secondary"> </div>
             </div>
             <div class="flex items-center ml-6">
-                <button class="hidden sm:inline-flex" mat-flat-button [color]="'primary'">
+                <button class="hidden sm:inline-flex" mat-flat-button [color]="'primary'" [routerLink]="['/societes',data.code]">
                     <mat-icon svgIcon="heroicons_solid:library"></mat-icon>
 
                     <span class="ml-2">Societe</span>
                 </button>
-                <button class="hidden sm:inline-flex ml-3" mat-stroked-button [routerLink]="['salaries']">
-                    <mat-icon svgIcon="heroicons_solid:users"></mat-icon>
+
+                <button class="hidden sm:inline-flex ml-3" mat-stroked-button [routerLink]="['/societes',data.code,'salaries']">
+                        <mat-icon svgIcon="heroicons_solid:users"></mat-icon>
 
                     <span class="ml-2">Salarie</span>
                 </button>
