@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
- import { AddComponent } from '../add/add.component';
-import { _DATA_SOCIETE } from './_data';
+ import { AddComponent } from '../../rubriques/add/add.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { _DATA } from './data';
+import { _DATA_SOCIETE } from '../list/_data';
 
 @Component({
   selector: 'app-list',
@@ -21,12 +21,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['code', 'raison_sociale', 'adresse', 'ville','bp','telephone'];
-  columnsToDisplay = ['code', 'raison_sociale', 'adresse', 'ville','bp','telephone','actions'];
-  listes = _DATA_SOCIETE;
+  displayedColumns: string[] = ['code', 'sens','intitule', 'type', 'gain','imprimable','actions'];
+  dataSource = _DATA;
   dialogRef: any;
-
-  dataSource = _DATA_SOCIETE;
+  data = _DATA_SOCIETE[0];
   
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -40,12 +38,7 @@ export class ListComponent implements OnInit {
 
   add(): void
   {
-      this.dialogRef = this._matDialog.open(AddComponent, {
-          panelClass: '',
-          data      : {
-              action: 'new'
-          } 
-      });
+      this.dialogRef = this._matDialog.open(AddComponent );
 
       this.dialogRef.afterClosed()
           .subscribe((response: FormGroup) => {

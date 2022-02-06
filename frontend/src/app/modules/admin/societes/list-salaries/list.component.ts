@@ -21,7 +21,7 @@ import { _DATA } from './data';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'matricule','cnss', 'nom', 'prenom','dateembauche' ];
+  displayedColumns: string[] = ['position', 'matricule','cnss', 'nom', 'prenom','dateembauche','actions' ];
   dataSource = _DATA;
   dialogRef: any;
   data = _DATA_SOCIETE[0];
