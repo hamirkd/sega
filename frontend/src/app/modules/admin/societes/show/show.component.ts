@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { SocieteService } from 'app/core/services/societe.service';
+import { Societe } from 'app/models/societe.model';
 import { AddComponent } from '../add/add.component';
  import { EditIdentificationComponent } from '../edit-identification/edit-identification.component';
 import { _DATA_SOCIETE } from '../list/_data';
@@ -15,8 +18,17 @@ export class ShowComponent implements OnInit {
   _d = {isEdit:false};
   dialogRef: any;
   constructor( 
-    private _matDialog: MatDialog) { }
-  data = _DATA_SOCIETE[0];
+    private _matDialog: MatDialog,private societeService:SocieteService,private route:ActivatedRoute) {
+      this.route.params.subscribe(params=>{
+        console.log(params)
+        if(params['id']){
+          this.societeService.get(params['id']).subscribe(data=>{
+            this.data = data;
+          })
+        }
+      })
+    }
+  data:Societe =new Societe({});
 
   ngOnInit(): void {
   }
@@ -33,7 +45,11 @@ export class ShowComponent implements OnInit {
       if (!response) {
           return;
       }
-      this.data.copy(response.getRawValue())
+      const s=new Societe(this.data);
+      s.copy(response.getRawValue());
+      // this.societeService.update(s).subscribe(data=>{
+      //   console.log(data);
+      // })
   });
   }
 

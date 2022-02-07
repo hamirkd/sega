@@ -21,6 +21,11 @@ export class ApiService {
       return this._httpClient.put(environment.urlApi+url,data);
     }
     get(url:string): Observable<any>{
-      return this._httpClient.get(url);
+      return this._httpClient.get(environment.urlApi+url);
     }
+
+    delete(url:string): Observable<any>{
+      return this._httpClient.delete(environment.urlApi+url);
+    }
+
 }

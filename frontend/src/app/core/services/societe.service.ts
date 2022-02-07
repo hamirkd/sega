@@ -14,16 +14,25 @@ export class SocieteService {
         return _DATA_SOCIETE;
     }
     
-    getAll1(): Observable<Societe[]> {
+    getAlls(): Observable<Societe[]> {
       return this.apiService.get('api/societe');
   }
+    
+  get(id): Observable<Societe> {
+    return this.apiService.get('api/societe/'+id);
+}
 
     add(societe: Societe): Observable<Societe> {
         return this.apiService.post('api/societe', societe);
     }
 
     update(societe: Societe): Observable<Societe> {
-        return this.apiService.put('api/societe/'+societe.id, societe);
+        console.log(societe)
+        return this.apiService.put('api/societe/'+societe.id , societe);
+    }
+    
+    delete(societe: Societe): Observable<any> {
+        return this.apiService.delete('api/societe/'+ societe.id);
     }
 
     set activeSociete(societe: Societe) {

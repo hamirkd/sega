@@ -42,7 +42,10 @@ export class SocietesComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        this.listeSocietes = this._societeService.getAll();
+        // this.listeSocietes = 
+        this._societeService.getAlls().subscribe(data=>{
+            this.listeSocietes = data
+        });
         
         this.societeActive = this._societeService.activeSociete;
     }

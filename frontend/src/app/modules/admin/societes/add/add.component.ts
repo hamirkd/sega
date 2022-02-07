@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SocieteService } from 'app/core/services/societe.service';
 import { Societe } from 'app/models/societe.model';
 
 @Component({
@@ -15,7 +16,8 @@ export class AddComponent implements OnInit {
     action:'edit'|'new'='new';
     
     formFieldHelpers: string[] = [''];
-    constructor(private _formBuilder: FormBuilder,@Inject(MAT_DIALOG_DATA) private _data: any,public matDialogRef: MatDialogRef<AddComponent>) {
+    constructor(private _formBuilder: FormBuilder,@Inject(MAT_DIALOG_DATA) private _data: any,public matDialogRef: MatDialogRef<AddComponent>,
+    public societeService:SocieteService) {
       
     this.societe = new Societe(_data.societe);
     this.action = _data.action;
@@ -55,7 +57,25 @@ export class AddComponent implements OnInit {
     }
     ngOnInit(): void {}
 
-    onSubmit() {}
+    
+    onSubmit() {
+        
+      const s=new Societe(this.societe);
+      s.copy(this.societeForm.getRawValue());
+      
+      if(this.action=='edit')
+        this.societeService.update(s).subscribe(data=>{
+            console.log(data);
+            this.matDialogRef.close();
+          },
+          err=>alert(err.message))
+        else
+        this.societeService.add(s).subscribe(data=>{
+            console.log(data);
+            this.matDialogRef.close(this.societeForm);
+        },
+        err=>alert(err.message))
+    }
 
     close() {}
 }

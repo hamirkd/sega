@@ -25,7 +25,7 @@ class SocieteController extends Controller
      */
     public function store(Request $request)
     {
-        Achat::create($request->all());
+        Societe::create($request->all());
         return response()->json([
             'message' => 'La société a été ajoutée',
             'status' => 200

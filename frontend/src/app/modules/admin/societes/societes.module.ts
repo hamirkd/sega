@@ -37,6 +37,7 @@ import { FuseCardModule } from '@fuse/components/card';
 import { ImportComponent as ImportSalariesComponent } from './import-salaries/import.component';
 import { ImportComponent as ImportRubriqueComponent } from './import-rubriques/import.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 const routes: Routes = [
     { path: '', component: ListComponent },
@@ -63,7 +64,7 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        RouterModule.forChild(routes), MatMomentDateModule,
         FormsModule,
         ReactiveFormsModule,
         MatTableModule,
