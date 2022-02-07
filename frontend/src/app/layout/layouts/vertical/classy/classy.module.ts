@@ -15,6 +15,7 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy.component';
+import { SocietesModule } from 'app/layout/common/societes/societes.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import { ClassyLayoutComponent } from 'app/layout/layouts/vertical/classy/classy
         HttpClientModule,
         RouterModule,
         MatButtonModule,
-        MatDividerModule,
+        MatDividerModule,SocietesModule,
         MatIconModule,
         MatMenuModule,
         FuseFullscreenModule,

@@ -15,6 +15,7 @@ import { ShortcutsModule } from 'app/layout/common/shortcuts/shortcuts.module';
 import { UserModule } from 'app/layout/common/user/user.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { CenteredLayoutComponent } from 'app/layout/layouts/horizontal/centered/centered.component';
+import { SocietesModule } from 'app/layout/common/societes/societes.module';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import { CenteredLayoutComponent } from 'app/layout/layouts/horizontal/centered/
         MatMenuModule,
         FuseFullscreenModule,
         FuseNavigationModule,
-        LanguagesModule,
+        LanguagesModule,SocietesModule,
         MessagesModule,
         NotificationsModule,
         SearchModule,

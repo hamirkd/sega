@@ -1,5 +1,6 @@
   // code;regime;raison_sociale;sigle;rccm;cnss;contribuable;statistique;activite;date_creation;date_mise_service;date_effet;date_immatriculation;adresse;code_postal;ville;telephone;fax;email;nif;  constructor(public modal: NgbActiveModal,public toastr: ToastrManager) { 
 export class Societe{
+      id?:number;
       code:string;
       regime:string;
       raison_sociale:string;
@@ -62,6 +63,7 @@ export class Societe{
           this.province=societe.province; 
           }
           constructor(societe) { 
+            this.id= societe.id;
               this.code=societe.code;
               this.regime=societe.regime;
               this.raison_sociale=societe.raison_sociale;

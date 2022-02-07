@@ -16,7 +16,7 @@ use App\Http\Controllers\BinanceController;
 // Route::apiResource('binance', 'App\Http\Controllers\BinanceController');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('site/index');
 });
 // Route::get('/login', function () {
 //     return view('admin/admin-user/index');

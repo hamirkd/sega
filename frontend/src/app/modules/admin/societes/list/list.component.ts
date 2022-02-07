@@ -43,6 +43,7 @@ export class ListComponent implements OnInit {
       this.dialogRef = this._matDialog.open(AddComponent, {
           panelClass: '',
           data      : {
+              societe:{},
               action: 'new'
           } 
       });
