@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SalarieService } from 'app/core/services/salarie.service';
 import { Salarie } from 'app/models/salarie.model';
 
 @Component({
@@ -15,7 +16,7 @@ export class AddComponent implements OnInit {
     
     formFieldHelpers: string[] = [''];
     constructor(private _formBuilder: FormBuilder,public matDialogRef: MatDialogRef<AddComponent>,
-        @Inject(MAT_DIALOG_DATA) private _data: any,) {
+        @Inject(MAT_DIALOG_DATA) private _data: any,private salarieService:SalarieService) {
             console.log(_data)
         this.salarie = new Salarie(_data.salarie);
         this.action = _data.action
@@ -54,7 +55,10 @@ export class AddComponent implements OnInit {
     ngOnInit(): void {}
 
     onSubmit() {
-        this.matDialogRef.close(this.salarieForm);}
+        if(this.action=='edit')
+        this.salarieService.add
+        this.matDialogRef.close(this.salarieForm);
+    }
 
     close() {}
 }

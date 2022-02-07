@@ -4,6 +4,7 @@
 import { Societe } from './societe.model';
 
 export class Salarie {
+    id:number;
     societe?: Societe;
     societe_id?:number;
     matricule: string;
@@ -26,6 +27,7 @@ export class Salarie {
     fin12: string;
     fin13das: string;
     constructor(salarie: any) {
+        this.id = salarie.id;
         this.societe = salarie.societe;
         this.societe_id = salarie.societe_id;
         this.matricule = salarie.matricule;
