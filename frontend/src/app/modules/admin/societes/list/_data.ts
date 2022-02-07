@@ -1,4 +1,6 @@
-export const _DATA_SOCIETE = [
+import { Societe } from "app/models/societe.model";
+
+export const _DATA_SOCIETE:Societe[] = [
 	{
 		"code": "Z6F5P5",
 		"raison_sociale": "Orange Burkina SA",

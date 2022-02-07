@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Ajouter une société</h2>
+<h2 mat-dialog-title>{{action=='new'?'Ajouter une société':'Modifier la société '+societe.raison_sociale}}</h2>
 <mat-dialog-content class="  sm:p-6 w-200">
 
 
@@ -119,5 +119,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Annuler</button>
-    <button mat-button (click)="onSubmit()" [disabled]="!societeForm.valid" cdkFocusInitial>Enregister</button>
+    <button mat-button (click)="onSubmit()" [disabled]="!societeForm.valid" cdkFocusInitial>
+        {{action=='new'?'Ajouter':'Modifier'}}
+    </button>
 </mat-dialog-actions>

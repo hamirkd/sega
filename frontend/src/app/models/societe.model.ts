@@ -16,6 +16,7 @@ export class Societe{
       adresse:string;
       code_postal:string;
       ville:string;
+      bp:string;
       telephone:string;
       fax:string;
       email:string;
@@ -29,36 +30,67 @@ export class Societe{
       arrondissement:string;
       departement:string;
       province:string; 
-    constructor(societe) { 
-        this.code=societe.code;
-        this.regime=societe.regime;
-        this.raison_sociale=societe.raison_sociale;
-        this.sigle=societe.sigle;
-        this.rccm=societe.rccm;
-        this.cnss=societe.cnss;
-        this.contribuable=societe.contribuable;
-        this.statistique=societe.statistique;
-        this.activite=societe.activite;
-        this.date_creation=societe.date_creation;
-        this.date_mise_service=societe.date_mise_service;
-        this.date_effet=societe.date_effet;
-        this.date_immatriculation=societe.date_immatriculation;
-        this.adresse=societe.adresse;
-        this.code_postal=societe.code_postal;
-        this.ville=societe.ville;
-        this.telephone=societe.telephone;
-        this.fax=societe.fax;
-        this.email=societe.email;
-        this.nif=societe.nif;
-        this.source_donnees=societe.source_donnees;
-        this.code_residence=societe.code_residence;
-        this.adressen=societe.adressen;
-        this.rue=societe.rue;
-        this.lieu_dit=societe.lieu_dit;
-        this.quartier=societe.quartier;
-        this.arrondissement=societe.arrondissement;
-        this.departement=societe.departement;
-        this.province=societe.province; 
-        }
+      copy?(societe) { 
+          this.code=societe.code;
+          this.regime=societe.regime;
+          this.raison_sociale=societe.raison_sociale;
+          this.sigle=societe.sigle;
+          this.rccm=societe.rccm;
+          this.cnss=societe.cnss;
+          this.contribuable=societe.contribuable;
+          this.statistique=societe.statistique;
+          this.activite=societe.activite;
+          this.date_creation=societe.date_creation;
+          this.date_mise_service=societe.date_mise_service;
+          this.date_effet=societe.date_effet;
+          this.date_immatriculation=societe.date_immatriculation;
+          this.adresse=societe.adresse;
+          this.code_postal=societe.code_postal;
+          this.ville=societe.ville;
+          this.telephone=societe.telephone;
+          this.fax=societe.fax;
+          this.email=societe.email;
+          this.nif=societe.nif;
+          this.source_donnees=societe.source_donnees;
+          this.code_residence=societe.code_residence;
+          this.adressen=societe.adressen;
+          this.rue=societe.rue;
+          this.lieu_dit=societe.lieu_dit;
+          this.quartier=societe.quartier;
+          this.arrondissement=societe.arrondissement;
+          this.departement=societe.departement;
+          this.province=societe.province; 
+          }
+          constructor(societe) { 
+              this.code=societe.code;
+              this.regime=societe.regime;
+              this.raison_sociale=societe.raison_sociale;
+              this.sigle=societe.sigle;
+              this.rccm=societe.rccm;
+              this.cnss=societe.cnss;
+              this.contribuable=societe.contribuable;
+              this.statistique=societe.statistique;
+              this.activite=societe.activite;
+              this.date_creation=societe.date_creation;
+              this.date_mise_service=societe.date_mise_service;
+              this.date_effet=societe.date_effet;
+              this.date_immatriculation=societe.date_immatriculation;
+              this.adresse=societe.adresse;
+              this.code_postal=societe.code_postal;
+              this.ville=societe.ville;
+              this.telephone=societe.telephone;
+              this.fax=societe.fax;
+              this.email=societe.email;
+              this.nif=societe.nif;
+              this.source_donnees=societe.source_donnees;
+              this.code_residence=societe.code_residence;
+              this.adressen=societe.adressen;
+              this.rue=societe.rue;
+              this.lieu_dit=societe.lieu_dit;
+              this.quartier=societe.quartier;
+              this.arrondissement=societe.arrondissement;
+              this.departement=societe.departement;
+              this.province=societe.province; 
+              }
 
 }

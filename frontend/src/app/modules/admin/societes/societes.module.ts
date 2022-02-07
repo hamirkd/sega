@@ -6,6 +6,8 @@ import { ListComponent as ListSalariesComponent } from './list-salaries/list.com
 import { ListComponent as ListRubriquesComponent } from './list-rubriques/list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AddComponent } from './add/add.component';
+import { AddComponent as AddSalariesComponent } from './add-salaries/add.component';
+import { AddComponent as AddRubriquesComponent } from './add-rubriques/add.component';
 import { ShowComponent } from './show/show.component';
 import { EditIdentificationComponent } from './edit-identification/edit-identification.component';
 import { EditIdentification2Component } from './edit-identification2/edit-identification2.component';
@@ -32,12 +34,19 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FuseCardModule } from '@fuse/components/card';
+import { ImportComponent as ImportSalariesComponent } from './import-salaries/import.component';
+import { ImportComponent as ImportRubriqueComponent } from './import-rubriques/import.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const routes: Routes = [
     { path: '', component: ListComponent },
     { path: ':id/salaries', component: ListSalariesComponent },
+    { path: ':id/salaries/import', component: ImportSalariesComponent },
+    { path: ':id/ruriques/import', component: ImportRubriqueComponent },
     { path: ':id/rubriques', component: ListRubriquesComponent },
     { path: 'add', component: AddComponent },
+    { path: 'add', component: AddSalariesComponent },
+    { path: 'add', component: AddRubriquesComponent },
     { path: ':id', component: ShowComponent },
 ];
 
@@ -49,8 +58,8 @@ const routes: Routes = [
         ShowComponent,
         EditIdentificationComponent,
         EditIdentification2Component,
-        Show1Component,
-        SalariesComponent,ListSalariesComponent,ListRubriquesComponent
+        Show1Component,ImportRubriqueComponent,
+        SalariesComponent,ListSalariesComponent,ListRubriquesComponent,AddSalariesComponent,ImportSalariesComponent,AddRubriquesComponent
     ],
     imports: [
         CommonModule,
@@ -62,7 +71,7 @@ const routes: Routes = [
         MatButtonToggleModule,
         MatDividerModule,
         MatIconModule,
-        MatMenuModule,
+        MatMenuModule,MatPaginatorModule,MatCheckboxModule,
         MatProgressBarModule,
         MatSortModule,
         MatTableModule,
