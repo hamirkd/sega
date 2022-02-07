@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RubriquesComponent } from './rubriques.component';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component'; 
-import { ReactiveFormsModule } from '@angular/forms';
+import { ImportComponent } from './import/import.component'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -25,42 +26,58 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const routes: Routes = [
   { path: '', component: ListComponent },
   { path: 'add', component: AddComponent }, 
+  { path: 'import', component: ImportComponent }, 
 ];
 
 @NgModule({
   declarations: [
     RubriquesComponent,
-    ListComponent,
+    ListComponent,ImportComponent,
     AddComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    FormsModule,
     ReactiveFormsModule,
-     MatButtonModule,
+    MatTableModule,
+    MatButtonModule,
     MatButtonToggleModule,
     MatDividerModule,
     MatIconModule,
-    MatMenuModule,
+    MatMenuModule,MatPaginatorModule,MatCheckboxModule,
     MatProgressBarModule,
     MatSortModule,
-     MatTooltipModule, 
-     MatToolbarModule,
-    FuseCardModule, 
+    MatTableModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTableModule,
+    MatToolbarModule,
+    FuseCardModule,
+    MatTableModule,
+    MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatAutocompleteModule, 
-    MatInputModule, 
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
     MatDialogModule,
-    MatRippleModule,  
+    MatRippleModule,
+    MatTableModule,
+    MatToolbarModule,
     MatOptionModule,
-    MatSelectModule, 
-    MatTabsModule, MatTableModule  
+    MatSelectModule,
+    MatTableModule,
+    MatTabsModule,
+    MatAutocompleteModule,
   ]
 })
 export class RubriquesModule { }

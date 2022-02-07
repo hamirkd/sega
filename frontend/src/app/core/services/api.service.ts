@@ -15,6 +15,11 @@ export class ApiService {
       
       return this._httpClient.post(environment.urlApi+url,data);
     }
+    
+    put(url:string, data:any): Observable<any>{
+      
+      return this._httpClient.put(environment.urlApi+url,data);
+    }
     get(url:string): Observable<any>{
       return this._httpClient.get(url);
     }

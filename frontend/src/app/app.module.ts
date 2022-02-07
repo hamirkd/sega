@@ -13,9 +13,6 @@ import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { translocoConfig, TranslocoModule, TRANSLOCO_CONFIG, TRANSLOCO_LOADER } from '@ngneat/transloco';
-import { environment } from 'environments/environment';
-import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
 import { HttpClientModule } from '@angular/common/http';
  
 const routerConfig: ExtraOptions = {

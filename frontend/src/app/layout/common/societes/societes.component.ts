@@ -3,6 +3,8 @@ import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { FuseNavigationService } from '@fuse/components/navigation';
 import { Societe } from 'app/models/societe.model';
 import { SocieteService } from 'app/core/services/societe.service';
+import { LayoutComponent } from 'app/layout/layout.component';
+import { Router } from '@angular/router';
 
 @Component({
     selector       : 'societes',
@@ -23,7 +25,9 @@ export class SocietesComponent implements OnInit, OnDestroy
      */
     constructor( 
         private _translocoService: TranslocoService,
-        private _societeService:SocieteService
+        private _societeService:SocieteService,
+        private _fuseNavigationService: FuseNavigationService,
+        private router:Router
     )
     {
     }
@@ -64,6 +68,7 @@ export class SocietesComponent implements OnInit, OnDestroy
         // Set the active lang
         this._societeService.activeSociete = societe
         this.societeActive = societe;
+        this._updateNavigation();
     }
 
     /**
@@ -77,4 +82,21 @@ export class SocietesComponent implements OnInit, OnDestroy
         return item.id || index;
     }
 
+    private _updateNavigation(): void
+    {
+        
+        // const navComponent = this._fuseNavigationService.getComponent<LayoutComponent>('mainContent');
+        // console.log(this._fuseNavigationService.getAll())
+
+        // if ( !navComponent )
+        // {
+        //     return null;
+        // }
+        // navComponent.refresh();
+        const lastLink = this.router.url;
+        this.router.navigateByUrl('/signed-in-redirect').then(() => {
+            this.router.navigate([lastLink]);
+        }); 
+           
+    }
 }

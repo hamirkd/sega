@@ -1,7 +1,7 @@
-import { Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { combineLatest, Subject } from 'rxjs';
+import { combineLatest, ReplaySubject, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { FuseConfigService } from '@fuse/services/config';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
@@ -24,6 +24,7 @@ export class LayoutComponent implements OnInit, OnDestroy
     theme: string;
     themes: [string, any][] = [];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    onRefreshed: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
     /**
      * Constructor
@@ -35,7 +36,8 @@ export class LayoutComponent implements OnInit, OnDestroy
         private _router: Router,
         private _fuseConfigService: FuseConfigService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseTailwindConfigService: FuseTailwindService
+        private _fuseTailwindConfigService: FuseTailwindService,
+        private _changeDetectorRef: ChangeDetectorRef,
     )
     {
     }
@@ -257,5 +259,13 @@ export class LayoutComponent implements OnInit, OnDestroy
 
         // Add class name for the currently selected theme
         this._document.body.classList.add(`theme-${this.theme}`);
+    }
+    refresh(): void
+    {
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+
+        // Execute the observable
+        this.onRefreshed.next(true);
     }
 }

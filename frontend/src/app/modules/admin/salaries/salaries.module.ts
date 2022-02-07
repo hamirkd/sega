@@ -4,7 +4,8 @@ import { SalariesComponent } from './salaries.component';
 import { ListComponent } from './list/list.component';
 import { AddComponent } from './add/add.component';
 import { ShowComponent } from './show/show.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ImportComponent } from './import/import.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -26,45 +27,60 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const routes: Routes = [
-  { path: '', component: ListComponent },
-  { path: 'add', component: AddComponent },
-  { path: ':id', component: ShowComponent },
+    { path: '', component: ListComponent },
+    { path: 'add', component: AddComponent },
+    { path: 'import', component: ImportComponent },
+    { path: ':id', component: ShowComponent },
 ];
 
 @NgModule({
-  declarations: [
-    SalariesComponent,
-    ListComponent,
-    AddComponent,
-    ShowComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-     MatButtonModule,
-    MatButtonToggleModule,
-    MatDividerModule,
-    MatIconModule,
-    MatMenuModule,
-    MatProgressBarModule,
-    MatSortModule,
-     MatTooltipModule, 
-     MatToolbarModule,
-    FuseCardModule, 
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatAutocompleteModule, 
-    MatInputModule, 
-    MatDialogModule,
-    MatRippleModule,  
-    MatOptionModule,
-    MatSelectModule, 
-    MatTabsModule, MatTableModule  
-  ]
+    declarations: [
+        SalariesComponent,
+        ListComponent,
+        AddComponent,
+        ShowComponent,ImportComponent
+    ],
+    imports: [
+      CommonModule,
+      RouterModule.forChild(routes),
+      FormsModule,
+      ReactiveFormsModule,
+      MatTableModule,
+      MatButtonModule,
+      MatButtonToggleModule,
+      MatDividerModule,
+      MatIconModule,
+      MatMenuModule,MatPaginatorModule,MatCheckboxModule,
+      MatProgressBarModule,
+      MatSortModule,
+      MatTableModule,
+      MatTooltipModule,
+      MatIconModule,
+      MatMenuModule,
+      MatTableModule,
+      MatToolbarModule,
+      FuseCardModule,
+      MatTableModule,
+      MatButtonModule,
+      MatCheckboxModule,
+      MatDatepickerModule,
+      MatFormFieldModule,
+      MatAutocompleteModule, 
+      MatIconModule,
+      MatInputModule,
+      MatMenuModule,
+      MatDialogModule,
+      MatRippleModule,
+      MatTableModule,
+      MatToolbarModule,
+      MatOptionModule,
+      MatSelectModule,
+      MatTableModule,
+      MatTabsModule,
+      MatAutocompleteModule,
+    ],
 })
-export class SalariesModule { }
+export class SalariesModule {}
