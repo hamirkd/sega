@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordResetController; 
 use App\Http\Controllers\SocieteController;
+use App\Http\Controllers\SalarieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::group([
 
 Route::middleware('auth:api')->group(function() {
     Route::apiResource('societe', 'App\Http\Controllers\SocieteController');
+    Route::apiResource('salarie', 'App\Http\Controllers\SalarieController');
     Route::put('auth/update', 'App\Http\Controllers\AuthController@update');
     Route::get('auth/user-profile', 'App\Http\Controllers\AuthController@userProfile');
     //Route::get('/achats_/nombre_titre_acheter/{titre}', [AchatController::class, 'nombre_titre_acheter']);
