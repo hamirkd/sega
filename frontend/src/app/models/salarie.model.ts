@@ -4,7 +4,7 @@
 import { Societe } from './societe.model';
 
 export class Salarie {
-    id:number;
+    id?:number;
     societe?: Societe;
     societe_id?:number;
     matricule: string;

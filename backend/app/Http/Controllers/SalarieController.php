@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Salarie;
+use App\Models\Societe;
 use Illuminate\Http\Request;
 
 class SalarieController extends Controller
@@ -14,11 +15,7 @@ class SalarieController extends Controller
      */
     public function index()
     {
-        Salarie::create($request->all());
-        return response()->json([
-            'message' => 'La salarié a été ajouté',
-            'status' => 200
-        ], 200);
+        return Salarie::all();
     }
  
 
@@ -48,6 +45,15 @@ class SalarieController extends Controller
         return $salarie;
     } 
 
+    /**
+     * Display a listing of the resource by Societe.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getListBySociete(Societe $societe)
+    {
+        return Salarie::where("societe_id",$societe->id)->get();
+    }
     /**
      * Update the specified resource in storage.
      *

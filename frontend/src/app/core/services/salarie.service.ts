@@ -23,16 +23,23 @@ export class SalarieService {
     return this.apiService.get('api/salarie');
 }
   
+getAllByCurrentSociete(): Observable<Salarie[]> {
+  return this.apiService.get('api/salarie/societe/'+this._societeService.activeSociete.id);
+}
+  
 get(id): Observable<Salarie> {
   return this.apiService.get('api/salarie/'+id);
 }
 
   add(salarie: Salarie): Observable<Salarie> {
+    const societe_id = this._societeService.activeSociete.id;
+    salarie.societe_id = societe_id;
       return this.apiService.post('api/salarie', salarie);
   }
 
   update(salarie: Salarie): Observable<Salarie> {
-      console.log(salarie)
+      const societe_id = this._societeService.activeSociete.id;
+      salarie.societe_id = societe_id;
       return this.apiService.put('api/salarie/'+salarie.id , salarie);
   }
   

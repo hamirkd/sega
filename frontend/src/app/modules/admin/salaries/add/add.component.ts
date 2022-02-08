@@ -55,9 +55,23 @@ export class AddComponent implements OnInit {
     ngOnInit(): void {}
 
     onSubmit() {
+        this.salarie.copy(this.salarieForm.getRawValue());
+        console.log(this.salarie);
         if(this.action=='edit')
-        this.salarieService.add
-        this.matDialogRef.close(this.salarieForm);
+        {
+            this.salarieService.add(this.salarie).subscribe(o=>{
+                console.log(o);
+                this.matDialogRef.close(this.salarieForm);
+            },err=>console.error(err));
+        }
+        else{
+            this.salarieService.update(this.salarie).subscribe(o=>{
+                console.log(o);
+                this.matDialogRef.close(this.salarieForm);
+            },err=>console.error(err));
+        }
+
+        
     }
 
     close() {}

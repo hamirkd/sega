@@ -64,15 +64,27 @@ export class ListComponent implements OnInit  , AfterViewInit{
         private _salarieService:SalarieService,
         private _societeService:SocieteService
     ) {
-
+        this.dataSource = new MatTableDataSource<Salarie>([]);
+        // this._updateList();
     }
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
       }
     ngOnInit(): void {
-        this.dataSource = new MatTableDataSource<Salarie>(this._salarieService.getAll());
-        this.data = this._societeService.activeSociete;
+        this._updateList();
         
+        this.data = this._societeService.activeSociete;
+    }
+
+    _updateList(){
+        this.dataSource.data=[];
+        this._salarieService.getAllByCurrentSociete().subscribe(data=>{
+            this.dataSource.data=data;
+            this.table.renderRows();
+        },err=>{
+            this.dataSource.data=[];
+            this.table.renderRows();
+        })
     }
 
     add(): void {
@@ -87,8 +99,8 @@ export class ListComponent implements OnInit  , AfterViewInit{
             if (!response) {
                 return;
             }
-            this.dataSource.data.push(response.getRawValue());
-            this.table.renderRows();
+            this._updateList();
+            
         });
     }
 
@@ -99,7 +111,6 @@ export class ListComponent implements OnInit  , AfterViewInit{
                 'Voulez-vous supprimer tous les salariés de votre base de données ?',
         });
         this.dialogRef.afterClosed().subscribe((response) => {
-            console.log(response);
             if (response === 'confirmed') {
                 this.dataSource.data = [];
                 this.table.renderRows();
@@ -119,8 +130,12 @@ export class ListComponent implements OnInit  , AfterViewInit{
             if (!response) {
                 return;
             }
-            salarie.copy(response.getRawValue())
-            this.table.renderRows();
+            this.dataSource.data=[];
+            this._salarieService.getAlls().subscribe(data=>{
+                this.dataSource.data.push(...data);
+                this.table.renderRows();
+            })
+            
         });
     }
 
