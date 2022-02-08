@@ -57,7 +57,7 @@ export class AddComponent implements OnInit {
     onSubmit() {
         this.salarie.copy(this.salarieForm.getRawValue());
         console.log(this.salarie);
-        if(this.action=='edit')
+        if(this.action=='new')
         {
             this.salarieService.add(this.salarie).subscribe(o=>{
                 console.log(o);

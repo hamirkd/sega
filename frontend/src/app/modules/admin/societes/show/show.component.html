@@ -9,33 +9,8 @@
                 <div class="font-medium tracking-tight text-secondary"> </div>
             </div>
             <div class="flex items-center ml-6">
-                <button class="hidden sm:inline-flex" mat-flat-button [color]="'primary'" [routerLink]="['/societes',data.code]">
-                    <mat-icon svgIcon="heroicons_solid:library"></mat-icon>
 
-                    <span class="ml-2">Société</span>
-                </button>
 
-                <button class="hidden sm:inline-flex ml-3" mat-stroked-button [routerLink]="['/societes',data.code,'salaries']">
-                        <mat-icon svgIcon="heroicons_solid:users"></mat-icon>
-
-                    <span class="ml-2">Salariés</span>
-                </button>
-                <button class="hidden sm:inline-flex ml-3" mat-stroked-button [routerLink]="['/societes',data.code,'rubriques']">
-                    <mat-icon svgIcon="heroicons_solid:archive"></mat-icon>
-
-                    <span class="ml-2">Rubriques</span>
-                </button>
-
-                <!-- Actions menu (visible on xs) -->
-                <div class="sm:hidden">
-                    <button [matMenuTriggerFor]="actionsMenu" mat-icon-button>
-                <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
-            </button>
-                    <mat-menu #actionsMenu="matMenu">
-                        <button mat-menu-item>Export</button>
-                        <button mat-menu-item>Settings</button>
-                    </mat-menu>
-                </div>
             </div>
         </div>
 
@@ -172,14 +147,11 @@
                 <div class="flex items-center justify-between">
                     <div class="text-2xl font-semibold leading-tight">Localisation</div>
                     <div class="-mr-3">
-                        <button mat-icon-button [matMenuTriggerFor]="listCard03Menu">
+                        <button mat-icon-button (click)="editLocalisation()">
                             <mat-icon
                                 class="icon-size-5"
-                                [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
+                                [svgIcon]="'heroicons_solid:pencil'"></mat-icon>
                         </button>
-                        <mat-menu #listCard03Menu="matMenu">
-                            <button mat-menu-item>Modifier</button>
-                        </mat-menu>
                     </div>
                 </div>
                 <div class="flex flex-col mt-5">

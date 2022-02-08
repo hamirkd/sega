@@ -130,11 +130,7 @@ export class ListComponent implements OnInit  , AfterViewInit{
             if (!response) {
                 return;
             }
-            this.dataSource.data=[];
-            this._salarieService.getAlls().subscribe(data=>{
-                this.dataSource.data.push(...data);
-                this.table.renderRows();
-            })
+            this._updateList();
             
         });
     }
@@ -166,20 +162,10 @@ export class ListComponent implements OnInit  , AfterViewInit{
         this.dialogRef.afterClosed().subscribe((response) => {
             console.log(response);
             if (response === 'confirmed') {
-                this.dataSource.data.splice(
-                    this.dataSource.data.findIndex(
-                        (s) => s.matricule == salarie.matricule
-                    ),
-                    1
-                );
-                this.table.renderRows();
-                const tempo=JSON.parse(JSON.stringify(this.dataSource.data));
-            this.dataSource.data = [];
-            setTimeout(() => {
-                this.dataSource.data = tempo;
-            this.selection.clear();
-            this.table.renderRows();
-            }, 0);
+                this._salarieService.delete(salarie).subscribe(o=>{
+                    console.log(o);
+                    this._updateList();
+                },err=>console.error(err));
             }
         });
     }

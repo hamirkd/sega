@@ -53,34 +53,34 @@
                             </ng-container>
                             <ng-container matColumnDef="nif">
                                 <th mat-header-cell *matHeaderCellDef> NIF </th>
-                                <td mat-cell *matCellDef="let element"> {{element.nif}} </td>
+                                <td mat-cell *matCellDef="let element" [routerLink]="['/salaries',element.id]"> {{element.nif}} </td>
                             </ng-container>
 
                             <!-- Name Column -->
                             <ng-container matColumnDef="matricule">
                                 <th mat-header-cell *matHeaderCellDef> Matricule </th>
-                                <td mat-cell *matCellDef="let element"> {{element.matricule}} </td>
+                                <td mat-cell *matCellDef="let element" [routerLink]="['/salaries',element.id]"> {{element.matricule}} </td>
                             </ng-container>
                             <!-- Name Column -->
                             <ng-container matColumnDef="emploi_occupe">
                                 <th mat-header-cell *matHeaderCellDef> Emploi occupé</th>
-                                <td mat-cell *matCellDef="let element"> {{element.emploi_occupe}} </td>
+                                <td mat-cell *matCellDef="let element" [routerLink]="['/salaries',element.id]"> {{element.emploi_occupe}} </td>
                             </ng-container>
                             <!-- Name Column -->
                             <ng-container matColumnDef="dateembauche">
                                 <th mat-header-cell *matHeaderCellDef> Date embauche </th>
-                                <td mat-cell *matCellDef="let element"> {{element.dateembauche}} </td>
+                                <td mat-cell *matCellDef="let element" [routerLink]="['/salaries',element.id]"> {{element.dateembauche}} </td>
                             </ng-container>
                             <!-- nom Column -->
                             <ng-container matColumnDef="nom">
                                 <th mat-header-cell *matHeaderCellDef> Nom </th>
-                                <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
+                                <td mat-cell *matCellDef="let element" [routerLink]="['/salaries',element.id]"> {{element.nom}} </td>
                             </ng-container>
 
                             <!-- prenom Column -->
                             <ng-container matColumnDef="prenom">
                                 <th mat-header-cell *matHeaderCellDef> Prenom </th>
-                                <td mat-cell *matCellDef="let element"> {{element.prenom}} </td>
+                                <td mat-cell *matCellDef="let element" [routerLink]="['/salaries',element.id]"> {{element.prenom}} </td>
                             </ng-container>
                             <ng-container matColumnDef="actions">
                                 <th mat-header-cell *matHeaderCellDef>

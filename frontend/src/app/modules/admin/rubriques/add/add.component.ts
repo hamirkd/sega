@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RubriqueService } from 'app/core/services/rubrique.service';
 import { Rubrique } from 'app/models/rubrique.model';
 
 @Component({
@@ -15,7 +16,7 @@ export class AddComponent implements OnInit {
     
     formFieldHelpers: string[] = [''];
     constructor(private _formBuilder: FormBuilder,public matDialogRef: MatDialogRef<AddComponent>,
-        @Inject(MAT_DIALOG_DATA) private _data: any,) {
+        @Inject(MAT_DIALOG_DATA) private _data: any,private _rubriqueService:RubriqueService) {
             console.log(_data)
         this.rubrique = new Rubrique(_data.rubrique);
         this.action = _data.action
@@ -41,7 +42,24 @@ export class AddComponent implements OnInit {
     ngOnInit(): void {}
 
     onSubmit() {
-        this.matDialogRef.close(this.rubriqueForm);
+
+
+        this.rubrique.copy(this.rubriqueForm.getRawValue());
+        if(this.action=='new')
+        {
+            this._rubriqueService.add(this.rubrique).subscribe(data=>{
+                console.log(data);
+                this.matDialogRef.close(this.rubriqueForm);
+            })
+        }
+        else
+        {
+            this._rubriqueService.update(this.rubrique).subscribe(data=>{
+                console.log(data);
+                this.matDialogRef.close(this.rubriqueForm);
+            })
+        }
+        
     }
 
     close() {}

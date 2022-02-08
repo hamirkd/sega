@@ -13,6 +13,7 @@ import { _DATA_SOCIETE } from '../../societes/list/_data';
 import { Societe } from 'app/models/societe.model';
 import { SocieteService } from 'app/core/services/societe.service';
 import { RubriqueService } from 'app/core/services/rubrique.service';
+import { _DATA_RUBRIQUES } from 'app/core/data-test/data-rubriques';
 
 @Component({
   selector: 'app-list',
@@ -40,9 +41,16 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
       this.data = this._societeService.activeSociete;
-    this.dataSource = this.rubriqueService.getAll();
+      this._updateDataSource();
   }
- 
+  _updateDataSource(){
+
+    this.rubriqueService.getAllByCurrentSociete().subscribe(data=>{
+        this.dataSource = data;
+        this.table.renderRows();
+    },err=>{this.dataSource=[];console.error(err)})
+
+  }
 
   add(): void
   {
@@ -54,14 +62,12 @@ export class ListComponent implements OnInit {
         }});
 
       this.dialogRef.afterClosed()
-          .subscribe((response: FormGroup) => {
+          .subscribe((response: any) => {
               if ( !response )
               {
                   return;
               }
-              this.rubriqueService.add(response.getRawValue());
-              this.dataSource=this.rubriqueService.getAll();
-              this.table.renderRows();
+              this._updateDataSource();
           });
   }
 
@@ -75,8 +81,13 @@ export class ListComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((response) => {
         console.log(response);
         if (response === 'confirmed') {
-            this.dataSource = [];
-            this.table.renderRows();
+           //**********DELETE */
+           this.rubriqueService.deleteAllByCurrentSociete().subscribe(data=>{
+            console.log(data);
+         this._updateDataSource();
+        },err=>{
+            console.error(err)
+        })
         }
     });
 }
@@ -89,15 +100,11 @@ edit(rubrique: Rubrique): void {
         },
     });
 
-    this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
+    this.dialogRef.afterClosed().subscribe((response: any) => {
         if (!response) {
             return;
         }
-        const r = new Rubrique(rubrique);
-        r.copy(response.getRawValue());
-        this.rubriqueService.update(r);
-        this.dataSource = this.rubriqueService.getAll();
-        this.table.renderRows();
+        this._updateDataSource();
     });
 }
 
@@ -110,15 +117,13 @@ importerListeRubriques(): void {
         if (!rubriques) {
             return;
         }
-        this.dataSource = rubriques;
-        console.log(this.dataSource);
-        // this.data.rubriques = response.rubriques;
+        this._updateDataSource();
     });
 }
 
 supprimer(rubrique: Rubrique) {
     this.dialogRef = this._fuseConfirmationService.open({
-        title: 'Suppression de salarié',
+        title: 'Suppression de rubrique',
         message:
             'Voulez-vous supprimer la rubrique ' +
             rubrique.intitule +' ?',
@@ -126,13 +131,13 @@ supprimer(rubrique: Rubrique) {
     this.dialogRef.afterClosed().subscribe((response) => {
         console.log(response);
         if (response === 'confirmed') {
-            this.dataSource.splice(
-                this.dataSource.findIndex(
-                    (s) => s.code == rubrique.code
-                ),
-                1
-            );
-            this.table.renderRows();
+           //***DELETE ONE */
+           this.rubriqueService.delete(rubrique).subscribe(data=>{
+               console.log(data);
+            this._updateDataSource();
+           },err=>{
+               console.error(err)
+           })
         }
     });
 }

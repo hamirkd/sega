@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RubriqueService } from 'app/core/services/rubrique.service';
 import { Rubrique } from 'app/models/rubrique.model';
-import { Salarie } from 'app/models/salarie.model';
 import { isNumber } from 'lodash';
-import { distinct } from 'rxjs/operators';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -14,16 +12,16 @@ import * as XLSX from 'xlsx';
 })
 export class ImportComponent implements OnInit {
     action = 'noshow';
-    rubriques:Rubrique[]=[];
+    
     arrayBuffer: any;
     file: File;
     formFieldHelpers: string[] = [''];
 
     constructor(
-        private _formBuilder: FormBuilder,
-        public matDialogRef: MatDialogRef<ImportComponent>
+        public matDialogRef: MatDialogRef<ImportComponent>,
+        private rubriqueService:RubriqueService
     ) {
-        this.rubriques = [];
+        
     }
 
     /**
@@ -37,7 +35,7 @@ export class ImportComponent implements OnInit {
     onSubmit() {}
 
     close() {
-        this.matDialogRef.close(this.rubriques);
+        this.matDialogRef.close({});
     }
 
     incomingfile(event) {
@@ -63,18 +61,16 @@ export class ImportComponent implements OnInit {
                 raw: true,
             }) as { ordre; nom; prenom; code; intitule; sens }[];
 
-            let salariesIndex = Array.from(
-                new Set(dataAll.map((x) => x.ordre))
-            );
             let rubriquesIndex = Array.from(
                 new Set(dataAll.map((x) => x.code))
             );
-            // let salaries = dataAll.map(a=>a.code)
             
-
-           
-            this.rubriques = [];
             rubriquesIndex.forEach((i) => {
+               
+                
+            });
+            for (let index = 0; index < rubriquesIndex.length; index++) {
+                const i = rubriquesIndex[index];
                 if (!isNumber(i)) return;
                 let da = dataAll.find((p) => p.code == i);
                 let ru = new Rubrique({
@@ -82,9 +78,13 @@ export class ImportComponent implements OnInit {
                     intitule: da.intitule,
                     sens: da.sens > 0 ? '+' : '-',
                 })
-                this.rubriques.push(ru);
-            });
-            this.close();
+                setTimeout(() => {
+                    this.rubriqueService.add(ru).subscribe(data=>{
+                        console.log(data);
+                    },err=>{console.error(err)})
+                }, 500*index);
+            }
+            // this.close();
         };
         fileReader.readAsArrayBuffer(this.file);
     }

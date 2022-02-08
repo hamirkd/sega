@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Salarie;
+use App\Models\Rubrique;
 use App\Models\Societe;
 use Illuminate\Http\Request;
 
-class SalarieController extends Controller
+class RubriqueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class SalarieController extends Controller
      */
     public function index()
     {
-        return Salarie::all();
+        return Rubrique::all();
     }
  
 
@@ -27,9 +27,9 @@ class SalarieController extends Controller
      */
     public function store(Request $request)
     {
-        Salarie::create($request->all());
+        Rubrique::create($request->all());
         return response()->json([
-            'message' => 'La salarié a été ajouté',
+            'message' => 'La rubrique a été ajoutée',
             'status' => 200
         ], 200);
     }
@@ -37,44 +37,54 @@ class SalarieController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Salarie  $salarie
+     * @param  \App\Models\Rubrique  $rubrique
      * @return \Illuminate\Http\Response
      */
-    public function show(Salarie $salarie)
+    public function show(Rubrique $rubrique)
     {
-        return $salarie;
+        return $rubrique;
     } 
 
     /**
-     * Display a listing of the resource by Societe.
+     * Display a listing of the resource by Rubrique.
      *
      * @return \Illuminate\Http\Response
      */
     public function getListBySociete(Societe $societe)
     {
-        return Salarie::where("societe_id",$societe->id)->get();
+        return Rubrique::where("societe_id",$societe->id)->get();
     }
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Salarie  $salarie
+     * @param  \App\Models\Rubrique  $rubrique
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Salarie $salarie)
+    public function update(Request $request, Rubrique $rubrique)
     {
-        $salarie->update($request->all());
+        $rubrique->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Salarie  $salarie
+     * @param  \App\Models\Rubrique  $rubrique
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Salarie $salarie)
+    public function destroy(Rubrique $rubrique)
     {
-        $salarie->delete();
+        $rubrique->delete();
     }
-    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Societe  $societe
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll(Societe $societe)
+    {
+        Rubrique::where("societe_id",$societe->id)->delete();
+    }
 }

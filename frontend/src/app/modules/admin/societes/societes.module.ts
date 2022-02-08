@@ -7,6 +7,7 @@ import { ListComponent as ListRubriquesComponent } from './list-rubriques/list.c
 import { RouterModule, Routes } from '@angular/router';
 import { AddComponent } from './add/add.component';
 import { AddComponent as AddSalariesComponent } from './add-salaries/add.component';
+import { AddComponent as AddLocalisationComponent } from './add-localisation/add.component';
 import { AddComponent as AddRubriquesComponent } from './add-rubriques/add.component';
 import { ShowComponent } from './show/show.component';
 import { EditIdentificationComponent } from './edit-identification/edit-identification.component';
@@ -47,6 +48,7 @@ const routes: Routes = [
     { path: ':id/rubriques', component: ListRubriquesComponent },
     { path: 'add', component: AddComponent },
     { path: 'add', component: AddSalariesComponent },
+    { path: 'add', component: AddLocalisationComponent },
     { path: 'add', component: AddRubriquesComponent },
     { path: ':id', component: ShowComponent },
 ];
@@ -57,7 +59,7 @@ const routes: Routes = [
         ListComponent,
         AddComponent,
         ShowComponent,
-        EditIdentificationComponent,
+        EditIdentificationComponent,AddLocalisationComponent,
         EditIdentification2Component,
         Show1Component,ImportRubriqueComponent,
         SalariesComponent,ListSalariesComponent,ListRubriquesComponent,AddSalariesComponent,ImportSalariesComponent,AddRubriquesComponent
