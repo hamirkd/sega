@@ -16,6 +16,7 @@ export class ImportComponent implements OnInit {
     arrayBuffer: any;
     file: File;
     formFieldHelpers: string[] = [''];
+    rubriques:[]=[];
 
     constructor(
         public matDialogRef: MatDialogRef<ImportComponent>,
@@ -35,7 +36,7 @@ export class ImportComponent implements OnInit {
     onSubmit() {}
 
     close() {
-        this.matDialogRef.close({});
+        this.matDialogRef.close(this.rubriques);
     }
 
     incomingfile(event) {
@@ -65,10 +66,6 @@ export class ImportComponent implements OnInit {
                 new Set(dataAll.map((x) => x.code))
             );
             
-            rubriquesIndex.forEach((i) => {
-               
-                
-            });
             for (let index = 0; index < rubriquesIndex.length; index++) {
                 const i = rubriquesIndex[index];
                 if (!isNumber(i)) return;
@@ -84,7 +81,7 @@ export class ImportComponent implements OnInit {
                     },err=>{console.error(err)})
                 }, 500*index);
             }
-            // this.close();
+            this.close();
         };
         fileReader.readAsArrayBuffer(this.file);
     }

@@ -77,6 +77,7 @@ export const appRoutes: Route[] = [
             {path: 'societes', loadChildren: () => import('app/modules/admin/societes/societes.module').then(m => m.SocietesModule)},
             {path: 'salaries', loadChildren: () => import('app/modules/admin/salaries/salaries.module').then(m => m.SalariesModule)},
             {path: 'rubriques', loadChildren: () => import('app/modules/admin/rubriques/rubriques.module').then(m => m.RubriquesModule)},
+            {path: 'traitement-retenue', loadChildren: () => import('app/modules/admin/traitement-retenue/traitement-retenue.module').then(m => m.TraitementRetenueModule)},
             {path: 'paies', loadChildren: () => import('app/modules/admin/paies/paies.module').then(m => m.PaiesModule)},
         ]
     }

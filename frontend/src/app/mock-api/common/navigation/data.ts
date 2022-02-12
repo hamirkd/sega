@@ -30,6 +30,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon : 'heroicons_outline:archive',
         link : '/rubriques'
     }, 
+    {
+        id   : 'traitement-retenue',
+        title: 'Traitement Retenue',
+        type : 'basic',
+        icon : 'heroicons_outline:currency-dollar',
+        link : '/traitement-retenue'
+    }, 
 
     {
         id   : 'paies',
