@@ -19,6 +19,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SalarieService } from 'app/core/services/salarie.service';
 import { SocieteService } from 'app/core/services/societe.service';
+import { SalarieComplement } from 'app/models/salarie-complement-1.model';
+import { AnneeService } from 'app/core/services/annee.service';
 
 @Component({
     selector: 'app-list',
@@ -47,15 +49,18 @@ export class ListComponent implements OnInit  , AfterViewInit{
         'actions',
     ];
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    selection = new SelectionModel<Salarie>(true, []);
+    selection = new SelectionModel<SalarieComplement>(true, []);
 
-    dataSource = new MatTableDataSource<Salarie>([]);
-
+    dataSource = new MatTableDataSource<SalarieComplement>([]);
+    data:any; // Active Societe
     dialogRef: any;
-    data = _DATA_SOCIETE[0];
     @ViewChild(MatTable) table: MatTable<Salarie>;
     filters: string[] = ['all', 'article', 'listing', 'list', 'info', 'shopping', 'pricing', 'testimonial', 'post', 'interactive'];
-
+    mois =[{id:1,value:'JANVIER'},{id:2,value:'FEVRIER'},{id:3,value:'MARS'},
+    {id:4,value:'AVRIL'},{id:5,value:'MAI'},{id:6,value:'JUIN'},
+    {id:7,value:'JUILLET'},{id:8,value:'AOUT'},{id:9,value:'SEPTEMBRE'},
+    {id:10,value:'OCTOBRE'},{id:11,value:'NOVEMBRE'},{id:12,value:'DECEMBRE'}];
+    moisActif:{id,value};
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _activatedRoute: ActivatedRoute,
@@ -63,11 +68,19 @@ export class ListComponent implements OnInit  , AfterViewInit{
         private _matDialog: MatDialog,
         private _fuseConfirmationService: FuseConfirmationService,
         private _salarieService:SalarieService,
-        private _societeService:SocieteService
+        private _societeService:SocieteService,
+        private _anneeService:AnneeService
     ) {
-        this.dataSource = new MatTableDataSource<Salarie>([]);
+        this.dataSource = new MatTableDataSource<SalarieComplement>([]);
         // this._updateList();
+        this.moisActif = this.mois[0];
     }
+
+
+    echo(){
+        console.log(this.moisActif);
+    }
+
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
       }
@@ -80,8 +93,8 @@ export class ListComponent implements OnInit  , AfterViewInit{
     _updateList(){
         this.dataSource.data=[];
         this._salarieService.getAllByCurrentSociete().subscribe(data=>{
-            this.dataSource.data=data;
-            this.table.renderRows();
+            // this.dataSource.data=data;
+            // this.table.renderRows();
         },err=>{
             this.dataSource.data=[];
             this.table.renderRows();
@@ -89,9 +102,14 @@ export class ListComponent implements OnInit  , AfterViewInit{
     }
 
     add(): void {
+        console.log(this.moisActif);
+        // return;
         this.dialogRef = this._matDialog.open(AddComponent, {
             data: {
-                salarie: {},
+                declarationRetenue: {},
+                moisActif:this.moisActif,
+                societe:this.data,
+                annee:this._anneeService.activeAnnee,
                 action: 'new',
             },
         });
@@ -113,6 +131,10 @@ export class ListComponent implements OnInit  , AfterViewInit{
         });
         this.dialogRef.afterClosed().subscribe((response) => {
             if (response === 'confirmed') {
+                this.irpp = 0;
+                this.tcs = 0;
+                this.fnh = 0;
+                this.cfp = 0;
                 this.dataSource.data = [];
                 this.table.renderRows();
             }
@@ -122,7 +144,7 @@ export class ListComponent implements OnInit  , AfterViewInit{
     edit(salarie: Salarie): void {
         this.dialogRef = this._matDialog.open(AddComponent, {
             data: {
-                salarie: salarie,
+                declarationRetenue: salarie,
                 action: 'edit',
             },
         });
@@ -135,16 +157,32 @@ export class ListComponent implements OnInit  , AfterViewInit{
             
         });
     }
-
+    irpp:number = 0;
+    tcs:number = 0;
+    fnh:number = 0;
+    cfp:number = 0;
     importerListeSalaries(): void {
         this.dialogRef = this._matDialog.open(ImportComponent, {
             data: this.data,
         });
 
-        this.dialogRef.afterClosed().subscribe((salaries) => {
+        this.dialogRef.afterClosed().subscribe((salaries:SalarieComplement[]) => {
             if (!salaries) {
                 return;
             }
+            
+            this.irpp = 0;
+            this.tcs = 0;
+            this.fnh = 0;
+            this.cfp = 0;
+            salaries.forEach(s=>{
+                console.log(Number(s.irpp),"=>" , s.irpp)
+                this.irpp = this.irpp + Number(s.irpp);
+                this.tcs = this.tcs + Number(s.tcs);
+                this.fnh = this.fnh + Number(s.fnh);
+                this.cfp = this.cfp + Number(s.cfp);
+
+            })
             this.dataSource.data = salaries;
             // this.data.rubriques = response.rubriques;
         });
@@ -217,7 +255,7 @@ export class ListComponent implements OnInit  , AfterViewInit{
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Salarie): string {
+  checkboxLabel(row?: SalarieComplement): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }

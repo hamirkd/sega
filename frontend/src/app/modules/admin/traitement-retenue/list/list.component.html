@@ -12,11 +12,8 @@
                 <div class="leading-none">
                     <mat-form-field class="w-full">
                         <mat-label>Mois</mat-label>
-                        <mat-select [value]="'btc'" #walletSelector="matSelect">
-                            <mat-option [value]="'btc'">Bitcoin</mat-option>
-                            <mat-option [value]="'eth'">Ethereum</mat-option>
-                            <mat-option [value]="'bch'">Bitcoin Cash</mat-option>
-                            <mat-option [value]="'xrp'">XRP</mat-option>
+                        <mat-select [(ngModel)]="moisActif">
+                            <mat-option [value]="mo" *ngFor="let mo of mois">{{mo.value}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -31,19 +28,19 @@
                 <div class="sm:flex items-center my-3">
                     <div class="p-4 leading-none rounded-l-xl border border-r-0">
                         <div class="text-sm font-medium text-secondary">IRPP</div>
-                        <div class="mt-2 font-mono text-xl">{{0}}00000000B</div>
+                        <div class="mt-2 font-mono text-xl">{{irpp | currency:'XOF'}}</div>
                     </div>
                     <div class="p-4 leading-none border border-r-0">
                         <div class="text-sm font-medium text-secondary">TCS</div>
-                        <div class="mt-2 font-mono text-xl">{{0}}0000B</div>
+                        <div class="mt-2 font-mono text-xl">{{tcs | currency:'XOF'}}</div>
                     </div>
                     <div class="p-4 leading-none border border-r-0">
                         <div class="text-sm font-medium text-secondary">FNH</div>
-                        <div class="mt-2 font-mono text-xl">{{0}}00000000000M</div>
+                        <div class="mt-2 font-mono text-xl">{{fnh | currency:'XOF'}}</div>
                     </div>
                     <div class="p-4 leading-none rounded-r-xl border">
                         <div class="text-sm font-medium text-secondary">CFP</div>
-                        <div class="mt-2 font-mono text-xl">{{0}}</div>
+                        <div class="mt-2 font-mono text-xl">{{cfp | currency:'XOF'}}</div>
                     </div>
                 </div>
             </div>
@@ -164,11 +161,11 @@
                              <span class="ml-2">Consolider les données</span>
                         </button>
 
-                        <button class="mt-2" mat-stroked-button (click)="add()">
+                        <button class="mt-2" mat-stroked-button (click)="importerListeSalaries()">
                              <span class="ml-2">Importer les données</span>
                         </button>
 
-                        <button class="mt-2" mat-stroked-button (click)="add()">
+                        <button class="mt-2" mat-stroked-button (click)="toutvider()">
                              <span class="ml-2">Vider les données</span>
                         </button>
 

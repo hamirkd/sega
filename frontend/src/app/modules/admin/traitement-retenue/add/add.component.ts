@@ -1,73 +1,74 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SalarieService } from 'app/core/services/salarie.service';
-import { Salarie } from 'app/models/salarie.model';
+import { DeclarationRetenueService } from 'app/core/services/declaration-retenue.service';
+import { DeclarationRetenue } from 'app/models/declaration-retenue.model';
 
 @Component({
-    selector: 'app-participant-add',
+    selector: 'app-retenu-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
 })
 export class AddComponent implements OnInit {
     @Input() name;
-    salarie:Salarie;
-    action:'new'|'edit'='new'
+    declarationRetenue:DeclarationRetenue;
+    action:'new'|'edit'='new';
+    moisActif;
+    societe;
+    annee;
     
     formFieldHelpers: string[] = [''];
     constructor(private _formBuilder: FormBuilder,public matDialogRef: MatDialogRef<AddComponent>,
-        @Inject(MAT_DIALOG_DATA) private _data: any,private salarieService:SalarieService) {
-            console.log(_data)
-        this.salarie = new Salarie(_data.salarie);
+        @Inject(MAT_DIALOG_DATA) private _data: any,private declarationRetenueService:DeclarationRetenueService) {
+        this.declarationRetenue = new DeclarationRetenue(_data.declarationRetenue);
         this.action = _data.action
-        this.salarieForm = this.createsalarieForm();
+        this.moisActif = _data.moisActif;
+        this.societe = _data.societe;
+        this.annee = _data.annee;
+        console.log(_data)
+        this.declarationRetenueForm = this.createDeclarationRetenueForm();
     }
-    salarieForm :any
+    declarationRetenueForm :any
 
     /**
      * Create user form
      *
      * @returns {FormGroup}
      */
-     createsalarieForm(): FormGroup {
-        return this._formBuilder.group({
-         matricule:[this.salarie.matricule],
-         nom:[this.salarie.nom],
-         prenom:[this.salarie.prenom],
-         nif:[this.salarie.nif],
-         emploi:[this.salarie.emploi],
-         niveau:[this.salarie.niveau],
-         nationalite:[this.salarie.nationalite],
-         age:[this.salarie.age],
-         sexe:[this.salarie.sexe],
-         enfants:[this.salarie.enfants],
-         emploi_occupe:[this.salarie.emploi_occupe],
-         situation_familiale:[this.salarie.situation_familiale],
-         deb10:[this.salarie.deb10],
-         deb11:[this.salarie.deb11],
-         code_postal:[this.salarie.code_postal],
-         ville:[this.salarie.ville],
-         telephone:[this.salarie.telephone],
-         fin12:[this.salarie.fin12],
-         fin13das:[this.salarie.fin13das],
-        });
+     createDeclarationRetenueForm(): FormGroup {
+         return this._formBuilder.group({
+            annee:[{value: this.annee, disabled: true}],
+            mois:[{value: this.moisActif.value, disabled: true}],
+            societe:[{value: this.societe.raison_sociale, disabled: true}],
+            mode_reglement:[this.declarationRetenue.mode_reglement],
+            numero_cheque:[this.declarationRetenue.numero_cheque],
+            iban:[this.declarationRetenue.iban], 
+            bic:[this.declarationRetenue.bic],
+            date_versement:[this.declarationRetenue.date_versement],
+            date_signature:[this.declarationRetenue.date_signature],
+            lieu_signature:[this.declarationRetenue.lieu_signature],
+            irpp:[this.declarationRetenue.irpp],
+            tcs:[this.declarationRetenue.tcs],
+            fnh:[this.declarationRetenue.fnh],
+         })
+        
     }
     ngOnInit(): void {}
 
     onSubmit() {
-        this.salarie.copy(this.salarieForm.getRawValue());
-        console.log(this.salarie);
+        this.declarationRetenue.copy(this.declarationRetenueForm.getRawValue());
+        console.log(this.declarationRetenue);
         if(this.action=='new')
         {
-            this.salarieService.add(this.salarie).subscribe(o=>{
+            this.declarationRetenueService.add(this.declarationRetenue).subscribe(o=>{
                 console.log(o);
-                this.matDialogRef.close(this.salarieForm);
+                this.matDialogRef.close(this.declarationRetenueForm);
             },err=>console.error(err));
         }
         else{
-            this.salarieService.update(this.salarie).subscribe(o=>{
+            this.declarationRetenueService.update(this.declarationRetenue).subscribe(o=>{
                 console.log(o);
-                this.matDialogRef.close(this.salarieForm);
+                this.matDialogRef.close(this.declarationRetenueForm);
             },err=>console.error(err));
         }
 

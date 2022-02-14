@@ -29,6 +29,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
+import {  LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
+
 const routes: Routes = [
     { path: '', component: ListComponent },
     { path: 'add', component: AddComponent },
@@ -37,6 +42,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
+    providers:[
+        { provide: LOCALE_ID, useValue: 'fr-FR'},],
     declarations: [
         TraitementRetenueComponent,
         ListComponent,

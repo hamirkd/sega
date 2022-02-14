@@ -1,112 +1,81 @@
-<h2 mat-dialog-title>{{action=='new'?'Ajouter un salarié':'Modifier les informations de '+salarie.nom+' '+salarie.prenom}}</h2>
+<h2 mat-dialog-title>Fiche déclaration retenue</h2>
 <mat-dialog-content class="  sm:p-6 w-200">
-
-
-    <form class=" " [formGroup]="salarieForm">
-
+    <form class=" " [formGroup]="declarationRetenueForm">
         <div class="flex flex-col w-full ">
             <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Matricule</mat-label>
-                    <input matInput [formControlName]="'matricule'" required>
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Année</mat-label>
+                    <input matInput [formControlName]="'annee'" required>
                 </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>NIF</mat-label>
-                    <input matInput [formControlName]="'nif'" required>
+                <mat-form-field class="w-1/3 pl-2 pr-2">
+                    <mat-label>Mois</mat-label>
+                    <input matInput [formControlName]="'mois'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Société</mat-label>
+                    <input matInput [formControlName]="'societe'" required>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Mode de règlement</mat-label>
+                    <mat-select [formControlName]="'mode_reglement'">
+                        <mat-option [value]="'CHEQUE'">{{'Chèque'}}</mat-option>
+                        <mat-option [value]="'VIREMENT'">{{'Virement'}}</mat-option>
+                        <mat-option [value]="'ESPECE'">{{'Espèce'}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2 pr-2" *ngIf="declarationRetenueForm.get('mode_reglement').value=='CHEQUE'">
+                    <mat-label>Numéro chèque</mat-label>
+                    <input matInput [formControlName]="'numero_cheque'" required>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>IBAN</mat-label>
+                    <input matInput [formControlName]="'iban'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2 pr-2">
+                    <mat-label>BIC</mat-label>
+                    <input matInput [formControlName]="'bic'" required>
                 </mat-form-field>
             </div>
 
             <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Nom</mat-label>
-                    <input matInput [formControlName]="'nom'" required>
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Date de versement </mat-label>
+                    <input matInput [formControlName]="'date_versement'" required>
                 </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>Prénom(s)</mat-label>
-                    <input matInput [formControlName]="'prenom'" required>
+                <mat-form-field class="w-1/3 pl-2 pr-2">
+                    <mat-label>Date signature</mat-label>
+                    <input matInput [formControlName]="'date_signature'" required>
                 </mat-form-field>
-            </div>
-            <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Emploi</mat-label>
-                    <input matInput [formControlName]="'emploi'" required>
-                </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>Niveau</mat-label>
-                    <input matInput [formControlName]="'niveau'">
-                </mat-form-field>
-            </div>
-            <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Nationalité</mat-label>
-                    <input matInput [formControlName]="'nationalite'">
-                </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>Age</mat-label>
-                    <input matInput [formControlName]="'age'">
-                </mat-form-field>
-            </div>
-            <mat-form-field class="w-full">
-                <mat-label>Sexe</mat-label>
-                <input matInput [formControlName]="'sexe'">
-            </mat-form-field>
-            <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Enfants</mat-label>
-                    <input matInput [formControlName]="'enfants'">
-                </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>Telephone</mat-label>
-                    <input matInput [formControlName]="'telephone'">
-                </mat-form-field>
-            </div>
-            <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Code postal</mat-label>
-                    <input matInput [formControlName]="'code_postal'">
-                </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>Ville</mat-label>
-                    <input matInput [formControlName]="'ville'">
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Lieu signature</mat-label>
+                    <input matInput [formControlName]="'lieu_signature'" required>
                 </mat-form-field>
             </div>
 
             <div class="flex">
-                <mat-form-field class="w-1/2 pr-2">
-                    <mat-label>Emploi occupe</mat-label>
-                    <input matInput [formControlName]="'emploi_occupe'">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>IRPP</mat-label>
+                    <input matInput [formControlName]="'irpp'" required>
                 </mat-form-field>
-                <mat-form-field class="w-1/2 pl-2">
-                    <mat-label>Situation familiale</mat-label>
-                    <input matInput [formControlName]="'situation_familiale'">
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>TCS</mat-label>
+                    <input matInput [formControlName]="'tcs'" required>
                 </mat-form-field>
-            </div>
-            <div class="flex">
-                <mat-form-field class="w-1/4 pr-2">
-                    <mat-label>deb10</mat-label>
-                    <input matInput [formControlName]="'deb10'">
-                </mat-form-field>
-                <mat-form-field class="w-1/4 pl-2 pr-2">
-                    <mat-label>deb11</mat-label>
-                    <input matInput [formControlName]="'deb11'">
-                </mat-form-field>
-                <mat-form-field class="w-1/4 pr-2 pl-2">
-                    <mat-label>fin12</mat-label>
-                    <input matInput [formControlName]="'fin12'">
-                </mat-form-field>
-                <mat-form-field class="w-1/4 pl-2">
-                    <mat-label>fin13das</mat-label>
-                    <input matInput [formControlName]="'fin13das'">
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>FNH</mat-label>
+                    <input matInput [formControlName]="'fnh'" required>
                 </mat-form-field>
             </div>
-
-
         </div>
     </form>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close cdkFocusInitial>Annuler</button>
-    <button mat-button (click)="onSubmit()" [disabled]="!salarieForm.valid">
-        {{action=='new'?'Enregister':'Modifier'}}</button>
+    <button mat-button (click)="onSubmit()" [disabled]="!declarationRetenueForm.valid">
+        {{'Enregister'}}</button>
 </mat-dialog-actions>
