@@ -1,4 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { AddComponent } from '../add/add.component';
 import {
     animate,
@@ -21,6 +27,10 @@ import { SalarieService } from 'app/core/services/salarie.service';
 import { SocieteService } from 'app/core/services/societe.service';
 import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { AnneeService } from 'app/core/services/annee.service';
+import { DeclarationRetenueService } from 'app/core/services/declaration-retenue.service';
+import { Societe } from 'app/models/societe.model';
+import { saveAs } from 'file-saver';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-list',
@@ -37,7 +47,7 @@ import { AnneeService } from 'app/core/services/annee.service';
         ]),
     ],
 })
-export class ListComponent implements OnInit  , AfterViewInit{
+export class ListComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = [
         'select',
         'matricule',
@@ -52,53 +62,77 @@ export class ListComponent implements OnInit  , AfterViewInit{
     selection = new SelectionModel<SalarieComplement>(true, []);
 
     dataSource = new MatTableDataSource<SalarieComplement>([]);
-    data:any; // Active Societe
+    data: Societe = new Societe({}); // Active Societe
     dialogRef: any;
     @ViewChild(MatTable) table: MatTable<Salarie>;
-    filters: string[] = ['all', 'article', 'listing', 'list', 'info', 'shopping', 'pricing', 'testimonial', 'post', 'interactive'];
-    mois =[{id:1,value:'JANVIER'},{id:2,value:'FEVRIER'},{id:3,value:'MARS'},
-    {id:4,value:'AVRIL'},{id:5,value:'MAI'},{id:6,value:'JUIN'},
-    {id:7,value:'JUILLET'},{id:8,value:'AOUT'},{id:9,value:'SEPTEMBRE'},
-    {id:10,value:'OCTOBRE'},{id:11,value:'NOVEMBRE'},{id:12,value:'DECEMBRE'}];
-    moisActif:{id,value};
-    constructor(
+    filters: string[] = [
+        'all',
+        'article',
+        'listing',
+        'list',
+        'info',
+        'shopping',
+        'pricing',
+        'testimonial',
+        'post',
+        'interactive',
+    ];
+    mois = [
+        { id: 1, value: 'JANVIER' },
+        { id: 2, value: 'FEVRIER' },
+        { id: 3, value: 'MARS' },
+        { id: 4, value: 'AVRIL' },
+        { id: 5, value: 'MAI' },
+        { id: 6, value: 'JUIN' },
+        { id: 7, value: 'JUILLET' },
+        { id: 8, value: 'AOUT' },
+        { id: 9, value: 'SEPTEMBRE' },
+        { id: 10, value: 'OCTOBRE' },
+        { id: 11, value: 'NOVEMBRE' },
+        { id: 12, value: 'DECEMBRE' },
+    ];
+    moisActif: { id; value };
+    constructor(private http: HttpClient,
         private _changeDetectorRef: ChangeDetectorRef,
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
         private _matDialog: MatDialog,
         private _fuseConfirmationService: FuseConfirmationService,
-        private _salarieService:SalarieService,
-        private _societeService:SocieteService,
-        private _anneeService:AnneeService
+        private _salarieService: SalarieService,
+        private _societeService: SocieteService,
+        private _anneeService: AnneeService,
+        private _declaration_retenue: DeclarationRetenueService
     ) {
         this.dataSource = new MatTableDataSource<SalarieComplement>([]);
         // this._updateList();
         this.moisActif = this.mois[0];
     }
 
-
-    echo(){
+    echo() {
         console.log(this.moisActif);
     }
 
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
-      }
+    }
     ngOnInit(): void {
         this._updateList();
-        
+
         this.data = this._societeService.activeSociete;
     }
 
-    _updateList(){
-        this.dataSource.data=[];
-        this._salarieService.getAllByCurrentSociete().subscribe(data=>{
-            // this.dataSource.data=data;
-            // this.table.renderRows();
-        },err=>{
-            this.dataSource.data=[];
-            this.table.renderRows();
-        })
+    _updateList() {
+        this.dataSource.data = [];
+        this._salarieService.getAllByCurrentSociete().subscribe(
+            (data) => {
+                // this.dataSource.data=data;
+                // this.table.renderRows();
+            },
+            (err) => {
+                this.dataSource.data = [];
+                this.table.renderRows();
+            }
+        );
     }
 
     add(): void {
@@ -107,9 +141,9 @@ export class ListComponent implements OnInit  , AfterViewInit{
         this.dialogRef = this._matDialog.open(AddComponent, {
             data: {
                 declarationRetenue: {},
-                moisActif:this.moisActif,
-                societe:this.data,
-                annee:this._anneeService.activeAnnee,
+                moisActif: this.moisActif,
+                societe: this.data,
+                annee: this._anneeService.activeAnnee,
                 action: 'new',
             },
         });
@@ -119,7 +153,6 @@ export class ListComponent implements OnInit  , AfterViewInit{
                 return;
             }
             this._updateList();
-            
         });
     }
 
@@ -154,38 +187,38 @@ export class ListComponent implements OnInit  , AfterViewInit{
                 return;
             }
             this._updateList();
-            
         });
     }
-    irpp:number = 0;
-    tcs:number = 0;
-    fnh:number = 0;
-    cfp:number = 0;
+    irpp: number = 0;
+    tcs: number = 0;
+    fnh: number = 0;
+    cfp: number = 0;
     importerListeSalaries(): void {
         this.dialogRef = this._matDialog.open(ImportComponent, {
             data: this.data,
         });
 
-        this.dialogRef.afterClosed().subscribe((salaries:SalarieComplement[]) => {
-            if (!salaries) {
-                return;
-            }
-            
-            this.irpp = 0;
-            this.tcs = 0;
-            this.fnh = 0;
-            this.cfp = 0;
-            salaries.forEach(s=>{
-                console.log(Number(s.irpp),"=>" , s.irpp)
-                this.irpp = this.irpp + Number(s.irpp);
-                this.tcs = this.tcs + Number(s.tcs);
-                this.fnh = this.fnh + Number(s.fnh);
-                this.cfp = this.cfp + Number(s.cfp);
+        this.dialogRef
+            .afterClosed()
+            .subscribe((salaries: SalarieComplement[]) => {
+                if (!salaries) {
+                    return;
+                }
 
-            })
-            this.dataSource.data = salaries;
-            // this.data.rubriques = response.rubriques;
-        });
+                this.irpp = 0;
+                this.tcs = 0;
+                this.fnh = 0;
+                this.cfp = 0;
+                salaries.forEach((s) => {
+                    console.log(Number(s.irpp), '=>', s.irpp);
+                    this.irpp = this.irpp + Number(s.irpp);
+                    this.tcs = this.tcs + Number(s.tcs);
+                    this.fnh = this.fnh + Number(s.fnh);
+                    this.cfp = this.cfp + Number(s.cfp);
+                });
+                this.dataSource.data = salaries;
+                // this.data.rubriques = response.rubriques;
+            });
     }
 
     supprimer(salarie: Salarie) {
@@ -201,64 +234,94 @@ export class ListComponent implements OnInit  , AfterViewInit{
         this.dialogRef.afterClosed().subscribe((response) => {
             console.log(response);
             if (response === 'confirmed') {
-                this._salarieService.delete(salarie).subscribe(o=>{
-                    console.log(o);
-                    this._updateList();
-                },err=>console.error(err));
+                this._salarieService.delete(salarie).subscribe(
+                    (o) => {
+                        console.log(o);
+                        this._updateList();
+                    },
+                    (err) => console.error(err)
+                );
             }
         });
     }
-     /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
     }
 
-    this.selection.select(...this.dataSource.data);
-  }
-  supprimer_element(){
-      this.dialogRef = this._fuseConfirmationService.open({
-        title: 'Suppression de salarié',
-        message:
-            'Voulez-vous supprimer les salariés sélectionner ?',
-    });
-    this.dialogRef.afterClosed().subscribe((response) => {
-        console.log(response);
-        if (response === 'confirmed') {
-            
-            this.selection.selected.forEach(salarie=>{
-                this.dataSource.data.splice(
-                    this.dataSource.data.findIndex(
-                        (s) => s.matricule == salarie.matricule
-                    ),
-                    1
-                );
-                // this.dataSource.data = []
-            })
-            const tempo=JSON.parse(JSON.stringify(this.dataSource.data));
-            this.dataSource.data = [];
-            setTimeout(() => {
-                this.dataSource.data = tempo;
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        if (this.isAllSelected()) {
             this.selection.clear();
-            this.table.renderRows();
-            }, 0);
+            return;
         }
-    });
-  }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: SalarieComplement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+        this.selection.select(...this.dataSource.data);
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.matricule + 1}`;
-  }
+    supprimer_element() {
+        this.dialogRef = this._fuseConfirmationService.open({
+            title: 'Suppression de salarié',
+            message: 'Voulez-vous supprimer les salariés sélectionner ?',
+        });
+        this.dialogRef.afterClosed().subscribe((response) => {
+            console.log(response);
+            if (response === 'confirmed') {
+                this.selection.selected.forEach((salarie) => {
+                    this.dataSource.data.splice(
+                        this.dataSource.data.findIndex(
+                            (s) => s.matricule == salarie.matricule
+                        ),
+                        1
+                    );
+                    // this.dataSource.data = []
+                });
+                const tempo = JSON.parse(JSON.stringify(this.dataSource.data));
+                this.dataSource.data = [];
+                setTimeout(() => {
+                    this.dataSource.data = tempo;
+                    this.selection.clear();
+                    this.table.renderRows();
+                }, 0);
+            }
+        });
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: SalarieComplement): string {
+        if (!row) {
+            return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+            row.matricule + 1
+        }`;
+    }
+
+    edit11() {
+        this._declaration_retenue.edit11({
+            annee: this._anneeService.activeAnnee,
+            mois: this.moisActif,
+            raison_sociale: this.data.raison_sociale,
+            contribuable: this.data.contribuable,
+            date_versement: '',
+            code_postal: this.data.code_postal,
+            irpp: this.irpp,
+            numero_cheque: '2222',
+            sigle: this.data.sigle,
+            tcs: this.tcs,
+            fnh: this.fnh,
+            total: this.tcs + this.irpp + this.fnh,
+            ville: this.data.ville,
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_ID10_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.docx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+    
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SocieteController;
 use App\Http\Controllers\SalarieController;
 use App\Http\Controllers\RubriqueController;
+use App\Http\Controllers\DeclarationRetenueController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +47,7 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('rubrique/societe/{societe}',[RubriqueController::class,'destroyAll']);
     Route::put('auth/update', 'App\Http\Controllers\AuthController@update');
     Route::get('auth/user-profile', 'App\Http\Controllers\AuthController@userProfile');
-    //Route::get('/achats_/nombre_titre_acheter/{titre}', [AchatController::class, 'nombre_titre_acheter']);
+
+    
+    Route::post('declaration-retenue', [DeclarationRetenueController::class,'edit11']);
 });

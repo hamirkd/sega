@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -26,6 +26,11 @@ export class ApiService {
 
     delete(url:string): Observable<any>{
       return this._httpClient.delete(environment.urlApi+url);
+    }
+    
+    post2(url:string, data:any): Observable<any>{
+      
+      return this._httpClient.post(environment.urlApi+url,data,{responseType: 'blob'});
     }
 
 }

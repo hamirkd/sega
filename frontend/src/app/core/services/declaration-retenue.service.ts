@@ -35,6 +35,12 @@ get(id): Observable<DeclarationRetenue> {
       declarationRetenue.societe_id = societe_id;
       return this.apiService.put('api/declaration-retenue/'+declarationRetenue.id , declarationRetenue);
   }
+
+  edit11(d:{fnh,ville,sigle,code_postal,annee,mois,raison_sociale,contribuable,numero_cheque,date_versement,irpp,tcs,total}): 
+  Observable<Blob> {
+    console.log(d);  
+    return this.apiService.post2('api/declaration-retenue', d);
+  }
   
   delete(declarationRetenue: DeclarationRetenue): Observable<any> {
       return this.apiService.delete('api/declaration-retenue/'+ declarationRetenue.id);
