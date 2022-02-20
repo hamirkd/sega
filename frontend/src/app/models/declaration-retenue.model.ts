@@ -13,9 +13,11 @@ import { Societe } from "./societe.model";
     date_versement:string;
     date_signature:string;
     lieu_signature:string;
-    irpp:string;
-    tcs:string;
-    fnh:string;
+    irpp:number;
+    tcs:number;
+    fnh:number;
+    cfp:number;
+
     constructor(decl:any){
     this.annee=decl.annee;
     this.mois=decl.mois;
@@ -30,6 +32,7 @@ import { Societe } from "./societe.model";
     this.irpp=decl.irpp;
     this.tcs=decl.tcs;
     this.fnh=decl.fnh;
+    this.cfp=decl.cfp;
     }
     copy?(decl:any){
 

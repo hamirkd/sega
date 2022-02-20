@@ -19,7 +19,7 @@
             <div class="flex">
                 <mat-form-field class="w-1/3 pr-2">
                     <mat-label>Mode de règlement</mat-label>
-                    <mat-select [formControlName]="'mode_reglement'">
+                    <mat-select [formControlName]="'mode_reglement'" [value]="declarationRetenue.mode_reglement">
                         <mat-option [value]="'CHEQUE'">{{'Chèque'}}</mat-option>
                         <mat-option [value]="'VIREMENT'">{{'Virement'}}</mat-option>
                         <mat-option [value]="'ESPECE'">{{'Espèce'}}</mat-option>
@@ -27,7 +27,7 @@
                 </mat-form-field>
                 <mat-form-field class="w-1/3 pl-2 pr-2" *ngIf="declarationRetenueForm.get('mode_reglement').value=='CHEQUE'">
                     <mat-label>Numéro chèque</mat-label>
-                    <input matInput [formControlName]="'numero_cheque'" required>
+                    <input matInput [formControlName]="'numero_cheque'">
                 </mat-form-field>
             </div>
             <div class="flex">
@@ -44,11 +44,15 @@
             <div class="flex">
                 <mat-form-field class="w-1/3 pr-2">
                     <mat-label>Date de versement </mat-label>
-                    <input matInput [formControlName]="'date_versement'" required>
+                    <input matInput [matDatepicker]="date_versement" [formControlName]="'date_versement'" required>
+                    <mat-datepicker-toggle matSuffix [for]="date_versement"></mat-datepicker-toggle>
+                    <mat-datepicker #date_versement></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="w-1/3 pl-2 pr-2">
                     <mat-label>Date signature</mat-label>
-                    <input matInput [formControlName]="'date_signature'" required>
+                    <input matInput [matDatepicker]="date_signature" [formControlName]="'date_signature'" required>
+                    <mat-datepicker-toggle matSuffix [for]="date_signature"></mat-datepicker-toggle>
+                    <mat-datepicker #date_signature></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="w-1/3 pl-2">
                     <mat-label>Lieu signature</mat-label>

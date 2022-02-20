@@ -32,6 +32,7 @@ import { Societe } from 'app/models/societe.model';
 import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
+import { DeclarationRetenue } from 'app/models/declaration-retenue.model';
 
 @Component({
     selector: 'app-list',
@@ -56,7 +57,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         'nom',
         'prenom',
         'emploi_occupe',
-        'dateembauche',
         'actions',
     ];
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -66,18 +66,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     data: Societe = new Societe({}); // Active Societe
     dialogRef: any;
     @ViewChild(MatTable) table: MatTable<Salarie>;
-    filters: string[] = [
-        'all',
-        'article',
-        'listing',
-        'list',
-        'info',
-        'shopping',
-        'pricing',
-        'testimonial',
-        'post',
-        'interactive',
-    ];
+  
     mois = [
         { id: 1, value: 'JANVIER' },
         { id: 2, value: 'FEVRIER' },
@@ -93,6 +82,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         { id: 12, value: 'DECEMBRE' },
     ];
     moisActif: { id; value };
+    declarationsRetenue:DeclarationRetenue = new DeclarationRetenue({});
     constructor(private http: HttpClient,
         private _changeDetectorRef: ChangeDetectorRef,
         private _activatedRoute: ActivatedRoute,
@@ -109,6 +99,20 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.moisActif = this.mois[0];
     }
 
+    initData(){
+        this._declaration_retenue.getByMoisAnnee({annee: this._anneeService.activeAnnee,mois:this.moisActif.id,societe_id:this._societeService.activeSociete.id})
+        .subscribe(data=>{
+            this.declarationsRetenue = new DeclarationRetenue(data); 
+        },err=>{
+            this.declarationsRetenue = new DeclarationRetenue({});
+            this.declarationsRetenue.irpp = 0;
+            this.declarationsRetenue.tcs = 0;
+            this.declarationsRetenue.fnh = 0;
+            this.declarationsRetenue.cfp = 0;
+        });
+        
+    }
+
     echo() {
         console.log(this.moisActif);
     }
@@ -117,17 +121,19 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.dataSource.paginator = this.paginator;
     }
     ngOnInit(): void {
-        this._updateList();
-
         this.data = this._societeService.activeSociete;
+        this._updateList();
+        this.initData();
+
     }
 
     _updateList() {
         this.dataSource.data = [];
-        this._salarieService.getAllByCurrentSociete().subscribe(
+        this._declaration_retenue.getSalariesByMoisAnneeSociete({annee:this._anneeService.activeAnnee,mois:this.moisActif.id,societe_id:this._societeService.activeSociete.id}).subscribe(
             (data) => {
-                // this.dataSource.data=data;
-                // this.table.renderRows();
+                 this.dataSource.data=data;
+                 this.table.renderRows();
+                 console.log(data);
             },
             (err) => {
                 this.dataSource.data = [];
@@ -137,8 +143,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     add(): void {
-        console.log(this.moisActif);
-        // return;
+        
         this.dialogRef = this._matDialog.open(AddComponent, {
             data: {
                 declarationRetenue: {},
@@ -165,10 +170,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
         this.dialogRef.afterClosed().subscribe((response) => {
             if (response === 'confirmed') {
-                this.irpp = 0;
-                this.tcs = 0;
-                this.fnh = 0;
-                this.cfp = 0;
+                this.declarationsRetenue.irpp = 0;
+                this.declarationsRetenue.tcs = 0;
+                this.declarationsRetenue.fnh = 0;
+                this.declarationsRetenue.cfp = 0;
                 this.dataSource.data = [];
                 this.table.renderRows();
             }
@@ -205,19 +210,24 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (!salaries) {
                     return;
                 }
-
-                this.irpp = 0;
-                this.tcs = 0;
-                this.fnh = 0;
-                this.cfp = 0;
+                
+                this.declarationsRetenue.irpp = 0;
+                this.declarationsRetenue.tcs = 0;
+                this.declarationsRetenue.fnh = 0;
+                this.declarationsRetenue.cfp = 0;
                 salaries.forEach((s) => {
                     console.log(Number(s.irpp), '=>', s.irpp);
-                    this.irpp = this.irpp + Number(s.irpp);
-                    this.tcs = this.tcs + Number(s.tcs);
-                    this.fnh = this.fnh + Number(s.fnh);
-                    this.cfp = this.cfp + Number(s.cfp);
+                    this.declarationsRetenue.irpp = this.declarationsRetenue.irpp + Number(s.irpp);
+                    this.declarationsRetenue.tcs = this.declarationsRetenue.tcs + Number(s.tcs);
+                    this.declarationsRetenue.fnh = this.declarationsRetenue.fnh + Number(s.fnh);
+                    this.declarationsRetenue.cfp = this.declarationsRetenue.cfp + Number(s.cfp);
                 });
-                this.dataSource.data = salaries;
+                this._declaration_retenue.saveManySalariesInDeclarationRetenu({salaries:salaries,annee:this._anneeService.activeAnnee,mois:this.moisActif.id,societe_id:this._societeService.activeSociete.id})
+                .subscribe(d=>{
+                    console.log(d);
+                    this._updateList();
+                })
+                // this.dataSource.data = salaries;
                 // this.data.rubriques = response.rubriques;
             });
     }
@@ -299,24 +309,28 @@ export class ListComponent implements OnInit, AfterViewInit {
         }`;
     }
 
+    edit10() {
+        this._declaration_retenue.edit10xls({
+            annee: this._anneeService.activeAnnee,
+            mois: this.moisActif.id,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_ID10_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.xlsx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+
     edit11() {
         this._declaration_retenue.edit11({
             annee: this._anneeService.activeAnnee,
-            mois: this.moisActif,
-            raison_sociale: this.data.raison_sociale,
-            contribuable: this.data.contribuable,
-            date_versement: '',
-            code_postal: this.data.code_postal,
-            irpp: this.irpp,
-            numero_cheque: '2222',
-            sigle: this.data.sigle,
-            tcs: this.tcs,
-            fnh: this.fnh,
-            total: this.tcs + this.irpp + this.fnh,
-            ville: this.data.ville,
+            mois: this.moisActif.id,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
-            saveAs(d,`ETAT_ID10_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.docx`);
+            saveAs(d,`ETAT_ID11_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.docx`);
 
         },err=>{
             // Lorsque c'est un fichier, une erreur est générée, parce 

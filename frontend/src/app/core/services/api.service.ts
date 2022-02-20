@@ -13,24 +13,24 @@ export class ApiService {
     }
     post(url:string, data:any): Observable<any>{
       
-      return this._httpClient.post(environment.urlApi+url,data);
+      return this._httpClient.post(url,data);
     }
     
     put(url:string, data:any): Observable<any>{
       
-      return this._httpClient.put(environment.urlApi+url,data);
+      return this._httpClient.put(url,data);
     }
     get(url:string): Observable<any>{
-      return this._httpClient.get(environment.urlApi+url);
+      return this._httpClient.get(url);
     }
 
     delete(url:string): Observable<any>{
-      return this._httpClient.delete(environment.urlApi+url);
+      return this._httpClient.delete(url);
     }
     
     post2(url:string, data:any): Observable<any>{
-      
-      return this._httpClient.post(environment.urlApi+url,data,{responseType: 'blob'});
+      console.log(url)
+      return this._httpClient.post(url,data,{responseType: 'blob'});
     }
 
 }

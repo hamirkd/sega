@@ -32,6 +32,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import {  LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 registerLocaleData(localeFr);
 
 const routes: Routes = [
@@ -57,7 +58,7 @@ const routes: Routes = [
       ReactiveFormsModule,
       MatTableModule,
       MatButtonModule,
-      MatButtonToggleModule,
+      MatButtonToggleModule,MatMomentDateModule,
       MatDividerModule,
       MatIconModule,
       MatMenuModule,MatPaginatorModule,MatCheckboxModule,
