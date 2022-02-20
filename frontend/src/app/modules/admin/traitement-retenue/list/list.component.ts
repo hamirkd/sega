@@ -30,7 +30,8 @@ import { AnneeService } from 'app/core/services/annee.service';
 import { DeclarationRetenueService } from 'app/core/services/declaration-retenue.service';
 import { Societe } from 'app/models/societe.model';
 import { saveAs } from 'file-saver';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'app-list',
@@ -323,5 +324,5 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log(err);
         })
     }
-    
+
 }
