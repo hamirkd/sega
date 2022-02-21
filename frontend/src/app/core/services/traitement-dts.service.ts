@@ -1,0 +1,69 @@
+import { Injectable } from '@angular/core';
+import { TraitementDts } from 'app/models/traitement-dts.model';
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
+import { SocieteService } from './societe.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TraitementDtsService {
+
+  constructor(private _societeService:SocieteService,private apiService: ApiService) { }
+  
+  
+  getAlls(): Observable<TraitementDts[]> {
+      return this.apiService.get('api/traitement-dts');
+  }
+    
+  getAllByCurrentSociete(): Observable<TraitementDts[]> {
+    return this.apiService.get('api/traitement-dts/societe/'+this._societeService.activeSociete.id);
+  }
+    
+  get(id): Observable<TraitementDts> {
+    return this.apiService.get('api/traitement-dts/'+id);
+  }
+
+  add(traitementDas: TraitementDts): Observable<TraitementDts> {
+    const societe_id = this._societeService.activeSociete.id;
+    traitementDas.societe_id = societe_id;
+    console.log(traitementDas)
+      return this.apiService.post('api/traitement-dts', traitementDas);
+  }
+
+  update(traitementDas: TraitementDts): Observable<TraitementDts> {
+      const societe_id = this._societeService.activeSociete.id;
+      traitementDas.societe_id = societe_id;
+      return this.apiService.put('api/traitement-dts/'+traitementDas.id , traitementDas);
+  }
+
+  
+  edit11(d:{trimestre,annee,societe_id}): Observable<any> {
+    return this.apiService.post2('api/traitement-dts/edit11', d);
+  }
+  
+  edit10xls(d:{trimestre,annee,societe_id}): Observable<any> {
+    return this.apiService.post2('api/traitement-dts/edit10xls', d);
+  }
+  
+  getByTrimestreAnnee(d:{societe_id,trimestre,annee}): 
+  Observable<any> {
+    console.log(d);
+    return this.apiService.post('api/traitement-dts/getByTrimestreAnnee', d);
+  }
+
+  saveManySalariesInTraitementDts(traitementDasSalarie:{salaries,trimestre,annee,societe_id}): Observable<any> {
+    console.log(traitementDasSalarie);
+    return this.apiService.post('api/traitement-dts/saveManySalariesInTraitementDts',traitementDasSalarie);
+  }
+  
+  getSalariesByTrimestreAnneeSociete(traitementDasSalarie:{trimestre,annee,societe_id}): Observable<any> {
+    console.log(traitementDasSalarie);
+    return this.apiService.post('api/traitement-dts/getSalariesByTrimestreAnneeSociete',traitementDasSalarie);
+  }
+  
+  
+  delete(traitementDas: TraitementDts): Observable<any> {
+      return this.apiService.delete('api/traitement-dts/'+ traitementDas.id);
+  }
+}
