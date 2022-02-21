@@ -8,6 +8,8 @@ use App\Http\Controllers\SocieteController;
 use App\Http\Controllers\SalarieController;
 use App\Http\Controllers\RubriqueController;
 use App\Http\Controllers\DeclarationsRetenueController;
+use App\Http\Controllers\TraitementsDasController;
+use App\Http\Controllers\TraitementsDtsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,7 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('rubrique/societe/{societe}',[RubriqueController::class,'destroyAll']);
     Route::put('auth/update', 'App\Http\Controllers\AuthController@update');
     Route::get('auth/user-profile', 'App\Http\Controllers\AuthController@userProfile');
+    /** Donnees de base retenue */
     Route::apiResource('declaration-retenue', 'App\Http\Controllers\DeclarationsRetenueController');
     Route::post('declaration-retenue/edit11', [DeclarationsRetenueController::class,'edit11']);
     Route::post('declaration-retenue/edit10xls', [DeclarationsRetenueController::class,'edit10xls']);
@@ -55,4 +58,18 @@ Route::middleware('auth:api')->group(function() {
     Route::post('declaration-retenue/saveManySalariesInDeclarationRetenu', [DeclarationsRetenueController::class,'saveManySalariesInDeclarationRetenu']);
     Route::post('declaration-retenue/getSalariesByMoisAnneeSociete', [DeclarationsRetenueController::class,'getSalariesByMoisAnneeSociete']);
     
+    /** Traitement DAS */
+    Route::apiResource('traitement-das', 'App\Http\Controllers\TraitementsDasController');
+    Route::post('traitement-das/getByTrimestreAnnee', [TraitementsDasController::class,'getByTrimestreAnnee']);
+    Route::post('traitement-das/saveManySalariesInTraitementDas', [TraitementsDasController::class,'saveManySalariesInTraitementDas']);
+    Route::post('traitement-das/getSalariesByTrimestreAnneeSociete', [TraitementsDasController::class,'getSalariesByTrimestreAnneeSociete']);
+    
+
+    /** Traitement DTS */
+    Route::apiResource('traitement-dts', 'App\Http\Controllers\TraitementsDtsController');
+    Route::post('traitement-dts/getByTrimestreAnnee', [TraitementsDtsController::class,'getByTrimestreAnnee']);
+    Route::post('traitement-dts/saveManySalariesInTraitementDts', [TraitementsDtsController::class,'saveManySalariesInTraitementDts']);
+    Route::post('traitement-dts/getSalariesByTrimestreAnneeSociete', [TraitementsDtsController::class,'getSalariesByTrimestreAnneeSociete']);
+    
+
 });

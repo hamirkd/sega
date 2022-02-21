@@ -87,7 +87,7 @@ class DeclarationsRetenueController extends Controller
         ->where("annee",$request->annee)
         ->firstOrFail();
         // return $declarationsRetenue;
-        return DeclarationsRetenuesSalarie::where("declarations_retenue_id",2)->get();
+        return DeclarationsRetenuesSalarie::where("declarations_retenue_id",$declarationsRetenue->id)->get();
     }
 
     /**

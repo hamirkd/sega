@@ -17,6 +17,11 @@ export class SalarieComplement extends Salarie {
     cfp:string;
     total_26_a_29:string;
     ind_non_impo:string;
+    
+   alloc_familiale:number;
+   autre_deduc:number;
+   avance:number;
+   numero_dts:number;
 
     constructor(salarie: any) {
         super(salarie);

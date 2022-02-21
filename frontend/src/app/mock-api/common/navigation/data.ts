@@ -31,12 +31,33 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/rubriques'
     }, 
     {
-        id   : 'traitement-retenue',
-        title: 'Traitement Retenue',
-        type : 'basic',
+        id   : 'traitement',
+        title: 'Traitements',
+        type    : 'collapsable',
         icon : 'heroicons_outline:currency-dollar',
-        link : '/traitement-retenue'
-    }, 
+     
+    children: [
+        
+        {
+            id   : 'Traitements DTS',
+            title: 'Traitements DTS',
+            type : 'basic',
+            link : '/traitement-dts'
+        },
+        {
+            id   : 'Traitements DAS',
+            title: 'Traitements DAS',
+            type : 'basic',
+            link : '/traitement-das'
+        },
+        {
+            id   : 'donnees-de-base-retenue',
+            title: 'Donnees de base retenue',
+            type : 'basic',
+            link : '/donnees-de-base-retenue'
+        },
+    ]
+},
 
     {
         id   : 'paies',
