@@ -7,10 +7,10 @@ export class TraitementDts{
      alloc_familiale:number;
      ristourne:number;
      autre_deduc:number;
-     precision:number;
+     precision:string;
      avance:number;
      reste:number;
-     numero_dts:number;
+     numero_dts:string;
 
     constructor(decl:any){
         this.id=decl.id;

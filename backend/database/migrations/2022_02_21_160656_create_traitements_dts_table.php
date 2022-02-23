@@ -21,10 +21,10 @@ class CreateTraitementsDtsTable extends Migration
             $table->integer('alloc_familiale')->nullable();
             $table->integer('ristourne')->nullable();
             $table->integer('autre_deduc')->nullable();
-            $table->integer('precision')->nullable();
+            $table->string('precision',100)->nullable();
             $table->integer('avance')->nullable();
             $table->integer('reste')->nullable();
-            $table->integer('numero_dts')->nullable();
+            $table->string('numero_dts',100)->nullable();
             $table->timestamps();
         });
     }

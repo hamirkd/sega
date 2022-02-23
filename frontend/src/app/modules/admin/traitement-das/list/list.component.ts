@@ -6,6 +6,8 @@ import {
     ViewChild,
 } from '@angular/core';
 import { AddComponent } from '../add/add.component';
+import { AddComponent as AddSalarieComponent } from '../../salaries/add/add.component';
+
 import {
     animate,
     state,
@@ -27,12 +29,12 @@ import { SalarieService } from 'app/core/services/salarie.service';
 import { SocieteService } from 'app/core/services/societe.service';
 import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { AnneeService } from 'app/core/services/annee.service';
-import { DeclarationRetenueService } from 'app/core/services/declaration-retenue.service';
+import { TraitementDasService } from 'app/core/services/traitement-das.service';
 import { Societe } from 'app/models/societe.model';
 import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { DeclarationRetenue } from 'app/models/declaration-retenue.model';
+import { TraitementDas } from 'app/models/traitement-das.model';
 
 @Component({
     selector: 'app-list',
@@ -82,7 +84,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         { id: 12, value: 'DECEMBRE' },
     ];
     moisActif: { id; value };
-    declarationsRetenue:DeclarationRetenue = new DeclarationRetenue({});
+    traitementDas:TraitementDas = new TraitementDas({});
     constructor(private http: HttpClient,
         private _changeDetectorRef: ChangeDetectorRef,
         private _activatedRoute: ActivatedRoute,
@@ -92,7 +94,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         private _salarieService: SalarieService,
         private _societeService: SocieteService,
         private _anneeService: AnneeService,
-        private _declaration_retenue: DeclarationRetenueService
+        private _traitementDas: TraitementDasService
     ) {
         this.dataSource = new MatTableDataSource<SalarieComplement>([]);
         // this._updateList();
@@ -100,15 +102,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     initData(){
-        this._declaration_retenue.getByMoisAnnee({annee: this._anneeService.activeAnnee,mois:this.moisActif.id,societe_id:this._societeService.activeSociete.id})
+        this._traitementDas.getByAnnee({annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
         .subscribe(data=>{
-            this.declarationsRetenue = new DeclarationRetenue(data); 
+            this.traitementDas = new TraitementDas(data); 
         },err=>{
-            this.declarationsRetenue = new DeclarationRetenue({});
-            this.declarationsRetenue.irpp = 0;
-            this.declarationsRetenue.tcs = 0;
-            this.declarationsRetenue.fnh = 0;
-            this.declarationsRetenue.cfp = 0;
+            this.traitementDas = new TraitementDas({});
         });
         
     }
@@ -129,7 +127,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     _updateList() {
         this.dataSource.data = [];
-        this._declaration_retenue.getSalariesByMoisAnneeSociete({annee:this._anneeService.activeAnnee,mois:this.moisActif.id,societe_id:this._societeService.activeSociete.id}).subscribe(
+        this._traitementDas.getSalariesByAnneeSociete({annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id}).subscribe(
             (data) => {
                  this.dataSource.data=data;
                  this.table.renderRows();
@@ -170,10 +168,15 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
         this.dialogRef.afterClosed().subscribe((response) => {
             if (response === 'confirmed') {
-                this.declarationsRetenue.irpp = 0;
-                this.declarationsRetenue.tcs = 0;
-                this.declarationsRetenue.fnh = 0;
-                this.declarationsRetenue.cfp = 0;
+                this.traitementDas.irpp = 0;
+                this.traitementDas.tcs = 0;
+                this.traitementDas.fnh = 0;
+                this.traitementDas.brut_presence = 0;
+                this.traitementDas.av_eau_elec = 0;
+                this.traitementDas.av_nourriture = 0;
+                this.traitementDas.brut_conge = 0;
+                this.traitementDas.ind_impo = 0;
+                this.traitementDas.ind_nonimpo = 0;
                 this.dataSource.data = [];
                 this.table.renderRows();
             }
@@ -181,9 +184,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit(salarie: Salarie): void {
-        this.dialogRef = this._matDialog.open(AddComponent, {
+        this.dialogRef = this._matDialog.open(AddSalarieComponent, {
             data: {
-                declarationRetenue: salarie,
+                salarie: salarie,
                 action: 'edit',
             },
         });
@@ -195,10 +198,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this._updateList();
         });
     }
-    irpp: number = 0;
-    tcs: number = 0;
-    fnh: number = 0;
-    cfp: number = 0;
+    
     importerListeSalaries(): void {
         this.dialogRef = this._matDialog.open(ImportComponent, {
             data: this.data,
@@ -211,18 +211,30 @@ export class ListComponent implements OnInit, AfterViewInit {
                     return;
                 }
                 
-                this.declarationsRetenue.irpp = 0;
-                this.declarationsRetenue.tcs = 0;
-                this.declarationsRetenue.fnh = 0;
-                this.declarationsRetenue.cfp = 0;
+                
+                this.traitementDas.irpp = 0;
+                this.traitementDas.tcs = 0;
+                this.traitementDas.fnh = 0;
+                this.traitementDas.brut_presence = 0;
+                this.traitementDas.av_eau_elec = 0;
+                this.traitementDas.av_nourriture = 0;
+                this.traitementDas.brut_conge = 0;
+                this.traitementDas.ind_impo = 0;
+                this.traitementDas.ind_nonimpo = 0;
                 salaries.forEach((s) => {
-                    console.log(Number(s.irpp), '=>', s.irpp);
-                    this.declarationsRetenue.irpp = this.declarationsRetenue.irpp + Number(s.irpp);
-                    this.declarationsRetenue.tcs = this.declarationsRetenue.tcs + Number(s.tcs);
-                    this.declarationsRetenue.fnh = this.declarationsRetenue.fnh + Number(s.fnh);
-                    this.declarationsRetenue.cfp = this.declarationsRetenue.cfp + Number(s.cfp);
+                    
+                    this.traitementDas.irpp = this.traitementDas.irpp + Number(s.irpp);
+                    this.traitementDas.tcs = this.traitementDas.tcs + Number(s.tcs);
+                    this.traitementDas.fnh = this.traitementDas.fnh + Number(s.fnh);
+                    this.traitementDas.brut_presence = this.traitementDas.brut_presence + Number(s.brut_presence);
+                    this.traitementDas.av_eau_elec = this.traitementDas.av_eau_elec + Number(s.av_eau_elec);
+                    this.traitementDas.av_nourriture = this.traitementDas.av_nourriture + Number(s.av_nourriture);
+                    this.traitementDas.brut_conge = this.traitementDas.brut_conge + Number(s.brut_conge);
+                    this.traitementDas.ind_impo = this.traitementDas.ind_impo + Number(s.ind_impo);
+                    this.traitementDas.ind_nonimpo = this.traitementDas.ind_nonimpo + Number(s.ind_nonimpo);
+
                 });
-                this._declaration_retenue.saveManySalariesInDeclarationRetenu({salaries:salaries,annee:this._anneeService.activeAnnee,mois:this.moisActif.id,societe_id:this._societeService.activeSociete.id})
+                this._traitementDas.saveManySalariesInTraitementDas({salaries:salaries,annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
                 .subscribe(d=>{
                     console.log(d);
                     this._updateList();
@@ -310,9 +322,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit10() {
-        this._declaration_retenue.edit10xls({
-            annee: this._anneeService.activeAnnee,
-            mois: this.moisActif.id,societe_id:this._societeService.activeSociete.id
+        this._traitementDas.edit10xls({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
             saveAs(d,`ETAT_ID10_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.xlsx`);
@@ -325,9 +336,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit11() {
-        this._declaration_retenue.edit11({
-            annee: this._anneeService.activeAnnee,
-            mois: this.moisActif.id,societe_id:this._societeService.activeSociete.id
+        this._traitementDas.edit11({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
             saveAs(d,`ETAT_ID11_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.docx`);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TraitementsDts;
+use App\Models\TraitementsDtsSalarie;
 
 class TraitementsDtsController extends Controller
 {
@@ -55,7 +56,7 @@ class TraitementsDtsController extends Controller
     /**
      * Recuperer une liste de salarié
      */
-    public function saveManySalariesInTraitementDas(Request $request){
+    public function saveManySalariesInTraitementDts(Request $request){
         $traitementsDts = TraitementsDts::where("societe_id",$request->societe_id)
                 ->where("trimestre",$request->trimestre)
                 ->where("annee",$request->annee)

@@ -37,7 +37,6 @@ class TraitementsDasController extends Controller
     {
         
         $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
-                ->where("trimestre",$request->trimestre)
                 ->where("annee",$request->annee)
                 ->first();
         if(isset($traitementsDas)){
@@ -57,13 +56,11 @@ class TraitementsDasController extends Controller
      */
     public function saveManySalariesInTraitementDas(Request $request){
         $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
-                ->where("trimestre",$request->trimestre)
                 ->where("annee",$request->annee)
                 ->first();
         if(!isset($traitementsDas)){
             TraitementsDas::create($request->all());
             $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
-                ->where("trimestre",$request->trimestre)
                 ->where("annee",$request->annee)
                 ->first();
         }
@@ -77,25 +74,22 @@ class TraitementsDasController extends Controller
     /**
      * Permettre de recuperer la liste des salariés ont été déclaré
      */
-    public function getSalariesByTrimestreAnneeSociete(Request $request){
+    public function getSalariesByAnneeSociete(Request $request){
         $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
-        ->where("trimestre",$request->trimestre)
         ->where("annee",$request->annee)
         ->firstOrFail();
-        // return $traitementsDas;
         return TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
     }
 
     
     /**
-     * Rechercher la retenue par le mois et l'années. Si elle existe
+     * Rechercher le DAS par années. Si elle existe
      * nous allons retourné l'oject
      */
 
-    public function getByTrimestreAnnee(Request $request){
+    public function getByAnnee(Request $request){
         
         return TraitementsDas::where("societe_id",$request->societe_id)
-                ->where("trimestre",$request->trimestre)
                 ->where("annee",$request->annee)
                 ->firstOrFail();
      }

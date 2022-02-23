@@ -34,6 +34,8 @@ import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { TraitementDts } from 'app/models/traitement-dts.model';
+import { Definir1Component } from '../fiche-tdeduction/definir1.component';
+import { FicheTavanceComponent } from '../fiche-tavance/fiche-tavance.component';
 
 @Component({
     selector: 'app-list',
@@ -84,7 +86,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     ];
     trimestres = [ 1,2,3,4]; 
     trimestreActif:number;
-    traitementDas:TraitementDts = new TraitementDts({});
+    traitementDts:TraitementDts = new TraitementDts({});
     constructor(private http: HttpClient,
         private _changeDetectorRef: ChangeDetectorRef,
         private _activatedRoute: ActivatedRoute,
@@ -104,13 +106,17 @@ export class ListComponent implements OnInit, AfterViewInit {
     initData(){
         this._declaration_retenue.getByTrimestreAnnee({annee: this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
         .subscribe(data=>{
-            this.traitementDas = new TraitementDts(data); 
+            this.traitementDts = new TraitementDts(data); 
+            console.log(data)
+            console.log(this.traitementDts);
         },err=>{
-            this.traitementDas = new TraitementDts({});
-            this.traitementDas.alloc_familiale = 0;
-            this.traitementDas.autre_deduc = 0;
-            this.traitementDas.avance = 0;
-            this.traitementDas.precision = 0;
+            this.traitementDts = new TraitementDts({});
+            this.traitementDts.alloc_familiale = 0;
+            this.traitementDts.autre_deduc = 0;
+            this.traitementDts.avance = 0;
+            this.traitementDts.reste = 0;
+            this.traitementDts.numero_dts ='';
+            this.traitementDts.precision = '';
         });
         
     }
@@ -159,7 +165,45 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (!response) {
                 return;
             }
-            this._updateList();
+            this.ngOnInit();
+        });
+    }
+
+    definir1(){
+        this.dialogRef = this._matDialog.open(Definir1Component, {
+            data: {
+                traitementDts: {},
+                trimestreActif: this.trimestreActif,
+                societe: this.data,
+                annee: this._anneeService.activeAnnee,
+                action: 'new',
+            },
+        });
+
+        this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
+            if (!response) {
+                return;
+            }
+            this.ngOnInit();
+        });
+    }
+
+    ficheTavance(){
+        this.dialogRef = this._matDialog.open(FicheTavanceComponent, {
+            data: {
+                traitementDts: {},
+                trimestreActif: this.trimestreActif,
+                societe: this.data,
+                annee: this._anneeService.activeAnnee,
+                action: 'new',
+            },
+        });
+
+        this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
+            if (!response) {
+                return;
+            }
+            this.ngOnInit();
         });
     }
 
@@ -171,10 +215,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
         this.dialogRef.afterClosed().subscribe((response) => {
             if (response === 'confirmed') {
-                this.traitementDas.alloc_familiale = 0;
-                this.traitementDas.autre_deduc = 0;
-                this.traitementDas.avance = 0;
-                this.traitementDas.numero_dts = 0;
+                this.traitementDts.alloc_familiale = 0;
+                this.traitementDts.autre_deduc = 0;
+                this.traitementDts.avance = 0;
+                this.traitementDts.reste = 0;
+                this.traitementDts.numero_dts ='';
+                this.traitementDts.precision = '';
                 this.dataSource.data = [];
                 this.table.renderRows();
             }
@@ -213,15 +259,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
                 
                 
-                this.traitementDas.alloc_familiale = 0;
-                this.traitementDas.autre_deduc = 0;
-                this.traitementDas.avance = 0;
-                this.traitementDas.numero_dts = 0;
+            this.traitementDts.alloc_familiale = 0;
+            this.traitementDts.autre_deduc = 0;
+            this.traitementDts.avance = 0;
+            this.traitementDts.reste = 0;
+            this.traitementDts.numero_dts ='';
+            this.traitementDts.precision = '';
                 salaries.forEach((s) => {
-                    this.traitementDas.alloc_familiale = this.traitementDas.alloc_familiale + Number(s.alloc_familiale);
-                    this.traitementDas.autre_deduc = this.traitementDas.autre_deduc + Number(s.autre_deduc);
-                    this.traitementDas.avance = this.traitementDas.avance + Number(s.avance);
-                    this.traitementDas.numero_dts = this.traitementDas.numero_dts + Number(s.numero_dts);
+                    this.traitementDts.alloc_familiale = this.traitementDts.alloc_familiale + Number(s.alloc_familiale);
+                    this.traitementDts.autre_deduc = this.traitementDts.autre_deduc + Number(s.autre_deduc);
+                    this.traitementDts.avance = this.traitementDts.avance + Number(s.avance);
+                    this.traitementDts.reste = this.traitementDts.reste + Number(s.reste);
                 });
                 this._declaration_retenue.saveManySalariesInTraitementDts({salaries:salaries,annee:this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
                 .subscribe(d=>{

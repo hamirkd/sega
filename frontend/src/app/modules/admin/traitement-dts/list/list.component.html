@@ -22,63 +22,63 @@
                 <div class="leading-none">
                     <div class="flex flex-col w-full ">
                         <div class="flex">
-                            <mat-form-field class="w-2/5 pr-1">
-                                <mat-label>Alloc. Familiale</mat-label>
-                                <input matInput>
-                            </mat-form-field>
-                            <mat-form-field class="w-2/5 pl-1 pr-2">
-                                <mat-label>Ristourne (2%) </mat-label>
-                                <input matInput>
-                            </mat-form-field>
-
-
-                            <mat-form-field class="w-2/5 pr-2">
-                                <mat-label>Autre Déduc.</mat-label>
-                                <input matInput>
-                            </mat-form-field>
-                            <mat-form-field class="w-2/5 ">
-                                <mat-label>Précision</mat-label>
-                                <input matInput>
-                            </mat-form-field>
-
-                            <div class="w-1/5 pl-2 items-center flex">
-                                <button class="w-8 h-8 min-h-8" mat-stroked-button (click)="add()">
-                                    <span class=" ">Définir</span>
-                            </button>
+                            <div class="p-4 leading-none rounded-l-xl border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">Alloc. Familiale</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.alloc_familiale}}</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex items-center border-2 border-dashed border-gray-300 rounded-2xl p-2">
-                <div class="sm:flex items-center my-0">
-                    <div class="leading-none">
-                        <div class="flex flex-col w-full ">
-                            <div class="flex">
-                                <mat-form-field class="w-2/5 pr-1">
-                                    <mat-label>Avance</mat-label>
-                                    <input matInput>
-                                </mat-form-field>
-                                <mat-form-field class="w-2/5 pl-1 pr-1">
-                                    <mat-label>Reste </mat-label>
-                                    <input matInput>
-                                </mat-form-field>
-                                <mat-form-field class="w-2/5 pl-1">
-                                    <mat-label>N° DTS</mat-label>
-                                    <input matInput>
-                                </mat-form-field>
+                            <div class="p-4 leading-none border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">Ristourne (2%)</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.ristourne}}</div>
+                            </div>
+                            <div class="p-4 leading-none rounded-r-xl border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">Autre Déduc.</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.autre_deduc}}</div>
+                            </div>
+                            <div class="p-4 leading-none rounded-r-xl border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">Précision</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.precision}}</div>
+                            </div>
+                            <div class="p-4 leading-none">
                                 <div class="w-1/5 pl-2 items-center flex">
-                                    <button class="w-8 h-8 min-h-8" mat-stroked-button (click)="add()">
-                                        <span class=" ">Définir</span>
-                                </button>
+                                    <button class="w-8 h-5" mat-stroked-button (click)="definir1()">
+                                            <span class=" ">Définir</span>
+                                    </button>
                                 </div>
 
                             </div>
 
-
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="flex items-center border-2 border-dashed border-gray-300 rounded-2xl p-1">
+                <div class="leading-none">
+                    <div class="flex flex-col w-full ">
+                        <div class="flex">
+                            <div class="p-4 leading-none rounded-l-xl border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">Avance</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.avance}}</div>
+                            </div>
+                            <div class="p-4 leading-none border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">Reste</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.reste}}</div>
+                            </div>
+                            <div class="p-4 leading-none rounded-r-xl border border-r-0 h-15">
+                                <div class="text-sm font-medium text-secondary">N° DTS</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDts.numero_dts}}</div>
+                            </div>
+                            <div class="p-4 leading-none">
+                                <div class="w-1/5 pl-2 items-center flex">
+                                    <button class="w-8 h-5" mat-stroked-button (click)="ficheTavance()">
+                                    <span class=" ">Définir</span>
+                            </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -192,79 +192,81 @@
                     <div class="flex w-1/6">
 
 
-                        <ul class="border-2 border-dashed border-gray-300 rounded-2xl p-2 text-center">
+                        <ul class="border-1 border-dashed border-gray-300 rounded-2xl p-2 text-center">
                             <li>
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS Mixte
                                     </button>
+
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis CNSS Mixte
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS (txt)
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis CNSS
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS IMMAT.
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS (txt) IMMAT.
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS XLS
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS XLS IMMAT.
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS XLS Non IMMAT.
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis XLS
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis XLS IMMAT.
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis XLS Non IMMAT.
                                     </button>
                             </li>
                             <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Editer (DTS CNAMGS)
                                     </button>
                             </li>
-                            <li class="mt-1">
-                                <button class="" mat-flat-button (click)="importerListeSalaries()">
+                            <li class="mt-1 h-5">
+                                <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                     DTS CNAMGS Format XLS
                                     </button>
                             </li>

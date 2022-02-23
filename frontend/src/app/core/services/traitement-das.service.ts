@@ -38,27 +38,27 @@ get(id): Observable<TraitementDas> {
   }
 
   
-  edit11(d:{mois,annee,societe_id}): Observable<any> {
+  edit11(d:{annee,societe_id}): Observable<any> {
     return this.apiService.post2('api/traitement-das/edit11', d);
   }
   
-  edit10xls(d:{mois,annee,societe_id}): Observable<any> {
+  edit10xls(d:{annee,societe_id}): Observable<any> {
     return this.apiService.post2('api/traitement-das/edit10xls', d);
   }
   
-  getByTrimestreAnnee(d:{societe_id,mois,annee}): 
+  getByAnnee(d:{societe_id,annee}): 
   Observable<any> {
     console.log(d);
-    return this.apiService.post('api/traitement-das/getByTrimestreAnnee', d);
+    return this.apiService.post('api/traitement-das/getByAnnee', d);
   }
 
-  saveManySalariesInTraitementDas(traitementDasSalarie:{salaries,mois,annee,societe_id}): Observable<any> {
+  saveManySalariesInTraitementDas(traitementDasSalarie:{salaries,annee,societe_id}): Observable<any> {
     console.log(traitementDasSalarie);
     return this.apiService.post('api/traitement-das/saveManySalariesInTraitementDas',traitementDasSalarie);
   }
-  getSalariesByTrimestreAnneeSociete(traitementDasSalarie:{mois,annee,societe_id}): Observable<any> {
+  getSalariesByAnneeSociete(traitementDasSalarie:{annee,societe_id}): Observable<any> {
     console.log(traitementDasSalarie);
-    return this.apiService.post('api/traitement-das/getSalariesByTrimestreAnneeSociete',traitementDasSalarie);
+    return this.apiService.post('api/traitement-das/getSalariesByAnneeSociete',traitementDasSalarie);
   }
   
   

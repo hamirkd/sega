@@ -60,9 +60,9 @@ Route::middleware('auth:api')->group(function() {
     
     /** Traitement DAS */
     Route::apiResource('traitement-das', 'App\Http\Controllers\TraitementsDasController');
-    Route::post('traitement-das/getByTrimestreAnnee', [TraitementsDasController::class,'getByTrimestreAnnee']);
+    Route::post('traitement-das/getByAnnee', [TraitementsDasController::class,'getByAnnee']);
     Route::post('traitement-das/saveManySalariesInTraitementDas', [TraitementsDasController::class,'saveManySalariesInTraitementDas']);
-    Route::post('traitement-das/getSalariesByTrimestreAnneeSociete', [TraitementsDasController::class,'getSalariesByTrimestreAnneeSociete']);
+    Route::post('traitement-das/getSalariesByAnneeSociete', [TraitementsDasController::class,'getSalariesByAnneeSociete']);
     
 
     /** Traitement DTS */

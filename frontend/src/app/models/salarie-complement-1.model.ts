@@ -9,7 +9,7 @@ export class SalarieComplement extends Salarie {
     avlog:string;
     av_nour:string;
     prim_impo:string;
-    brut_conge:string;
+    brut_conge:number;
     total_20_a_24:string;
     tcs:string;
     irpp:string;
@@ -17,12 +17,19 @@ export class SalarieComplement extends Salarie {
     cfp:string;
     total_26_a_29:string;
     ind_non_impo:string;
+
+    
+    brut_presence:number;
+    av_eau_elec:number;
+    av_nourriture:number;
+    ind_impo:number;
+    ind_nonimpo:number;
     
    alloc_familiale:number;
    autre_deduc:number;
    avance:number;
    numero_dts:number;
-
+reste:number;
     constructor(salarie: any) {
         super(salarie);
         this.brute = salarie.brute;

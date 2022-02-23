@@ -15,7 +15,6 @@ class CreateTraitementsDasTable extends Migration
     {
         Schema::create('traitements_das', function (Blueprint $table) {
             $table->id();
-            $table->integer('trimestre')->nullable();
             $table->integer('annee')->nullable();
             $table->integer('societe_id')->nullable();
             $table->integer('alloc_familiale')->nullable();
