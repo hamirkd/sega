@@ -11,7 +11,7 @@
             <div class="">
                 <div class="leading-none">
                     <mat-form-field class="w-full">
-                        <mat-label>Trimestre</mat-label>
+                        <mat-label class="">Trimestre</mat-label>
                         <mat-select [(ngModel)]="trimestreActif" (ngModelChange)="ngOnInit()">
                             <mat-option [value]="trimestre" *ngFor="let trimestre of trimestres">{{trimestre}}</mat-option>
                         </mat-select>
