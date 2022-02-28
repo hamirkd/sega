@@ -11,7 +11,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { _DATA_SOCIETE } from '../../societes/list/_data';
-import { _DATA } from './data2';
 import { ImportComponent as ImportSalariesComponent } from '../import-salaries/import.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { Salarie } from 'app/models/salarie.model';
@@ -48,7 +47,7 @@ export class ListComponent implements OnInit  , AfterViewInit{
     @ViewChild(MatPaginator) paginator: MatPaginator;
     selection = new SelectionModel<Salarie>(true, []);
 
-    dataSource = new MatTableDataSource<Salarie>(_DATA);
+    dataSource = new MatTableDataSource<Salarie>([]);
 
     dialogRef: any;
     data = _DATA_SOCIETE[0];

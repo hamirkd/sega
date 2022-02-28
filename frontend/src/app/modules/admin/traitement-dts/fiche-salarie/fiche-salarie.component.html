@@ -1,0 +1,160 @@
+<h2 mat-dialog-title>{{'Fiche du salarié ...'}}</h2>
+<mat-dialog-content class="  sm:p-6 w-200">
+
+
+    <form class=" " [formGroup]="salarieForm">
+
+        <div class="flex flex-col w-full ">
+
+            <div class="flex">
+                <mat-form-field class="w-1/3">
+                    <mat-label>Société</mat-label>
+                    <input matInput [formControlName]="'societe'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Année</mat-label>
+                    <input matInput [formControlName]="'annee'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Trimestre</mat-label>
+                    <input matInput [formControlName]="'trimestreActif'" required>
+                </mat-form-field>
+            </div>
+
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Matricule</mat-label>
+                    <input matInput [formControlName]="'matricule'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>n_cnss</mat-label>
+                    <input matInput [formControlName]="'n_cnss'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>n_cnamgs</mat-label>
+                    <input matInput [formControlName]="'n_cnamgs'" required>
+                </mat-form-field>
+            </div>
+
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Nom</mat-label>
+                    <input matInput [formControlName]="'nom'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Prénom(s)</mat-label>
+                    <input matInput [formControlName]="'prenom'" required>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/4 pr-2">
+                    <mat-label>Date Embauche</mat-label>
+                    <input matInput [formControlName]="'date_embauche'" required>
+                </mat-form-field>
+                <mat-form-field class="w-1/4 pl-2">
+                    <mat-label>Date départ</mat-label>
+                    <input matInput [formControlName]="'date_depart'">
+                </mat-form-field>
+                <mat-form-field class="w-1/4 pl-2">
+                    <mat-label>Taux CNSS</mat-label>
+                    <input matInput [formControlName]="'tx_cnss'">
+                </mat-form-field>
+                <mat-form-field class="w-1/4 pl-2">
+                    <mat-label>Taux CNAMGS</mat-label>
+                    <input matInput [formControlName]="'tx_cnamgs'">
+                </mat-form-field>
+            </div>
+            <div class="flex ">
+                <div class="flex w-1/3  flex-col  border-2 border border-gray-300 p-1 pl-2">
+
+                    <div class="text-3xl font-semibold tracking-tight leading-8">Mois 1</div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Plafonné CNSS</mat-label>
+                        <input matInput [formControlName]="'bpcnss1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Plafonné CNAMGS</mat-label>
+                        <input matInput [formControlName]="'bpcnam1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Déplafonné CNSS</mat-label>
+                        <input matInput [formControlName]="'bdplaf1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Nbre Jrs/Heures</mat-label>
+                        <input matInput [formControlName]="'njrcnss1'">
+                    </mat-form-field>
+
+                </div>
+
+                <div class="flex w-1/3  flex-col p-1 pl-2">
+
+                    <div class="text-3xl font-semibold tracking-tight leading-8">Mois 2</div>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Plafonné CNSS</mat-label>
+                        <input matInput [formControlName]="'bpcnss1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Plafonné CNAMGS</mat-label>
+                        <input matInput [formControlName]="'bpcnam1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Déplafonné CNSS</mat-label>
+                        <input matInput [formControlName]="'bdplaf1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Nbre Jrs/Heures</mat-label>
+                        <input matInput [formControlName]="'njrcnss1'">
+                    </mat-form-field>
+
+                </div>
+
+                <div class="flex w-1/3  flex-col  border-2 border border-gray-300 p-3 items-center">
+
+                    <div class="text-3xl font-semibold tracking-tight leading-8">Mois 3</div>
+                    <mat-form-field class="w-full">
+                        <mat-label>Plafonné CNSS</mat-label>
+                        <input matInput [formControlName]="'bpcnss1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Plafonné CNAMGS</mat-label>
+                        <input matInput [formControlName]="'bpcnam1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Déplafonné CNSS</mat-label>
+                        <input matInput [formControlName]="'bdplaf1'">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Nbre Jrs/Heures</mat-label>
+                        <input matInput [formControlName]="'njrcnss1'">
+                    </mat-form-field>
+
+                </div>
+
+
+            </div>
+
+            <mat-form-field class="w-full">
+                <mat-label>Code etablissement</mat-label>
+                <input matInput [formControlName]="'code_etablissement'">
+            </mat-form-field>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial>Annuler</button>
+    <button mat-button (click)="onSubmit()" [disabled]="!salarieForm.valid">
+        {{'Enregister'}}</button>
+</mat-dialog-actions>

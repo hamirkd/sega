@@ -36,6 +36,7 @@ import { environment } from 'environments/environment';
 import { TraitementDts } from 'app/models/traitement-dts.model';
 import { Definir1Component } from '../fiche-tdeduction/definir1.component';
 import { FicheTavanceComponent } from '../fiche-tavance/fiche-tavance.component';
+import { FicheSalarieComponent } from '../fiche-salarie/fiche-salarie.component';
 
 @Component({
     selector: 'app-list',
@@ -56,10 +57,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = [
         'select',
         'matricule',
-        'nif',
+        'n_cnamgs','n_cnss',
         'nom',
-        'prenom',
-        'emploi_occupe',
+        'prenom','date_embauche','date_depart',
         'actions',
     ];
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -96,7 +96,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         private _salarieService: SalarieService,
         private _societeService: SocieteService,
         private _anneeService: AnneeService,
-        private _declaration_retenue: TraitementDtsService
+        private _traitementDtsService: TraitementDtsService
     ) {
         this.dataSource = new MatTableDataSource<SalarieComplement>([]);
         // this._updateList();
@@ -104,7 +104,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     initData(){
-        this._declaration_retenue.getByTrimestreAnnee({annee: this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
+        this._traitementDtsService.getByTrimestreAnnee({annee: this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
         .subscribe(data=>{
             this.traitementDts = new TraitementDts(data); 
             console.log(data)
@@ -136,7 +136,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     _updateList() {
         this.dataSource.data = [];
-        this._declaration_retenue.getSalariesByTrimestreAnneeSociete({annee:this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id}).subscribe(
+        this._traitementDtsService.getSalariesByTrimestreAnneeSociete({annee:this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id}).subscribe(
             (data) => {
                  this.dataSource.data=data;
                  this.table.renderRows();
@@ -215,23 +215,29 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
         this.dialogRef.afterClosed().subscribe((response) => {
             if (response === 'confirmed') {
-                this.traitementDts.alloc_familiale = 0;
-                this.traitementDts.autre_deduc = 0;
-                this.traitementDts.avance = 0;
-                this.traitementDts.reste = 0;
-                this.traitementDts.numero_dts ='';
-                this.traitementDts.precision = '';
-                this.dataSource.data = [];
-                this.table.renderRows();
+                this.masterToggle();
+                console.log();
+                let ids:number[]=[];
+                this.selection.selected.forEach(d=>{
+                    ids.push(d.id);
+                });
+
+                this._traitementDtsService.deleteManySalariesInTraitementDts({ids:ids}).subscribe(d=>{
+                    this.selection.clear();
+                    this._updateList();
+                    this.initData();
+                })
             }
         });
     }
 
-    edit(salarie: Salarie): void {
-        this.dialogRef = this._matDialog.open(AddSalarieComponent, {
+    editFicheSalarie(salarie: Salarie): void {
+        this.dialogRef = this._matDialog.open(FicheSalarieComponent, {
             data: {
                 salarie: salarie,
-                action: 'edit',
+                trimestreActif:this.trimestreActif,
+                annee:this._anneeService.activeAnnee,
+                societe:this.data
             },
         });
 
@@ -242,10 +248,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this._updateList();
         });
     }
-    irpp: number = 0;
-    tcs: number = 0;
-    fnh: number = 0;
-    cfp: number = 0;
+    
     importerListeSalaries(): void {
         this.dialogRef = this._matDialog.open(ImportComponent, {
             data: this.data,
@@ -265,13 +268,13 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.traitementDts.reste = 0;
             this.traitementDts.numero_dts ='';
             this.traitementDts.precision = '';
-                salaries.forEach((s) => {
-                    this.traitementDts.alloc_familiale = this.traitementDts.alloc_familiale + Number(s.alloc_familiale);
-                    this.traitementDts.autre_deduc = this.traitementDts.autre_deduc + Number(s.autre_deduc);
-                    this.traitementDts.avance = this.traitementDts.avance + Number(s.avance);
-                    this.traitementDts.reste = this.traitementDts.reste + Number(s.reste);
-                });
-                this._declaration_retenue.saveManySalariesInTraitementDts({salaries:salaries,annee:this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
+                // salaries.forEach((s) => {
+                //     this.traitementDts.alloc_familiale = this.traitementDts.alloc_familiale + Number(s.alloc_familiale);
+                //     this.traitementDts.autre_deduc = this.traitementDts.autre_deduc + Number(s.autre_deduc);
+                //     this.traitementDts.avance = this.traitementDts.avance + Number(s.avance);
+                //     this.traitementDts.reste = this.traitementDts.reste + Number(s.reste);
+                // });
+                this._traitementDtsService.saveManySalariesInTraitementDts({salaries:salaries,annee:this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
                 .subscribe(d=>{
                     console.log(d);
                     this._updateList();
@@ -294,10 +297,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.dialogRef.afterClosed().subscribe((response) => {
             console.log(response);
             if (response === 'confirmed') {
-                this._salarieService.delete(salarie).subscribe(
+                let ids:number[]=[];ids.push(salarie.id);
+                this._traitementDtsService.deleteManySalariesInTraitementDts({ids:ids}).subscribe(
                     (o) => {
                         console.log(o);
                         this._updateList();
+                        this.initData();
                     },
                     (err) => console.error(err)
                 );
@@ -359,7 +364,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit10() {
-        this._declaration_retenue.edit10xls({
+        this._traitementDtsService.edit10xls({
             annee: this._anneeService.activeAnnee,
             trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
@@ -374,7 +379,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit11() {
-        this._declaration_retenue.edit11({
+        this._traitementDtsService.edit11({
             annee: this._anneeService.activeAnnee,
             trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{

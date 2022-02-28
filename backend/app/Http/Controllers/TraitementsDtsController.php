@@ -144,4 +144,15 @@ class TraitementsDtsController extends Controller
     {
         //
     }
+
+    
+    /**
+     * Supprimer un salarié ou une liste de salarié
+     */
+    public function deleteManySalariesInTraitementDts(Request $request){
+        echo json_encode($request->ids);
+        foreach($request->ids as $id){
+            TraitementsDtsSalarie::where("id",$id)->delete();
+        }
+    }
 }

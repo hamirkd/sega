@@ -85,11 +85,27 @@
                     },
                     "defaultConfiguration": "production"
                 },
-                "serve": {
+                "servelocal": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "browserTarget": "move-safe:build",
                         "proxyConfig": "src/proxy.conf.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "fuse:build:production"
+                        },
+                        "development": {
+                            "browserTarget": "fuse:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "move-safe:build",
+                        "proxyConfig": "src/proxy.conf.local.json"
                     },
                     "configurations": {
                         "production": {

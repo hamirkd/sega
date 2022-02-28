@@ -4,32 +4,58 @@
 import { Salarie } from './salarie.model';
 
 export class SalarieComplement extends Salarie {
-    id?:number;
-    brute:string;
-    avlog:string;
-    av_nour:string;
-    prim_impo:string;
-    brut_conge:number;
-    total_20_a_24:string;
-    tcs:string;
-    irpp:string;
-    fnh:string;
-    cfp:string;
-    total_26_a_29:string;
-    ind_non_impo:string;
+    id?: number;
+    brute: string;
+    avlog: string;
+    av_nour: string;
+    prim_impo: string;
+    brut_conge: number;
+    total_20_a_24: string;
+    tcs: string;
+    irpp: string;
+    fnh: string;
+    cfp: string;
+    total_26_a_29: string;
+    ind_non_impo: string;
 
+    brut_presence: number;
+    av_eau_elec: number;
+    av_nourriture: number;
+    ind_impo: number;
+    ind_nonimpo: number;
+
+    alloc_familiale: number;
+    autre_deduc: number;
+    avance: number;
+    numero_dts: number;
+    reste: number;
+
+    n_cnss: string;
+    n_cnamgs: string;
+    date_embauche: string;
+    date_depart: string;
+    tx_cnamgs: string;
+    tx_cnss: string;
+
+    bpcnss1:string;
+    bpcnam1:string;
+    bdplaf1:string;
+    njrcnss1:string;
+    njrcnam1:string;
+
+    bpcnss2:string;
+    bpcnam2:string;
+    bdplaf2:string;
+    njrcnss2:string;
+    njrcnam2:string;
     
-    brut_presence:number;
-    av_eau_elec:number;
-    av_nourriture:number;
-    ind_impo:number;
-    ind_nonimpo:number;
-    
-   alloc_familiale:number;
-   autre_deduc:number;
-   avance:number;
-   numero_dts:number;
-reste:number;
+    bpcnss3:string;
+    bpcnam3:string;
+    bdplaf3:string;
+    njrcnss3:string;
+    njrcnam3:string;
+    code_etablissement:string;
+
     constructor(salarie: any) {
         super(salarie);
         this.brute = salarie.brute;
@@ -44,6 +70,27 @@ reste:number;
         this.cfp = salarie.cfp;
         this.total_26_a_29 = salarie.total_26_a_29;
         this.ind_non_impo = salarie.ind_non_impo;
+        this.n_cnss = salarie.n_cnss;
+        this.n_cnamgs = salarie.n_cnamgs;
+        this.bpcnss1 = salarie.bdplaf1;
+        this.bpcnam1 = salarie.bpcnam1;
+        this.bdplaf1 = salarie.bdplaf1;
+        this.njrcnss1 = salarie.njrcnss1;
+        this.njrcnam1 = salarie.njrcnam1;
+        
+        this.bpcnss2 = salarie.bdplaf2;
+        this.bpcnam2 = salarie.bpcnam2;
+        this.bdplaf2 = salarie.bdplaf2;
+        this.njrcnss2 = salarie.njrcnss2;
+        this.njrcnam2 = salarie.njrcnam2;
+        
+        this.bpcnss3 = salarie.bdplaf3;
+        this.bpcnam3 = salarie.bpcnam3;
+        this.bdplaf3 = salarie.bdplaf3;
+        this.njrcnss3 = salarie.njrcnss3;
+        this.njrcnam3 = salarie.njrcnam3;
+
+        this.code_etablissement = salarie.code_etablissement;
     }
     copy?(salarie: any) {
         this.societe = salarie.societe;
@@ -79,5 +126,29 @@ reste:number;
         this.cfp = salarie.cfp;
         this.total_26_a_29 = salarie.total_26_a_29;
         this.ind_non_impo = salarie.ind_non_impo;
+        this.n_cnss = salarie.n_cnss;
+        this.n_cnamgs = salarie.n_cnamgs;
+
+        this.bpcnss1 = salarie.bdplaf1;
+        this.bpcnam1 = salarie.bpcnam1;
+        this.bdplaf1 = salarie.bdplaf1;
+        this.njrcnss1 = salarie.njrcnss1;
+        this.njrcnam1 = salarie.njrcnam1;
+        
+        this.bpcnss2 = salarie.bdplaf2;
+        this.bpcnam2 = salarie.bpcnam2;
+        this.bdplaf2 = salarie.bdplaf2;
+        this.njrcnss2 = salarie.njrcnss2;
+        this.njrcnam2 = salarie.njrcnam2;
+        
+        this.bpcnss3 = salarie.bdplaf3;
+        this.bpcnam3 = salarie.bpcnam3;
+        this.bdplaf3 = salarie.bdplaf3;
+        this.njrcnss3 = salarie.njrcnss3;
+        this.njrcnam3 = salarie.njrcnam3;
+
+        this.code_etablissement = salarie.code_etablissement;
+
+        
     }
 }

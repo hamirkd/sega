@@ -62,36 +62,33 @@ export class ImportComponent implements OnInit {
             dataAll.forEach(d=>{
                 let salarie = new SalarieComplement({});
                 salarie.matricule = d["Matricule"];
-                salarie.nif = d["NIF"];
                 salarie.nom = d["Nom"];
                 salarie.prenom = d["Prénom"];
-                salarie.emploi = d["Emploi"];
-                salarie.niveau = d["Niveau"];
-                salarie.nationalite = d["Nationalité"];
-                salarie.age = d["Age"];
-                salarie.sexe = d["Sexe"];
-                salarie.enfants = d["Enfants"];
-                salarie.telephone = d["Téléphone"];
-                salarie.code_postal = d["Code postal"];
-                salarie.ville = d["Ville"];
-                salarie.emploi_occupe = d["Emploi occupé"];
-                salarie.situation_familiale = d["Situation familiale"];
-                salarie.deb10 = d["DEB10"];
-                salarie.deb11 = d["DEB11"];
-                salarie.fin12 = d["FIN12"];
-                salarie.fin13das = d["FIN13DAS"];
-                salarie.brute = d["BRUT"]+'';
-                salarie.avlog = d["AVLOG"];
-                salarie.av_nour = d["AV NOUR"]; 
-                salarie.prim_impo = d["PRIM IMPO"]; 
-                salarie.brut_conge = d["BRUT CONGE"]; 
-                salarie.total_20_a_24 = d["TOTAL 20 à 24"]; 
-                salarie.tcs = (d["TCS"]+'').replace(/ /g,''); 
-                salarie.irpp = (d["IRPP"]+'').replace(/ /g,''); 
-                salarie.fnh = (d["FNH"]+'').replace(/ /g,''); 
-                salarie.cfp = (d["CFP"]+'').replace(/ /g,''); 
-                salarie.total_26_a_29 = d["TOTAL26 à 29"]; 
-                salarie.ind_non_impo = d["IND NON IMPO"];
+                salarie.n_cnss = d["N CNSS"];
+                salarie.n_cnamgs = d["N CNAMGS"];
+                salarie.tx_cnss = d["Taux CNSS"];
+                salarie.tx_cnamgs = d["Taux CNAMGS"];
+                salarie.date_embauche = d["Date d'embauche société"];
+                salarie.date_depart = d["Date de départ société"];
+
+                salarie.bpcnam1 = d["BPCNAM1"];
+                salarie.bpcnss1 = d["BPCNSS1"];
+                salarie.bdplaf1 = d["BDPLAF1"];
+                salarie.njrcnam1 = d["NJRCNSS1"];
+                salarie.njrcnss1 = d["NJRCNAM1"];
+
+                salarie.bpcnam2 = d["BPCNAM2"];
+                salarie.bpcnss2 = d["BPCNSS2"];
+                salarie.bdplaf2 = d["BDPLAF2"];
+                salarie.njrcnam2 = d["NJRCNSS2"];
+                salarie.njrcnss2 = d["NJRCNAM2"];
+
+                salarie.bpcnam3 = d["BPCNAM3"];
+                salarie.bpcnss3 = d["BPCNSS3"];
+                salarie.bdplaf3 = d["BDPLAF3"];
+                salarie.njrcnam3 = d["NJRCNSS3"];
+                salarie.njrcnss3 = d["NJRCNAM3"];
+
 
                 this.salaries.push(salarie);
             })

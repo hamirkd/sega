@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Salarie } from 'app/models/salarie.model';
-import { Societe } from 'app/models/societe.model';
 import { Observable } from 'rxjs';
-import { _DATA_SALARIES } from '../data-test/data-salaries';
 import { ApiService } from './api.service';
 import { SocieteService } from './societe.service';
 
@@ -14,10 +12,10 @@ export class SalarieService {
   constructor(private _societeService:SocieteService,private apiService: ApiService) { }
  
 
-  getAll():Salarie[]{
-    const societe_id = this._societeService.activeSociete.id
-    return _DATA_SALARIES.filter(s=>s.societe_id==societe_id);
-  }
+  // getAll():Salarie[]{
+  //   const societe_id = this._societeService.activeSociete.id
+  //   return _DATA_SALARIES.filter(s=>s.societe_id==societe_id);
+  // }
   
   getAlls(): Observable<Salarie[]> {
     return this.apiService.get('api/salarie');

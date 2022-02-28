@@ -35,6 +35,8 @@ import localeFr from '@angular/common/locales/fr';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { Definir1Component } from './fiche-tdeduction/definir1.component';
 import { FicheTavanceComponent } from './fiche-tavance/fiche-tavance.component';
+import { FicheSalarieComponent } from './fiche-salarie/fiche-salarie.component';
+
 registerLocaleData(localeFr);
 
 const routes: Routes = [
@@ -51,7 +53,7 @@ const routes: Routes = [
         TraitementDTSComponent,
         ListComponent,
         AddComponent,
-        ShowComponent,ImportComponent,Definir1Component,FicheTavanceComponent
+        ShowComponent,ImportComponent,Definir1Component,FicheTavanceComponent,FicheSalarieComponent
     ],
     imports: [
       CommonModule,

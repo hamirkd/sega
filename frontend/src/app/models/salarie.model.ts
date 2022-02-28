@@ -26,6 +26,7 @@ export class Salarie {
     deb11: string;
     fin12: string;
     fin13das: string;
+
     constructor(salarie: any) {
         this.id = salarie.id;
         this.societe = salarie.societe;

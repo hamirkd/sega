@@ -57,6 +57,11 @@ export class TraitementDtsService {
     return this.apiService.post('api/traitement-dts/saveManySalariesInTraitementDts',traitementDasSalarie);
   }
   
+  deleteManySalariesInTraitementDts(traitementDasSalarie:{ids:number[]}): Observable<any> {
+    console.log(traitementDasSalarie);
+    return this.apiService.post('api/traitement-dts/deleteManySalariesInTraitementDts',traitementDasSalarie);
+  }
+  
   getSalariesByTrimestreAnneeSociete(traitementDasSalarie:{trimestre,annee,societe_id}): Observable<any> {
     console.log(traitementDasSalarie);
     return this.apiService.post('api/traitement-dts/getSalariesByTrimestreAnneeSociete',traitementDasSalarie);
