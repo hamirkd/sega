@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SalarieService } from 'app/core/services/salarie.service';
+import { TraitementDtsService } from 'app/core/services/traitement-dts.service';
 import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { Salarie } from 'app/models/salarie.model';
 import { Societe } from 'app/models/societe.model';
@@ -22,7 +22,7 @@ export class FicheSalarieComponent implements OnInit {
         private _formBuilder: FormBuilder,
         public matDialogRef: MatDialogRef<FicheSalarieComponent>,
         @Inject(MAT_DIALOG_DATA) private _data: any,
-        private salarieService: SalarieService
+        private _traitementDtsService: TraitementDtsService
     ) {
         console.log(_data);
         this.salarie = new SalarieComplement(_data.salarie);
@@ -39,6 +39,7 @@ export class FicheSalarieComponent implements OnInit {
      * @returns {FormGroup}
      */
     createsalarieForm(): FormGroup {
+        console.log(this.salarie)
         return this._formBuilder.group({
             societe: [{value: this.societe.raison_sociale, disabled: true}],
             annee:[{value: this.annee, disabled: true}],
@@ -46,10 +47,10 @@ export class FicheSalarieComponent implements OnInit {
             n_cnss:[{value: this.salarie.n_cnss, disabled: true}],
             n_cnamgs:[{value: this.salarie.n_cnamgs, disabled: true}],
             matricule: [this.salarie.matricule],
-            nom: [this.salarie.nom],
-            prenom: [this.salarie.prenom],
-            date_embauche:[{value: this.salarie.date_embauche, disabled: true}],
-            date_depart:[{value: this.salarie.date_depart, disabled: true}],
+            nom: [{value:this.salarie.nom,disabled:true}],
+            prenom: [{value:this.salarie.prenom,disabled:true}],
+            date_embauche:[ this.salarie.date_embauche],
+            date_depart:[ this.salarie.date_depart],
             tx_cnss:[this.salarie.tx_cnss],
             tx_cnamgs:[this.salarie.tx_cnamgs],
            
@@ -79,10 +80,10 @@ export class FicheSalarieComponent implements OnInit {
 
     onSubmit() {
         this.salarie.copy(this.salarieForm.getRawValue());
-        this.salarieService.update(this.salarie).subscribe(
+        this._traitementDtsService.updateSalarie(this.salarie).subscribe(
             (o) => {
                 console.log(o);
-                this.matDialogRef.close(this.salarieForm);
+                // this.matDialogRef.close(this.salarieForm);
             },
             (err) => console.error(err)
         );

@@ -134,6 +134,21 @@ class TraitementsDtsController extends Controller
 
     }
 
+    
+    /**
+     * Update Salarie Données complémentaires
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSalarie(Request $request, TraitementsDtsSalarie $traitementsDtsSalarie)
+    {
+        echo json_encode($traitementsDtsSalarie);
+        return $traitementsDtsSalarie->update($request->all());
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *

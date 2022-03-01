@@ -71,6 +71,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-dts/saveManySalariesInTraitementDts', [TraitementsDtsController::class,'saveManySalariesInTraitementDts']);
     Route::post('traitement-dts/getSalariesByTrimestreAnneeSociete', [TraitementsDtsController::class,'getSalariesByTrimestreAnneeSociete']);
     Route::post('traitement-dts/deleteManySalariesInTraitementDts', [TraitementsDtsController::class,'deleteManySalariesInTraitementDts']);
+    Route::put('traitement-dts/updateSalarie/{traitementsDtsSalarie}', [TraitementsDtsController::class,'updateSalarie']);
     
     
 });

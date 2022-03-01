@@ -72,6 +72,12 @@ export class SalarieComplement extends Salarie {
         this.ind_non_impo = salarie.ind_non_impo;
         this.n_cnss = salarie.n_cnss;
         this.n_cnamgs = salarie.n_cnamgs;
+        this.date_embauche = salarie.date_embauche;
+        this.date_depart = salarie.date_depart;
+        this.tx_cnamgs = salarie.tx_cnamgs;
+        this.tx_cnss = salarie.tx_cnss;
+
+
         this.bpcnss1 = salarie.bdplaf1;
         this.bpcnam1 = salarie.bpcnam1;
         this.bdplaf1 = salarie.bdplaf1;

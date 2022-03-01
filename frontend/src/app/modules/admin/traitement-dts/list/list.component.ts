@@ -232,6 +232,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     editFicheSalarie(salarie: Salarie): void {
+        console.log(salarie)
         this.dialogRef = this._matDialog.open(FicheSalarieComponent, {
             data: {
                 salarie: salarie,

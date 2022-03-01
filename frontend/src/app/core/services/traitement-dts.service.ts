@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { TraitementDts } from 'app/models/traitement-dts.model';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
@@ -35,6 +36,10 @@ export class TraitementDtsService {
       const societe_id = this._societeService.activeSociete.id;
       traitementDas.societe_id = societe_id;
       return this.apiService.put('api/traitement-dts/'+traitementDas.id , traitementDas);
+  }
+
+  updateSalarie(salarie: SalarieComplement): Observable<TraitementDts> {
+      return this.apiService.put('api/traitement-dts/salarie', salarie);
   }
 
   

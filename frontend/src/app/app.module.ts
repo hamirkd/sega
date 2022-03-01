@@ -14,6 +14,9 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {  NgxCsvParserModule } from 'ngx-csv-parser';
+
+
  
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -26,7 +29,7 @@ const routerConfig: ExtraOptions = {
     ],
     imports     : [
         BrowserModule,
-        BrowserAnimationsModule,
+        BrowserAnimationsModule,NgxCsvParserModule,
         RouterModule.forRoot(appRoutes, routerConfig),
         
         FormsModule,
