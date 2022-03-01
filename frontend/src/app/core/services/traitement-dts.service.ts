@@ -39,7 +39,8 @@ export class TraitementDtsService {
   }
 
   updateSalarie(salarie: SalarieComplement): Observable<TraitementDts> {
-      return this.apiService.put('api/traitement-dts/salarie', salarie);
+    console.log(salarie)
+      return this.apiService.put('api/traitement-dts/updateSalarie/'+salarie.id, salarie);
   }
 
   

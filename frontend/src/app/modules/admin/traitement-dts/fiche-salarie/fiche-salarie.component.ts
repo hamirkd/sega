@@ -83,7 +83,7 @@ export class FicheSalarieComponent implements OnInit {
         this._traitementDtsService.updateSalarie(this.salarie).subscribe(
             (o) => {
                 console.log(o);
-                // this.matDialogRef.close(this.salarieForm);
+                this.matDialogRef.close(this.salarieForm);
             },
             (err) => console.error(err)
         );

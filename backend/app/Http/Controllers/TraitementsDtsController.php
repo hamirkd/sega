@@ -144,7 +144,6 @@ class TraitementsDtsController extends Controller
      */
     public function updateSalarie(Request $request, TraitementsDtsSalarie $traitementsDtsSalarie)
     {
-        echo json_encode($traitementsDtsSalarie);
         return $traitementsDtsSalarie->update($request->all());
 
     }
