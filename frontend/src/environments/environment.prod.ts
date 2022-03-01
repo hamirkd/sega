@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    urlApi:"https://api.sega.fasohome.com/"
+    urlApi:"http://51.178.18.128:8000/"
 };
