@@ -183,8 +183,6 @@ class TraitementsDtsController extends Controller
         Carbon::setLocale('fr');
         setlocale(LC_TIME, 'French');
         // Recuperation des données
-        $annee=$request['annee'];
-        $mois=$request['mois'];
 
         $societe = Societe::findOrFail($request->societe_id);
         $traitementsDts = TraitementsDts::where("societe_id",$request->societe_id)
@@ -195,35 +193,57 @@ class TraitementsDtsController extends Controller
        
         $TBS = new OpenTBS();
         // load your template
-        $TBS->LoadTemplate('DTS_CNSS.xlsx');
+        $TBS->LoadTemplate('DTS_CNSS_FORMAT1.xlsx');
 
-        $TBS->MergeField('annee', $request->annee);
-        $TBS->MergeField("trimestre",$request->trimestre);
-        $TBS->MergeField('raison_sociale', utf8_decode($societe['raison_sociale']));
-        $TBS->MergeField('telephone', $societe['telephone']);
-        $TBS->MergeField('sigle', $societe['sigle']);
-        $TBS->MergeField('bp', $societe['bp']);
-        $TBS->MergeField('fax', $societe['fax']);
-        $TBS->MergeField('email', $societe['email']);
-        $TBS->MergeField('mois1', DateTime::createFromFormat('!m',($request->trimestre))->format('F'));
-        $TBS->MergeField('mois2', DateTime::createFromFormat('!m',($request->trimestre+1))->format('F'));
-        $TBS->MergeField('mois3', DateTime::createFromFormat('!m',($request->trimestre+2))->format('F'));
+        $TBS->MergeField('dts.annee', $request->annee);
+        $TBS->MergeField("dts.trimestre",$request->trimestre);
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        $TBS->MergeField('s.telephone', $societe['telephone']);
+        $TBS->MergeField('s.sigle', $societe['sigle']);
+        $TBS->MergeField('s.bp', $societe['bp']);
+        $TBS->MergeField('s.fax', $societe['fax']);
+        $TBS->MergeField('s.email', $societe['email']);
+        $TBS->MergeField('s.effectif', count($traitementsDtsSalarie));
+        $TBS->MergeField('dts.alloc_familiale', $traitementsDts->alloc_familiale);
+        $TBS->MergeField('dts.mois1', DateTime::createFromFormat('!m',($request->trimestre))->format('F'));
+        $TBS->MergeField('dts.mois2', DateTime::createFromFormat('!m',($request->trimestre+1))->format('F'));
+        $TBS->MergeField('dts.mois3', DateTime::createFromFormat('!m',($request->trimestre+2))->format('F'));
 
         $data = array();
+        $msalcnss1=0;
+        $msalcnss2=0;
+        $msalcnss3=0;
+        $tx_cnss = 0;
+        $i=1;
         foreach($traitementsDtsSalarie as $d)
         {
             $d->date_depart=isset($d->date_depart)?$d->date_depart:'-';
             $d->date_embauche=isset($d->date_embauche)?$d->date_embauche:'-';
             $d->tx_cnss=isset($d->tx_cnss)?$d->tx_cnss:'-';
             $d->n_cnss=isset($d->n_cnss)?$d->n_cnss:'-';
-
+            $d->id = $i;
             $data[] = $d;
+            $msalcnss1 = $msalcnss1 + $d->bpcnss1;
+            $msalcnss2 = $msalcnss2 + $d->bpcnss2;
+            $msalcnss3 = $msalcnss3 + $d->bpcnss3;
+            $tx_cnss = $tx_cnss + $d->tx_cnss;
+            $i=$i+1;
         }
+        if(count($traitementsDtsSalarie)>0)
+        $tx_cnss = $tx_cnss / count($traitementsDtsSalarie);
+        $TBS->MergeField('dts.msalcnss1', $msalcnss1);
+        $TBS->MergeField('dts.msalcnss2', $msalcnss2);
+        $TBS->MergeField('dts.msalcnss3', $msalcnss3);
+        $TBS->MergeField('dts.tx_cnss', $tx_cnss);
+        $TBS->MergeField('dts.msalcnsstotal', ($msalcnss1+$msalcnss2+$msalcnss3));
+        $TBS->MergeField('dts.co_brute_dues_cnss', ($msalcnss1+$msalcnss2+$msalcnss3)*$tx_cnss);
+        $TBS->MergeField('dts.co_nette_dues_cnss', ($msalcnss1+$msalcnss2+$msalcnss3)*$tx_cnss-$traitementsDts->alloc_familiale);
+        
         // echo json_encode($data);
         $TBS->MergeBlock('a', $data);
 
         $raison_sociale = utf8_decode($societe['raison_sociale']);
        
-        $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_ID10'.strtoupper($raison_sociale).'_'.$annee.'_'.$mois.'.XLSX');
+        $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_DTS_CNSS_FORMAT1'.strtoupper($raison_sociale).'_'.$request->annee.'_'.$request->trimestre.'.XLSX');
     }
 }

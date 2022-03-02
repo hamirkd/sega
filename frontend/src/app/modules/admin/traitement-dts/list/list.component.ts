@@ -69,7 +69,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     data: Societe = new Societe({}); // Active Societe
     dialogRef: any;
     @ViewChild(MatTable) table: MatTable<Salarie>;
-  
+    activeAll = false;
     mois = [
         { id: 1, value: 'JANVIER' },
         { id: 2, value: 'FEVRIER' },

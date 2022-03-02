@@ -201,79 +201,86 @@
 
 
                         <ul class="border-1 border-dashed border-gray-300 rounded-2xl p-2 text-center">
-                            <li>
+
+                            <li class="mt-1">
+
+                                <button class="h-5 w-50" mat-stroked-button (click)="editDTS_CNSSxls()">
+                                        DTS CNSS FORMAT 1
+                                    </button>
+                            </li>
+                            <li *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS Mixte
                                     </button>
 
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
 
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis CNSS Mixte
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS (txt)
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis CNSS
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS IMMAT.
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS CNSS (txt) IMMAT.
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="editDTS_CNSSxls()">
                                         DTS XLS
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS XLS IMMAT.
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         DTS XLS Non IMMAT.
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis XLS
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis XLS IMMAT.
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Avis XLS Non IMMAT.
                                     </button>
                             </li>
-                            <li class="mt-1">
+                            <li class="mt-1" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                         Editer (DTS CNAMGS)
                                     </button>
                             </li>
-                            <li class="mt-1 h-5">
+                            <li class="mt-1 h-5" *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">
                                     DTS CNAMGS Format XLS
                                     </button>
