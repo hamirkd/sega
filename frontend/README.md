@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice.  To 
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## How to build and deploy
+
+ng build --prod
+chown -R www-data:www-data frontend/dist
+/usr/bin/php7.4 -S 51.178.18.128:8000 /home/sega/sega/backend/server.php
+## Show processus and kill them
+sudo kill 15143
+ps aux --forest
