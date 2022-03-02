@@ -231,6 +231,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
+    editDTS_CNSSxls(){
+        this._traitementDtsService.editDTS_CNSSxls({
+            annee: this._anneeService.activeAnnee,
+            trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_DTS_CNSS_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+
     editFicheSalarie(salarie: Salarie): void {
         console.log(salarie)
         this.dialogRef = this._matDialog.open(FicheSalarieComponent, {

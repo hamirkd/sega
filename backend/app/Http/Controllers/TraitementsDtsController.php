@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MBence\OpenTBSBundle\Services\OpenTBS;
 use App\Models\TraitementsDts;
 use App\Models\TraitementsDtsSalarie;
+use App\Models\Societe;
+use Carbon\Carbon;
+use DateTime;
 
 class TraitementsDtsController extends Controller
 {
@@ -168,5 +172,58 @@ class TraitementsDtsController extends Controller
         foreach($request->ids as $id){
             TraitementsDtsSalarie::where("id",$id)->delete();
         }
+    }
+
+        /**
+     * Imprimer une déclaration
+     */
+    public function editDTS_CNSSxls(Request $request)
+    {
+        
+        Carbon::setLocale('fr');
+        setlocale(LC_TIME, 'French');
+        // Recuperation des données
+        $annee=$request['annee'];
+        $mois=$request['mois'];
+
+        $societe = Societe::findOrFail($request->societe_id);
+        $traitementsDts = TraitementsDts::where("societe_id",$request->societe_id)
+                ->where("trimestre",$request->trimestre)
+                ->where("annee",$request->annee)
+                ->firstOrFail();
+        $traitementsDtsSalarie = TraitementsDtsSalarie::where("traitements_dts_id",$traitementsDts->id)->get();
+       
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('DTS_CNSS.xlsx');
+
+        $TBS->MergeField('annee', $request->annee);
+        $TBS->MergeField("trimestre",$request->trimestre);
+        $TBS->MergeField('raison_sociale', utf8_decode($societe['raison_sociale']));
+        $TBS->MergeField('telephone', $societe['telephone']);
+        $TBS->MergeField('sigle', $societe['sigle']);
+        $TBS->MergeField('bp', $societe['bp']);
+        $TBS->MergeField('fax', $societe['fax']);
+        $TBS->MergeField('email', $societe['email']);
+        $TBS->MergeField('mois1', DateTime::createFromFormat('!m',($request->trimestre))->format('F'));
+        $TBS->MergeField('mois2', DateTime::createFromFormat('!m',($request->trimestre+1))->format('F'));
+        $TBS->MergeField('mois3', DateTime::createFromFormat('!m',($request->trimestre+2))->format('F'));
+
+        $data = array();
+        foreach($traitementsDtsSalarie as $d)
+        {
+            $d->date_depart=isset($d->date_depart)?$d->date_depart:'-';
+            $d->date_embauche=isset($d->date_embauche)?$d->date_embauche:'-';
+            $d->tx_cnss=isset($d->tx_cnss)?$d->tx_cnss:'-';
+            $d->n_cnss=isset($d->n_cnss)?$d->n_cnss:'-';
+
+            $data[] = $d;
+        }
+        // echo json_encode($data);
+        $TBS->MergeBlock('a', $data);
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+       
+        $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_ID10'.strtoupper($raison_sociale).'_'.$annee.'_'.$mois.'.XLSX');
     }
 }
