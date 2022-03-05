@@ -34,26 +34,26 @@ export class SalarieComplement extends Salarie {
     n_cnamgs: string;
     date_embauche: string;
     date_depart: string;
-    tx_cnamgs: string;
-    tx_cnss: string;
+    tx_cnamgs: number;
+    tx_cnss: number;
 
-    bpcnss1:string;
-    bpcnam1:string;
-    bdplaf1:string;
-    njrcnss1:string;
-    njrcnam1:string;
+    bpcnss1:number;
+    bpcnam1:number;
+    bdplaf1:number;
+    njrcnss1:number;
+    njrcnam1:number;
 
-    bpcnss2:string;
-    bpcnam2:string;
-    bdplaf2:string;
-    njrcnss2:string;
-    njrcnam2:string;
+    bpcnss2:number;
+    bpcnam2:number;
+    bdplaf2:number;
+    njrcnss2:number;
+    njrcnam2:number;
     
-    bpcnss3:string;
-    bpcnam3:string;
-    bdplaf3:string;
-    njrcnss3:string;
-    njrcnam3:string;
+    bpcnss3:number;
+    bpcnam3:number;
+    bdplaf3:number;
+    njrcnss3:number;
+    njrcnam3:number;
     code_etablissement:string;
 
     constructor(salarie: any) {

@@ -237,6 +237,26 @@
               >
                 Sign Up
               </a>
+
+              
+              <a
+                href="http://localhost:8000/test"
+                class="
+                  text-base
+                  font-medium
+                  text-white
+                  bg-white bg-opacity-20
+                  rounded-lg
+                  py-3
+                  px-6
+                  hover:bg-opacity-100 hover:text-dark
+                  signUpBtn
+                  duration-300
+                  ease-in-out
+                "
+              >
+                Download
+              </a>
             </div>
           </div>
         </div>

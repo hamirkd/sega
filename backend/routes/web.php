@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BinanceController;
+use App\Http\Controllers\TraitementsDtsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +13,6 @@ use App\Http\Controllers\BinanceController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::apiResource('binance', 'App\Http\Controllers\BinanceController');
 
 Route::get('/', function () {
     return view('site/index');
@@ -22,7 +21,6 @@ Route::get('/', function () {
 //     return view('admin/admin-user/index');
 // });
 Route::get('/test', function () {
-    //Route::apiResource('binance', 'App\Http\Controllers\BinanceController');
-    $binance = new BinanceController();
-   $binance->test();
+    $binance = new TraitementsDtsController();
+   $binance->test3();
 });

@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "mbence/opentbs-bundle": "^1.9",
         "nextapps/laravel-swagger-ui": "^0.3.0",
+        "phpoffice/phpexcel": "^1.8",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
