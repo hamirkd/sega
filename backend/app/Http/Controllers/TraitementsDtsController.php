@@ -178,7 +178,7 @@ class TraitementsDtsController extends Controller
         /**
      * Imprimer une déclaration
      */
-    public function editDTS_CNSSxls(Request $request)
+    public function editDTS_CNSSxls1(Request $request)
     {
         
         Carbon::setLocale('fr');
@@ -252,6 +252,286 @@ class TraitementsDtsController extends Controller
         $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_DTS_CNSS_FORMAT1'.strtoupper($raison_sociale).'_'.$request->annee.'_'.$request->trimestre.'.XLSX');
     }
     
+    public function editDTS_CNSSxls2(Request $request)
+    {
+
+        Carbon::setLocale('fr');
+        setlocale(LC_TIME, 'French');
+        // Recuperation des données
+        $societe_id = $request->societe_id;
+        $trimestre = $request->trimestre;
+        $annee = $request->annee;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDts = TraitementsDts::where("societe_id",$societe_id)
+                ->where("trimestre",$trimestre)
+                ->where("annee",$annee)
+                ->firstOrFail();
+        $traitementsDtsSalarie = TraitementsDtsSalarie::where("traitements_dts_id",$traitementsDts->id)->get();
+       
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('DTS_CNSS_FORMAT2.xlsx');
+
+              
+        $TBS->MergeField('dts.annee', $annee);
+        $TBS->MergeField("dts.trimestre",$trimestre);
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        $TBS->MergeField('s.telephone', $societe['telephone']);
+        $TBS->MergeField('s.ville', $societe['ville']);
+        $TBS->MergeField('s.regime', $societe['regime']);
+        $TBS->MergeField('s.matricule', $societe['matricule']);
+        $TBS->MergeField('s.sigle', $societe['sigle']);
+        $TBS->MergeField('s.bp', $societe['bp']);
+        $TBS->MergeField('s.fax', $societe['fax']);
+        $TBS->MergeField('s.email', $societe['email']);
+        $TBS->MergeField('s.effectif', count($traitementsDtsSalarie));
+        $TBS->MergeField('dts.alloc_familiale', $traitementsDts->alloc_familiale);
+        
+        setlocale(LC_TIME, 'French');
+        
+        $TBS->MergeField('dts.mois1', $date = Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre))->format('Y/m/d')))->formatLocalized('%B'));
+        $TBS->MergeField('dts.mois2', $date = Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre+1))->format('Y/m/d')))->formatLocalized('%B'));
+        $TBS->MergeField('dts.mois3', $date = Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre+2))->format('Y/m/d')))->formatLocalized('%B'));
+
+        $data = array();
+        $msalcnss1=0;
+        $msalcnss2=0;
+        $msalcnss3=0;
+        
+        $msalcnam1=0;
+        $msalcnam2=0;
+        $msalcnam3=0;
+        $tx_cnss = 0;
+        $tx_cnamgs = 0;
+        $i=1;
+        foreach($traitementsDtsSalarie as $d)
+        {
+            $d->date_depart=isset($d->date_depart)?$d->date_depart:'-';
+            $d->date_embauche=isset($d->date_embauche)?$d->date_embauche:'-';
+            $d->tx_cnss=isset($d->tx_cnss)?$d->tx_cnss:'-';
+            $d->tx_cnamgs=isset($d->tx_cnamgs)?$d->tx_cnamgs:'-';
+            $d->n_cnss=isset($d->n_cnss)?$d->n_cnss:'-';
+            $d->id = $i;
+
+            $data[] = $d;
+            $msalcnss1 = $msalcnss1 + $d->bpcnss1;
+            $msalcnss2 = $msalcnss2 + $d->bpcnss2;
+            $msalcnss3 = $msalcnss3 + $d->bpcnss3;
+            $tx_cnss = $tx_cnss + $d->tx_cnss;
+            
+            $msalcnam1 = $msalcnam1 + $d->bpcnam1;
+            $msalcnam2 = $msalcnam2 + $d->bpcnam2;
+            $msalcnam3 = $msalcnam3 + $d->bpcnam3;
+            $tx_cnamgs = $tx_cnamgs + $d->tx_cnamgs;
+            
+            $i=$i+1;
+        }
+        if(count($traitementsDtsSalarie)>0){
+        $tx_cnss = $tx_cnss / count($traitementsDtsSalarie);
+        $tx_cnamgs = $tx_cnamgs / count($traitementsDtsSalarie);
+        }
+        $TBS->MergeField('dts.msalcnss1', $msalcnss1);
+        $TBS->MergeField('dts.msalcnss2', $msalcnss2);
+        $TBS->MergeField('dts.msalcnss3', $msalcnss3);
+        
+        $TBS->MergeField('dts.msalcnam1', $msalcnam1);
+        $TBS->MergeField('dts.msalcnam2', $msalcnam2);
+        $TBS->MergeField('dts.msalcnam3', $msalcnam3);
+
+        $TBS->MergeField('dts.tx_cnss', $tx_cnss);
+        $TBS->MergeField('dts.tx_cnamgs', $tx_cnamgs);
+        $TBS->MergeField('dts.msalcnsstotal', ($msalcnss1+$msalcnss2+$msalcnss3));
+        $TBS->MergeField('dts.msalcnamtotal', ($msalcnam1+$msalcnam2+$msalcnam3));
+        $TBS->MergeField('dts.co_brute_dues_cnss', ($msalcnss1+$msalcnss2+$msalcnss3)*$tx_cnss);
+        $TBS->MergeField('dts.co_nette_dues_cnss', ($msalcnss1+$msalcnss2+$msalcnss3)*$tx_cnss-$traitementsDts->alloc_familiale);
+        
+        // echo json_encode($data);
+        $TBS->MergeBlock('a', $data);
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+
+
+        $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_DTS_CNSS_FORMAT2'.strtoupper($raison_sociale).'_'.$annee.'_'.$trimestre.'.XLSX');
+    }
+    
+    
+    public function editDTS_CNSSxls2_2(Request $request)
+    {
+
+        Carbon::setLocale('fr');
+        setlocale(LC_TIME, 'French');
+        // Recuperation des données
+        $societe_id = $request->societe_id;
+        $trimestre = $request->trimestre;
+        $annee = $request->annee;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDts = TraitementsDts::where("societe_id",$societe_id)
+                ->where("trimestre",$trimestre)
+                ->where("annee",$annee)
+                ->firstOrFail();
+        $traitementsDtsSalarie = TraitementsDtsSalarie::where("traitements_dts_id",$traitementsDts->id)->get();
+       
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('DTS_CNSS_FORMAT2_2.xlsx');
+
+              
+        $TBS->MergeField('dts.annee', $annee);
+        $TBS->MergeField("dts.trimestre",$trimestre);
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        $TBS->MergeField('s.telephone', $societe['telephone']);
+        $TBS->MergeField('s.ville', $societe['ville']);
+        $TBS->MergeField('s.regime', $societe['regime']);
+        $TBS->MergeField('s.matricule', $societe['matricule']);
+        $TBS->MergeField('s.sigle', $societe['sigle']);
+        $TBS->MergeField('s.bp', $societe['bp']);
+        $TBS->MergeField('s.fax', $societe['fax']);
+        $TBS->MergeField('s.email', $societe['email']);
+        $TBS->MergeField('s.effectif', count($traitementsDtsSalarie));
+        $TBS->MergeField('dts.alloc_familiale', $traitementsDts->alloc_familiale);
+        
+        setlocale(LC_TIME, 'French');
+        
+        $TBS->MergeField('dts.mois1', $date = Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre))->format('Y/m/d')))->formatLocalized('%B'));
+        $TBS->MergeField('dts.mois2', $date = Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre+1))->format('Y/m/d')))->formatLocalized('%B'));
+        $TBS->MergeField('dts.mois3', $date = Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre+2))->format('Y/m/d')))->formatLocalized('%B'));
+
+        $data = array();
+        $msalcnss1=0;
+        $msalcnss2=0;
+        $msalcnss3=0;
+        
+        $msalcnam1=0;
+        $msalcnam2=0;
+        $msalcnam3=0;
+        $tx_cnss = 0;
+        $tx_cnamgs = 0;
+        $i=1;
+        foreach($traitementsDtsSalarie as $d)
+        {
+            $d->date_depart=isset($d->date_depart)?$d->date_depart:'-';
+            $d->date_embauche=isset($d->date_embauche)?$d->date_embauche:'-';
+            $d->tx_cnss=isset($d->tx_cnss)?$d->tx_cnss:'-';
+            $d->tx_cnamgs=isset($d->tx_cnamgs)?$d->tx_cnamgs:'-';
+            $d->n_cnss=isset($d->n_cnss)?$d->n_cnss:'-';
+            $d->id = $i;
+            $d2 = clone $d;
+            $d2->n_cnss = $d->n_cnamgs;
+            $d2->tx_cnss = $d->tx_cnamgs;
+            $d2->bpcnss1 = $d2->bpcnam1;
+            $d2->bpcnss2 = $d2->bpcnam2;
+            $d2->bpcnss3 = $d2->bpcnam3;
+
+            $data[] = $d;
+            $data[] = $d2;
+            $msalcnss1 = $msalcnss1 + $d->bpcnss1;
+            $msalcnss2 = $msalcnss2 + $d->bpcnss2;
+            $msalcnss3 = $msalcnss3 + $d->bpcnss3;
+            $tx_cnss = $tx_cnss + $d->tx_cnss;
+            
+            $msalcnam1 = $msalcnam1 + $d->bpcnam1;
+            $msalcnam2 = $msalcnam2 + $d->bpcnam2;
+            $msalcnam3 = $msalcnam3 + $d->bpcnam3;
+            $tx_cnamgs = $tx_cnamgs + $d->tx_cnamgs;
+            
+            $i=$i+1;
+        }
+        if(count($traitementsDtsSalarie)>0)
+        $tx_cnss = $tx_cnss / count($traitementsDtsSalarie);
+        $TBS->MergeField('dts.msalcnss1', $msalcnss1);
+        $TBS->MergeField('dts.msalcnss2', $msalcnss2);
+        $TBS->MergeField('dts.msalcnss3', $msalcnss3);
+        
+        $TBS->MergeField('dts.msalcnam1', $msalcnam1);
+        $TBS->MergeField('dts.msalcnam2', $msalcnam2);
+        $TBS->MergeField('dts.msalcnam3', $msalcnam3);
+
+        $TBS->MergeField('dts.tx_cnss', $tx_cnss);
+        $TBS->MergeField('dts.tx_cnamgs', $tx_cnamgs);
+        $TBS->MergeField('dts.msalcnsstotal', ($msalcnss1+$msalcnss2+$msalcnss3));
+        $TBS->MergeField('dts.msalcnamtotal', ($msalcnam1+$msalcnam2+$msalcnam3));
+        $TBS->MergeField('dts.co_brute_dues_cnss', ($msalcnss1+$msalcnss2+$msalcnss3)*$tx_cnss);
+        $TBS->MergeField('dts.co_nette_dues_cnss', ($msalcnss1+$msalcnss2+$msalcnss3)*$tx_cnss-$traitementsDts->alloc_familiale);
+        
+        // echo json_encode($data);
+        $TBS->MergeBlock('a', $data);
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+
+
+        $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_DTS_CNSS_FORMAT2_2'.strtoupper($raison_sociale).'_'.$annee.'_'.$trimestre.'.XLSX');
+    }
+
+    public function editDTS_CNAMGSxls(Request $request)
+    {
+
+        Carbon::setLocale('fr');
+        setlocale(LC_TIME, 'French');
+        // Recuperation des données
+        $societe_id = $request->societe_id;
+        $trimestre = $request->trimestre;
+        $annee = $request->annee;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDts = TraitementsDts::where("societe_id",$societe_id)
+                ->where("trimestre",$trimestre)
+                ->where("annee",$annee)
+                ->firstOrFail();
+        $traitementsDtsSalarie = TraitementsDtsSalarie::where("traitements_dts_id",$traitementsDts->id)->get();
+       
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('DTS_CNAMGS_FORMAT.xlsx');
+              
+        $TBS->MergeField('dts.annee', $annee);
+        $TBS->MergeField("dts.trimestre",$trimestre);
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        $TBS->MergeField('s.telephone', $societe['telephone']);
+        $TBS->MergeField('s.ville', $societe['ville']);
+        $TBS->MergeField('s.regime', $societe['regime']);
+        $TBS->MergeField('s.matricule', $societe['matricule']);
+        $TBS->MergeField('s.sigle', $societe['sigle']);
+        $TBS->MergeField('s.code_postal', $societe['code_postal']);
+        $TBS->MergeField('s.fax', $societe['fax']);
+        $TBS->MergeField('s.email', $societe['email']);
+        $TBS->MergeField('s.effectif', count($traitementsDtsSalarie));
+        $TBS->MergeField('dts.alloc_familiale', $traitementsDts->alloc_familiale);
+        
+        setlocale(LC_TIME, 'French');
+        
+        $TBS->MergeField('dts.mois1', strtoupper(Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre))->format('Y/m/d')))->formatLocalized('%B')));
+        $TBS->MergeField('dts.mois2', strtoupper(Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre+1))->format('Y/m/d')))->formatLocalized('%B')));
+        $TBS->MergeField('dts.mois3', strtoupper(Carbon::createFromTimeStamp(strtotime(DateTime::createFromFormat('!m',($trimestre+2))->format('Y/m/d')))->formatLocalized('%B')));
+
+        $data = array();
+        $msalcnss1=0;
+        $msalcnss2=0;
+        $msalcnss3=0;
+        
+        $msalcnam1=0;
+        $msalcnam2=0;
+        $msalcnam3=0;
+        $tx_cnss = 0;
+        $tx_cnamgs = 0;
+        $i=1;
+        foreach($traitementsDtsSalarie as $d)
+        {
+            $d->date_depart=isset($d->date_depart)?$d->date_depart:'-';
+            $d->date_embauche=isset($d->date_embauche)?$d->date_embauche:'-';
+           
+            $d->id = $i;
+
+            $data[] = $d;
+           
+            $i=$i+1;
+        }
+        
+        $TBS->MergeBlock('a', $data);
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+
+        $TBS->Show(OPENTBS_DOWNLOAD, 'ETAT_DTS_CNAMGS_FORMAT'.strtoupper($raison_sociale).'_'.$annee.'_'.$trimestre.'.XLSX');
+    }
+
     public function test()
     {
 

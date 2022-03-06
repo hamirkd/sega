@@ -22,5 +22,5 @@ Route::get('/', function () {
 // });
 Route::get('/test', function () {
     $binance = new TraitementsDtsController();
-   $binance->test3();
+   $binance->editDTS_CNSSxls2();
 });

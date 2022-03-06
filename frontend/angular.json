@@ -72,7 +72,14 @@
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.prod.ts"
                             }],
-                            "outputHashing": "all"
+                            "outputHashing": "all",
+
+                            "buildOptimizer": false,
+                            "optimization": false,
+                            "vendorChunk": true,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": true
                         },
                         "development": {
                             "buildOptimizer": false,
@@ -85,34 +92,19 @@
                     },
                     "defaultConfiguration": "production"
                 },
-                "servelocal": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "move-safe:build",
-                        "proxyConfig": "src/proxy.conf.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "fuse:build:production"
-                        },
-                        "development": {
-                            "browserTarget": "fuse:build:development"
-                        }
-                    },
-                    "defaultConfiguration": "development"
-                },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "move-safe:build",
-                        "proxyConfig": "src/proxy.conf.json"
+                        "browserTarget": "move-safe:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "fuse:build:production"
+                            "browserTarget": "fuse:build:production",
+                            "proxyConfig": "src/proxy.conf.production.json"
                         },
                         "development": {
-                            "browserTarget": "fuse:build:development"
+                            "browserTarget": "fuse:build:development",
+                            "proxyConfig": "src/proxy.conf.local.json"
                         }
                     },
                     "defaultConfiguration": "development"

@@ -6,7 +6,6 @@ import {
     ViewChild,
 } from '@angular/core';
 import { AddComponent } from '../add/add.component';
-import { AddComponent as AddSalarieComponent } from '../../salaries/add/add.component';
 import {
     animate,
     state,
@@ -231,13 +230,58 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
-    editDTS_CNSSxls(){
-        this._traitementDtsService.editDTS_CNSSxls({
+    editDTS_CNSSxls1(){
+        this._traitementDtsService.editDTS_CNSSxls1({
             annee: this._anneeService.activeAnnee,
             trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
-            saveAs(d,`ETAT_DTS_CNSS_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
+            saveAs(d,`ETAT_DTS_CNSS_FORMAT1${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+    
+    editDTS_CNSSxls2(){
+        this._traitementDtsService.editDTS_CNSSxls2({
+            annee: this._anneeService.activeAnnee,
+            trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_DTS_CNSS_FORMAT2_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+    
+    editDTS_CNSSxls2_2(){
+        this._traitementDtsService.editDTS_CNSSxls2_2({
+            annee: this._anneeService.activeAnnee,
+            trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_DTS_CNSS_FORMAT2_2_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+    
+    editDTS_CNAMGSxls(){
+        this._traitementDtsService.editDTS_CNAMGSxls({
+            annee: this._anneeService.activeAnnee,
+            trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_DTS_CNAMGS_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
 
         },err=>{
             // Lorsque c'est un fichier, une erreur est générée, parce 

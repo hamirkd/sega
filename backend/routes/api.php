@@ -72,7 +72,10 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-dts/getSalariesByTrimestreAnneeSociete', [TraitementsDtsController::class,'getSalariesByTrimestreAnneeSociete']);
     Route::post('traitement-dts/deleteManySalariesInTraitementDts', [TraitementsDtsController::class,'deleteManySalariesInTraitementDts']);
     Route::put('traitement-dts/updateSalarie/{traitementsDtsSalarie}', [TraitementsDtsController::class,'updateSalarie']);
-    Route::post('traitement-dts/editDTS_CNSSxls', [TraitementsDtsController::class,'editDTS_CNSSxls']);
+    Route::post('traitement-dts/editDTS_CNSSxls1', [TraitementsDtsController::class,'editDTS_CNSSxls1']);
+    Route::post('traitement-dts/editDTS_CNSSxls2', [TraitementsDtsController::class,'editDTS_CNSSxls2']);
+    Route::post('traitement-dts/editDTS_CNSSxls2_2', [TraitementsDtsController::class,'editDTS_CNSSxls2_2']);
+    Route::post('traitement-dts/editDTS_CNAMGSxls', [TraitementsDtsController::class,'editDTS_CNAMGSxls']);
     
     
 });

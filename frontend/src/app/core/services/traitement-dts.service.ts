@@ -52,9 +52,24 @@ export class TraitementDtsService {
     return this.apiService.post2('api/traitement-dts/edit10xls', d);
   }
   
-  editDTS_CNSSxls(d:{trimestre,annee,societe_id}): Observable<any> {
+  editDTS_CNSSxls1(d:{trimestre,annee,societe_id}): Observable<any> {
     console.log(d)
-    return this.apiService.post2('api/traitement-dts/editDTS_CNSSxls', d);
+    return this.apiService.post2('api/traitement-dts/editDTS_CNSSxls1', d);
+  }
+  
+  editDTS_CNSSxls2(d:{trimestre,annee,societe_id}): Observable<any> {
+    console.log(d)
+    return this.apiService.post2('api/traitement-dts/editDTS_CNSSxls2', d);
+  }
+  
+  editDTS_CNSSxls2_2(d:{trimestre,annee,societe_id}): Observable<any> {
+    console.log(d)
+    return this.apiService.post2('api/traitement-dts/editDTS_CNSSxls2_2', d);
+  }
+  
+  editDTS_CNAMGSxls(d:{trimestre,annee,societe_id}): Observable<any> {
+    console.log(d)
+    return this.apiService.post2('api/traitement-dts/editDTS_CNAMGSxls', d);
   }
 
   
