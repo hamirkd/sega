@@ -29,9 +29,9 @@ class CreateSocietesTable extends Migration
             $table->date('date_effet')->nullable();
             $table->date('date_immatriculation')->nullable();
             $table->string('adresse',50)->nullable();
-            $table->string('code_postal',50)->nullable();
+            $table->string('signataire',50)->nullable();
             $table->string('ville',50)->nullable();
-            $table->string('bp',50)->nullable();
+            $table->string('code_postal',50)->nullable();
             $table->string('telephone',50)->nullable();
             $table->string('fax',50)->nullable();
             $table->string('email',50)->nullable();

@@ -43,6 +43,7 @@ class Societe extends Model
       'quartier',
       'arrondissement',
       'departement',
+      'signataire',
       'province'
     ];
 }

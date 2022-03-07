@@ -1,3 +1,5 @@
+import moment from "moment";
+
   // code;regime;raison_sociale;sigle;rccm;cnss;contribuable;statistique;activite;date_creation;date_mise_service;date_effet;date_immatriculation;adresse;code_postal;ville;telephone;fax;email;nif;  constructor(public modal: NgbActiveModal,public toastr: ToastrManager) { 
 export class Societe{
       id?:number;
@@ -31,6 +33,7 @@ export class Societe{
       arrondissement:string;
       departement:string;
       province:string; 
+      signataire?:string;
       copy?(societe) { 
           this.code=societe.code;
           this.regime=societe.regime;
@@ -61,6 +64,7 @@ export class Societe{
           this.arrondissement=societe.arrondissement;
           this.departement=societe.departement;
           this.province=societe.province; 
+          this.signataire=societe.signataire; 
           }
           constructor(societe) { 
             this.id= societe.id;
@@ -93,6 +97,12 @@ export class Societe{
               this.arrondissement=societe.arrondissement;
               this.departement=societe.departement;
               this.province=societe.province; 
+              this.signataire=societe.signataire; 
+
+              this.date_creation = this.date_creation?moment(this.date_creation).format("YYYY/M/D"):this.date_creation;
+              this.date_effet = this.date_effet?moment(this.date_effet).format("YYYY/M/D"):this.date_effet;
+              this.date_mise_service = this.date_mise_service?moment(this.date_mise_service).format("YYYY/M/D"):this.date_mise_service;
+              this.date_immatriculation = this.date_immatriculation?moment(this.date_immatriculation).format("YYYY/M/D"):this.date_immatriculation;
               }
 
 }

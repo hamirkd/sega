@@ -76,6 +76,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-dts/editDTS_CNSSxls2', [TraitementsDtsController::class,'editDTS_CNSSxls2']);
     Route::post('traitement-dts/editDTS_CNSSxls2_2', [TraitementsDtsController::class,'editDTS_CNSSxls2_2']);
     Route::post('traitement-dts/editDTS_CNAMGSxls', [TraitementsDtsController::class,'editDTS_CNAMGSxls']);
+    Route::post('traitement-dts/editDTS_CNSS_RECAPxlsx', [TraitementsDtsController::class,'editDTS_CNSS_RECAPxlsx']);
     
     
 });

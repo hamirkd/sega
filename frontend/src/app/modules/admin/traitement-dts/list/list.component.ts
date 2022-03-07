@@ -289,6 +289,21 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log(err);
         })
     }
+    
+    editDTS_CNSS_RECAPxlsx(){
+        this._traitementDtsService.editDTS_CNSS_RECAPxlsx({
+            annee: this._anneeService.activeAnnee,
+            trimestre: this.trimestreActif,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ETAT_DTS_CNSS_RECAP_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.trimestreActif}.xlsx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
 
     editFicheSalarie(salarie: Salarie): void {
         console.log(salarie)

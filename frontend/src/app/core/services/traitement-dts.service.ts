@@ -71,7 +71,10 @@ export class TraitementDtsService {
     console.log(d)
     return this.apiService.post2('api/traitement-dts/editDTS_CNAMGSxls', d);
   }
-
+  editDTS_CNSS_RECAPxlsx(d:{trimestre,annee,societe_id}): Observable<any> {
+    console.log(d)
+    return this.apiService.post2('api/traitement-dts/editDTS_CNSS_RECAPxlsx', d);
+  }
   
   getByTrimestreAnnee(d:{societe_id,trimestre,annee}): 
   Observable<any> {

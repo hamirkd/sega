@@ -112,10 +112,16 @@
                     <input matInput [formControlName]="'fax'">
                 </mat-form-field>
             </div>
-            <mat-form-field class="w-full">
-                <mat-label>E-mail</mat-label>
-                <input matInput [formControlName]="'email'">
-            </mat-form-field>
+            <div class="flex">
+                <mat-form-field class="w-1/2 pr-2">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput [formControlName]="'email'">
+                </mat-form-field>
+                <mat-form-field class="w-1/2 pl-2">
+                    <mat-label>Signataire</mat-label>
+                    <input matInput [formControlName]="'signataire'">
+                </mat-form-field>
+            </div>
         </div>
     </form>
 
