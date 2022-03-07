@@ -31,7 +31,7 @@ export class TraitementDts{
         this.trimestre=decl.trimestre;
         this.societe_id=decl.societe_id;
         this.alloc_familiale=decl.alloc_familiale;
-        this.ristourne=decl.ristourne;
+        this.ristourne=decl.alloc_familiale*0.02;
         this.autre_deduc=decl.autre_deduc;
         this.precision=decl.precision;
         this.avance=decl.avance;

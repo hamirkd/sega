@@ -417,11 +417,22 @@ class TraitementsDtsController extends Controller
             $d->n_cnss=isset($d->n_cnss)?$d->n_cnss:'-';
             $d->id = $i;
             $d2 = clone $d;
-            $d2->n_cnss = $d->n_cnamgs;
-            $d2->tx_cnss = $d->tx_cnamgs;
-            $d2->bpcnss1 = $d2->bpcnam1;
-            $d2->bpcnss2 = $d2->bpcnam2;
-            $d2->bpcnss3 = $d2->bpcnam3;
+            $d2->n_cnss = '-';
+            $d2->tx_cnss = '-';
+            
+            $d2->bdplaf1 = '-';
+            $d2->bdplaf2 = '-';
+            $d2->bdplaf3 = '-';
+
+            $d2->bpcnss1 = '-';
+            $d2->bpcnss2 = '-';
+            $d2->bpcnss3 = '-';
+            $d2->njrcnss1 = 0;
+            $d2->njrcnss2 = 0;
+            $d2->njrcnss3 = 0;
+            $d2->bpcnss1 = '-';
+            $d2->bpcnss2 = '-';
+            $d2->bpcnss3 = '-';
 
             $data[] = $d;
             $data[] = $d2;
@@ -430,10 +441,6 @@ class TraitementsDtsController extends Controller
             $msalcnss3 = $msalcnss3 + $d->bpcnss3;
             $tx_cnss = $tx_cnss + $d->tx_cnss;
             
-            $msalcnam1 = $msalcnam1 + $d->bpcnam1;
-            $msalcnam2 = $msalcnam2 + $d->bpcnam2;
-            $msalcnam3 = $msalcnam3 + $d->bpcnam3;
-            $tx_cnamgs = $tx_cnamgs + $d->tx_cnamgs;
             
             $i=$i+1;
         }

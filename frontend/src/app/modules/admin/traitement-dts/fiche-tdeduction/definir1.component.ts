@@ -57,7 +57,7 @@ export class Definir1Component implements OnInit {
             trimestre:[{value: this.trimestreActif, disabled: true}],
             alloc_familiale:[this.traitementDts.alloc_familiale],
             autre_deduc:[this.traitementDts.autre_deduc],
-            ristourne:[this.traitementDts.ristourne],
+            ristourne:[{value: this.traitementDts.ristourne, disabled: true}],
             precision:[this.traitementDts.precision],
          })
         

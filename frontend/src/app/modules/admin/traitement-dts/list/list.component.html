@@ -51,35 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center border-2 border-dashed border-gray-300 rounded-2xl p-1">
-                <div class="leading-none">
-                    <div class="flex flex-col w-full ">
-                        <div class="flex">
-                            <div class="p-4 leading-none rounded-l-xl border border-r-0 h-15">
-                                <div class="text-sm font-medium text-secondary">Avance</div>
-                                <div class="mt-2 font-mono text-xl">{{traitementDts.avance}}</div>
-                            </div>
-                            <div class="p-4 leading-none border border-r-0 h-15">
-                                <div class="text-sm font-medium text-secondary">Reste</div>
-                                <div class="mt-2 font-mono text-xl">{{traitementDts.reste}}</div>
-                            </div>
-                            <div class="p-4 leading-none rounded-r-xl border border-r-0 h-15">
-                                <div class="text-sm font-medium text-secondary">N° DTS</div>
-                                <div class="mt-2 font-mono text-xl">{{traitementDts.numero_dts}}</div>
-                            </div>
-                            <div class="p-4 leading-none">
-                                <div class="w-1/5 pl-2 items-center flex">
-                                    <button class="w-8 h-5" mat-stroked-button (click)="ficheTavance()">
-                                    <span class=" ">Définir</span>
-                            </button>
-                                </div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
 
 
@@ -210,12 +182,6 @@
                             </li>
                             <li class="mt-1">
 
-                                <button class="h-5 w-50" mat-stroked-button (click)="editDTS_CNSSxls2()">
-                                        DTS CNSS FORMAT 2 [1]
-                                    </button>
-                            </li>
-                            <li class="mt-1">
-
                                 <button class="h-5 w-50" mat-stroked-button (click)="editDTS_CNSSxls2_2()">
                                         DTS CNSS FORMAT 2 [2]
                                     </button>
@@ -231,6 +197,11 @@
                                 <button class="h-5 w-50" mat-stroked-button (click)="editDTS_CNSS_RECAPxlsx()">
                                     DTS CNSS RECAP
                                 </button>
+                            </li>
+                            <li class="mt-1">
+                                <button class="h-5 w-50" mat-stroked-button>
+                                        Signataire et qualité (A developper)
+                                    </button>
                             </li>
                             <li *ngIf="activeAll">
                                 <button class="h-5 w-50" mat-stroked-button (click)="importerListeSalaries()">

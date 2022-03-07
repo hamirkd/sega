@@ -32,7 +32,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
     }, 
     {
         id   : 'traitement',
-        title: 'Traitements',
+        title: 'Gestion des déclarations',
         type    : 'collapsable',
         icon : 'heroicons_outline:currency-dollar',
      
@@ -40,19 +40,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
         
         {
             id   : 'Traitements DTS',
-            title: 'Traitements DTS',
+            title: 'DTS',
             type : 'basic',
             link : '/traitement-dts'
         },
         {
             id   : 'Traitements DAS',
-            title: 'Traitements DAS',
+            title: 'DAS',
             type : 'basic',
             link : '/traitement-das'
         },
         {
             id   : 'donnees-de-base-retenue',
-            title: 'Donnees de base retenue',
+            title: 'DRS',
             type : 'basic',
             link : '/donnees-de-base-retenue'
         },
