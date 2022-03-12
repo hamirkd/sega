@@ -17,14 +17,15 @@ class CreateTraitementsDasTable extends Migration
             $table->id();
             $table->integer('annee')->nullable();
             $table->integer('societe_id')->nullable();
-            $table->integer('alloc_familiale')->nullable();
-            $table->integer('ristourne')->nullable();
-            $table->integer('autre_deduc')->nullable();
-            $table->integer('precision')->nullable();
-            $table->integer('avance')->nullable();
-            $table->integer('reste')->nullable();
-            $table->integer('numero_dts')->nullable();
-
+            $table->integer('brut_presence')->nullable();
+            $table->integer('av_eau_elec')->nullable();
+            $table->integer('brut_conge')->nullable();
+            $table->integer('prime_impo')->nullable();
+            $table->integer('prime_non_impo')->nullable();
+            $table->integer('av_nourriture')->nullable();
+            $table->integer('irpp')->nullable();
+            $table->integer('tcs')->nullable();
+            $table->integer('fnh')->nullable();
             $table->timestamps();
         });
     }

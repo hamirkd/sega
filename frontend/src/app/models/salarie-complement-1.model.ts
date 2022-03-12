@@ -5,18 +5,22 @@ import { Salarie } from './salarie.model';
 
 export class SalarieComplement extends Salarie {
     id?: number;
-    brute: string;
-    avlog: string;
-    av_nour: string;
-    prim_impo: string;
+    brute:number;
+    avlog:number;
+    av_nour:number;
+    prim_impo:number;
     brut_conge: number;
-    total_20_a_24: string;
-    tcs: string;
-    irpp: string;
-    fnh: string;
-    cfp: string;
-    total_26_a_29: string;
-    ind_non_impo: string;
+    total_brut:number;
+    salaire_brut:number;
+    total:number;
+    total_20_a_24:number;
+    tcs:number;
+    irpp:number;
+    fnh:number;
+    cfp:number;
+    total_26_a_29:number;
+    primes_non_impo:number;
+    n_statistique:string;
 
     brut_presence: number;
     av_eau_elec: number;
@@ -29,6 +33,7 @@ export class SalarieComplement extends Salarie {
     avance: number;
     numero_dts: number;
     reste: number;
+    detail_situ_fam : string;
 
     n_cnss: string;
     n_cnamgs: string;
@@ -56,6 +61,18 @@ export class SalarieComplement extends Salarie {
     njrcnam3:number;
     code_etablissement:string;
 
+
+    
+    nif_conjoint:string;
+    nom_conjoint:string;
+    prenom_conjoint:string;
+    nom_jeune_fille_conjoint:string;
+    profession_conjoint:string;
+    employeur_conjoint:string;
+    telephone_conjoint:string;
+    code_postal_conjoint:string;
+    ville_conjoint:string;
+
     constructor(salarie: any) {
         super(salarie);
         this.brute = salarie.brute;
@@ -64,16 +81,19 @@ export class SalarieComplement extends Salarie {
         this.prim_impo = salarie.prim_impo;
         this.brut_conge = salarie.brut_conge;
         this.total_20_a_24 = salarie.total_20_a_24;
+        this.salaire_brut = salarie.salaire_brut;
         this.tcs = salarie.tcs;
         this.irpp = salarie.irpp;
         this.fnh = salarie.fnh;
         this.cfp = salarie.cfp;
+        this.detail_situ_fam = salarie.detail_situ_fam;
         this.total_26_a_29 = salarie.total_26_a_29;
-        this.ind_non_impo = salarie.ind_non_impo;
+        this.primes_non_impo = salarie.primes_non_impo;
         this.n_cnss = salarie.n_cnss;
         this.n_cnamgs = salarie.n_cnamgs;
         this.date_embauche = salarie.date_embauche;
         this.date_depart = salarie.date_depart;
+        this.n_statistique = salarie.n_statistique;
         this.tx_cnamgs = salarie.tx_cnamgs;
         this.tx_cnss = salarie.tx_cnss;
 
@@ -97,6 +117,18 @@ export class SalarieComplement extends Salarie {
         this.njrcnam3 = salarie.njrcnam3;
 
         this.code_etablissement = salarie.code_etablissement;
+
+
+        
+        this.nif_conjoint = salarie.nif_conjoint;
+        this.nom_conjoint = salarie.nom_conjoint;
+        this.prenom_conjoint = salarie.prenom_conjoint;
+        this.nom_jeune_fille_conjoint = salarie.nom_jeune_fille_conjoint;
+        this.profession_conjoint = salarie.profession_conjoint;
+        this.employeur_conjoint = salarie.employeur_conjoint;
+        this.telephone_conjoint = salarie.telephone_conjoint;
+        this.code_postal_conjoint = salarie.code_postal_conjoint;
+        this.ville_conjoint = salarie.ville_conjoint;
     }
     copy?(salarie: any) {
         this.societe = salarie.societe;
@@ -107,7 +139,10 @@ export class SalarieComplement extends Salarie {
         this.prenom = salarie.prenom;
         this.emploi = salarie.emploi;
         this.niveau = salarie.niveau;
+        this.detail_situ_fam = salarie.detail_situ_fam;
         this.nationalite = salarie.nationalite;
+        this.salaire_brut = salarie.salaire_brut;
+        this.n_statistique = salarie.n_statistique;
         this.age = salarie.age;
         this.sexe = salarie.sexe;
         this.enfants = salarie.enfants;
@@ -131,7 +166,7 @@ export class SalarieComplement extends Salarie {
         this.fnh = salarie.fnh;
         this.cfp = salarie.cfp;
         this.total_26_a_29 = salarie.total_26_a_29;
-        this.ind_non_impo = salarie.ind_non_impo;
+        this.primes_non_impo = salarie.primes_non_impo;
         this.n_cnss = salarie.n_cnss;
         this.n_cnamgs = salarie.n_cnamgs;
         this.date_embauche = salarie.date_embauche;
@@ -160,5 +195,15 @@ export class SalarieComplement extends Salarie {
         this.code_etablissement = salarie.code_etablissement;
 
         
+        this.nif_conjoint = salarie.nif_conjoint;
+        this.nom_conjoint = salarie.nom_conjoint;
+        this.prenom_conjoint = salarie.prenom_conjoint;
+        this.nom_jeune_fille_conjoint = salarie.nom_jeune_fille_conjoint;
+        this.profession_conjoint = salarie.profession_conjoint;
+        this.employeur_conjoint = salarie.employeur_conjoint;
+        this.telephone_conjoint = salarie.telephone_conjoint;
+        this.code_postal_conjoint = salarie.code_postal_conjoint;
+        this.ville_conjoint = salarie.ville_conjoint;
     }
+    
 }

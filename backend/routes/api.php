@@ -10,6 +10,7 @@ use App\Http\Controllers\RubriqueController;
 use App\Http\Controllers\DeclarationsRetenueController;
 use App\Http\Controllers\TraitementsDasController;
 use App\Http\Controllers\TraitementsDtsController;
+use App\Http\Controllers\DasQuittancesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,8 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-das/getByAnnee', [TraitementsDasController::class,'getByAnnee']);
     Route::post('traitement-das/saveManySalariesInTraitementDas', [TraitementsDasController::class,'saveManySalariesInTraitementDas']);
     Route::post('traitement-das/getSalariesByAnneeSociete', [TraitementsDasController::class,'getSalariesByAnneeSociete']);
+    Route::get('traitement-das/getSalariesById/{id}', [TraitementsDasController::class,'getSalariesById']);
+    Route::put('traitement-das/updateSalarie/{id}', [TraitementsDasController::class,'updateSalarie']);
     
 
     /** Traitement DTS */
@@ -78,5 +81,8 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-dts/editDTS_CNAMGSxls', [TraitementsDtsController::class,'editDTS_CNAMGSxls']);
     Route::post('traitement-dts/editDTS_CNSS_RECAPxlsx', [TraitementsDtsController::class,'editDTS_CNSS_RECAPxlsx']);
     
-    
+    /** Das Quittances */
+    Route::apiResource('das-quittances', 'App\Http\Controllers\DasQuittancesController');
+    Route::post('das-quittances/getAll', [DasQuittancesController::class,'getAll']);
+
 });

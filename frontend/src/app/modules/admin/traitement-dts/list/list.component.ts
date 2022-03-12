@@ -36,6 +36,7 @@ import { TraitementDts } from 'app/models/traitement-dts.model';
 import { Definir1Component } from '../fiche-tdeduction/definir1.component';
 import { FicheTavanceComponent } from '../fiche-tavance/fiche-tavance.component';
 import { FicheSalarieComponent } from '../fiche-salarie/fiche-salarie.component';
+import { FicheSignataireComponent } from '../fiche-signataire/fiche-signataire.component';
 
 @Component({
     selector: 'app-list',
@@ -187,8 +188,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ficheTavance(){
-        this.dialogRef = this._matDialog.open(FicheTavanceComponent, {
+    editSignataire(){
+        this.dialogRef = this._matDialog.open(FicheSignataireComponent, {
             data: {
                 traitementDts: {},
                 trimestreActif: this.trimestreActif,
@@ -339,23 +340,18 @@ export class ListComponent implements OnInit, AfterViewInit {
                 
             this.traitementDts.alloc_familiale = 0;
             this.traitementDts.autre_deduc = 0;
+            this.traitementDts.ristourne = 0;
             this.traitementDts.avance = 0;
             this.traitementDts.reste = 0;
             this.traitementDts.numero_dts ='';
             this.traitementDts.precision = '';
-                // salaries.forEach((s) => {
-                //     this.traitementDts.alloc_familiale = this.traitementDts.alloc_familiale + Number(s.alloc_familiale);
-                //     this.traitementDts.autre_deduc = this.traitementDts.autre_deduc + Number(s.autre_deduc);
-                //     this.traitementDts.avance = this.traitementDts.avance + Number(s.avance);
-                //     this.traitementDts.reste = this.traitementDts.reste + Number(s.reste);
-                // });
+                
                 this._traitementDtsService.saveManySalariesInTraitementDts({salaries:salaries,annee:this._anneeService.activeAnnee,trimestre:this.trimestreActif,societe_id:this._societeService.activeSociete.id})
                 .subscribe(d=>{
                     console.log(d);
                     this._updateList();
                 })
-                // this.dataSource.data = salaries;
-                // this.data.rubriques = response.rubriques;
+                
             });
     }
 
@@ -393,6 +389,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
+        
         if (this.isAllSelected()) {
             this.selection.clear();
             return;
@@ -406,24 +403,18 @@ export class ListComponent implements OnInit, AfterViewInit {
             message: 'Voulez-vous supprimer les salariés sélectionner ?',
         });
         this.dialogRef.afterClosed().subscribe((response) => {
-            console.log(response);
+
             if (response === 'confirmed') {
-                this.selection.selected.forEach((salarie) => {
-                    this.dataSource.data.splice(
-                        this.dataSource.data.findIndex(
-                            (s) => s.matricule == salarie.matricule
-                        ),
-                        1
-                    );
-                    // this.dataSource.data = []
+                let ids:number[]=[];
+                this.selection.selected.forEach(d=>{
+                    ids.push(d.id);
                 });
-                const tempo = JSON.parse(JSON.stringify(this.dataSource.data));
-                this.dataSource.data = [];
-                setTimeout(() => {
-                    this.dataSource.data = tempo;
+
+                this._traitementDtsService.deleteManySalariesInTraitementDts({ids:ids}).subscribe(d=>{
                     this.selection.clear();
-                    this.table.renderRows();
-                }, 0);
+                    this._updateList();
+                    this.initData();
+                })
             }
         });
     }

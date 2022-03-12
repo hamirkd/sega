@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { f_convert_to_number, f_convert_to_number_tostring } from 'app/core/services/function';
 import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { Salarie } from 'app/models/salarie.model';
 import * as XLSX from 'xlsx';
@@ -56,43 +57,45 @@ export class ImportComponent implements OnInit {
             var worksheet = workbook.Sheets[first_sheet_name];
             // console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));return
             let dataAll = XLSX.utils.sheet_to_json(worksheet, {
-                raw: true,
+                raw: false,
             });
             // Nous allons relie les colonnes de la table excel 
+            console.log(dataAll)
             dataAll.forEach(d=>{
                 let salarie = new SalarieComplement({});
                 salarie.matricule = d["Matricule"];
+                salarie.n_statistique = d["N°STATISTIQUE"];
                 salarie.nif = d["NIF"];
-                salarie.nom = d["Nom"];
-                salarie.prenom = d["Prénom"];
-                salarie.emploi = d["Emploi"];
-                salarie.niveau = d["Niveau"];
-                salarie.nationalite = d["Nationalité"];
-                salarie.age = d["Age"];
-                salarie.sexe = d["Sexe"];
-                salarie.enfants = d["Enfants"];
-                salarie.telephone = d["Téléphone"];
-                salarie.code_postal = d["Code postal"];
-                salarie.ville = d["Ville"];
-                salarie.emploi_occupe = d["Emploi occupé"];
-                salarie.situation_familiale = d["Situation familiale"];
-                salarie.deb10 = d["DEB10"];
-                salarie.deb11 = d["DEB11"];
-                salarie.fin12 = d["FIN12"];
-                salarie.fin13das = d["FIN13DAS"];
-                salarie.brute = d["BRUT"]+'';
-                salarie.avlog = d["AVLOG"];
-                salarie.av_nour = d["AV NOUR"]; 
-                salarie.prim_impo = d["PRIM IMPO"]; 
-                salarie.brut_conge = d["BRUT CONGE"]; 
-                salarie.total_20_a_24 = d["TOTAL 20 à 24"]; 
-                salarie.tcs = (d["TCS"]+'').replace(/ /g,''); 
-                salarie.irpp = (d["IRPP"]+'').replace(/ /g,''); 
-                salarie.fnh = (d["FNH"]+'').replace(/ /g,''); 
-                salarie.cfp = (d["CFP"]+'').replace(/ /g,''); 
-                salarie.total_26_a_29 = d["TOTAL26 à 29"]; 
-                salarie.ind_non_impo = d["IND NON IMPO"];
-
+                salarie.nom = d["NOMS"];
+                salarie.prenom = d["PRENOMS"];
+                salarie.emploi = d["CODE EMPLOI"];
+                salarie.niveau = d["CODE NIVEAU"];
+                salarie.nationalite = d["CODE NATIONALITE"];
+                salarie.age = d["AGE"];
+                salarie.sexe = d["SEXE"];
+                salarie.situation_familiale = d["SITUATION FAMILIALE"];
+                salarie.enfants = d["ENFANTS"];
+                salarie.telephone = d["TELEPHONE"];
+                salarie.code_postal = d["BOITE POSTAL"];
+                salarie.ville = d["VILLE"];
+                salarie.emploi_occupe = d["EMPLOI OCCUPE"];
+                salarie.detail_situ_fam = d["DETAIL SITU. FAM"];
+                salarie.deb10 = f_convert_to_number_tostring(d["JOUR DEBUT"]);
+                salarie.deb11 = f_convert_to_number_tostring(d["MOIS DEBUT"]);
+                salarie.fin12 = f_convert_to_number_tostring(d["JOUR FIN"]);
+                salarie.fin13das = f_convert_to_number_tostring(d["MOIS FIN"]);
+                salarie.salaire_brut = f_convert_to_number(d["SALAIRE BRUT"]);
+                salarie.avlog = f_convert_to_number(d["AV LOGEMENT"]);
+                salarie.av_nour = f_convert_to_number(d["AV NOURRITURE"]); 
+                salarie.prim_impo = f_convert_to_number(d["PRIMRS IMPOSABLE"]); 
+                salarie.brut_conge = f_convert_to_number(d["CONGES PAYES"]); 
+                salarie.total_brut = f_convert_to_number(d["TOTAL BRUT"]);
+                salarie.tcs = f_convert_to_number(d["TCS"]);
+                salarie.irpp = f_convert_to_number(d["IRPP"]);
+                salarie.fnh = f_convert_to_number(d["FNH"]);
+                salarie.cfp = f_convert_to_number(d["CFP"]);
+                salarie.total = f_convert_to_number(d["TOTAL"]);
+                salarie.primes_non_impo = f_convert_to_number(d["PRIMES NON IMPO"]);
                 this.salaries.push(salarie);
             })
 

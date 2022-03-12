@@ -34,6 +34,18 @@ class CreateTraitementsDasSalariesTable extends Migration
             $table->string('emploi_occupe',100)->nullable();
             $table->string('situation_familiale')->nullable();
 
+            // information du conjoint
+            
+            $table->string('nif_conjoint',100)->nullable();
+            $table->string('nom_conjoint',100)->nullable();
+            $table->string('prenom_conjoint',100)->nullable();
+            $table->string('nom_jeune_fille_conjoint',100)->nullable();
+            $table->string('profession_conjoint',100)->nullable();
+            $table->string('employeur_conjoint',100)->nullable();
+            $table->string('telephone_conjoint',100)->nullable();
+            $table->string('code_postal_conjoint',100)->nullable();
+            $table->string('ville_conjoint',100)->nullable();
+
             $table->integer('irpp')->nullable();
             $table->integer('tcs')->nullable();
             $table->integer('fnh')->nullable();
@@ -43,13 +55,16 @@ class CreateTraitementsDasSalariesTable extends Migration
             $table->integer('av_nour')->nullable();
             $table->integer('prim_impo')->nullable();
             $table->integer('brut_conge')->nullable();
-            $table->integer('total_20_a_24')->nullable();
-            $table->integer('total_26_a_29')->nullable();
-            $table->integer('ind_non_impo')->nullable();
+            $table->integer('salaire_brut')->nullable();
+            $table->integer('total_brute')->nullable();
+            $table->integer('total')->nullable();
+            $table->integer('primes_non_impo')->nullable();
             $table->integer('deb10')->nullable();
             $table->integer('deb11')->nullable();
             $table->integer('fin12')->nullable();
             $table->integer('fin13das')->nullable();
+
+
             $table->timestamps();
         });
     }

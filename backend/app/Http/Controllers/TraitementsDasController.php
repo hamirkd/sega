@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TraitementsDas;
+use App\Models\TraitementsDasSalarie;
 
 class TraitementsDasController extends Controller
 {
@@ -58,11 +59,15 @@ class TraitementsDasController extends Controller
         $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
                 ->where("annee",$request->annee)
                 ->first();
+            
         if(!isset($traitementsDas)){
-            TraitementsDas::create($request->all());
+            TraitementsDas::create($request->traitementDas);
             $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
                 ->where("annee",$request->annee)
                 ->first();
+        }
+        else {
+            $traitementsDas->update($request->traitementDas);
         }
         TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->delete();
         foreach($request->salaries as $salarie){
@@ -75,12 +80,28 @@ class TraitementsDasController extends Controller
      * Permettre de recuperer la liste des salariés ont été déclaré
      */
     public function getSalariesByAnneeSociete(Request $request){
+
         $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
         ->where("annee",$request->annee)
         ->firstOrFail();
-        return TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
-    }
 
+        return TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+
+    }
+    
+    public function getSalariesById($id){
+
+        return TraitementsDasSalarie::findOrFail($id);
+
+    }
+    
+    public function updateSalarie(Request $request,$id){
+
+        $salarieDas = TraitementsDasSalarie::findOrFail($id);
+        $salarieDas->update($request->all());
+        return $salarieDas;
+    }
+    
     
     /**
      * Rechercher le DAS par années. Si elle existe

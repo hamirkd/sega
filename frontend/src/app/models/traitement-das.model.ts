@@ -7,8 +7,8 @@ export class TraitementDas{
      av_eau_elec:number;
      av_nourriture:number;
      brut_conge:number;
-     ind_impo:number;
-     ind_nonimpo:number;
+     prime_impo:number;
+     prime_non_impo:number;
      irpp:number;
      tcs:number;
      fnh:number;
@@ -21,8 +21,8 @@ export class TraitementDas{
         this.brut_conge=decl.brut_conge;
         this.av_eau_elec=decl.av_eau_elec;
         this.av_nourriture=decl.av_nourriture;
-        this.ind_impo=decl.ind_impo;
-        this.ind_nonimpo=decl.ind_nonimpo;
+        this.prime_impo=decl.prime_impo;
+        this.prime_non_impo=decl.prime_non_impo;
         this.irpp=decl.irpp;
         this.tcs=decl.tcs;
         this.fnh=decl.fnh;
@@ -34,8 +34,8 @@ export class TraitementDas{
         this.brut_presence=decl.brut_presence;
         this.av_eau_elec=decl.av_eau_elec;
         this.av_nourriture=decl.av_nourriture;
-        this.ind_impo=decl.ind_impo;
-        this.ind_nonimpo=decl.ind_nonimpo;
+        this.prime_impo=decl.prime_impo;
+        this.prime_non_impo=decl.prime_non_impo;
         this.brut_conge=decl.brut_conge;
         this.irpp=decl.irpp;
         this.tcs=decl.tcs;

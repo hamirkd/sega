@@ -13,7 +13,7 @@
 
                 </div>
             </div>
-            <div class="flex items-center border-2 border-dashed border-gray-300 rounded-2xl p-1">
+            <div class="flex items-center rounded-2xl p-1">
                 <div class="leading-none">
                     <div class="flex flex-col w-full ">
                         <div class="flex">
@@ -47,13 +47,13 @@
                                 <div class="text-sm font-medium text-secondary">Brut conge</div>
                                 <div class="mt-2 font-mono text-xl">{{traitementDas.brut_conge}}</div>
                             </div>
-                            <div class="p-4 leading-none rounded-r-xl border border-r-0 h-15">
+                            <div class="p-4 leading-none border border-r-0 h-15">
                                 <div class="text-sm font-medium text-secondary">Ind. Imposable</div>
-                                <div class="mt-2 font-mono text-xl">{{traitementDas.ind_impo}}</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDas.prime_impo}}</div>
                             </div>
-                            <div class="p-4 leading-none rounded-r-xl border border-r-0 h-15">
+                            <div class="p-4 leading-none rounded-r-xl border border-r-1 h-15">
                                 <div class="text-sm font-medium text-secondary">Ind. Non Impos.</div>
-                                <div class="mt-2 font-mono text-xl">{{traitementDas.ind_nonimpo}}</div>
+                                <div class="mt-2 font-mono text-xl">{{traitementDas.prime_non_impo}}</div>
                             </div>
 
                         </div>
@@ -171,7 +171,7 @@
                     </div>
 
                     <div class="w-1/6 text-center">
-                        <button class="mt-2 w-50" mat-stroked-button (click)="add()">
+                        <button class="mt-2 w-50" mat-stroked-button [routerLink]="['quittances']">
                              <span class="ml-2">Quittances de versement ...</span>
                         </button>
 

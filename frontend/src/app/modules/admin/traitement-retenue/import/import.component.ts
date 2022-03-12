@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { f_convert_to_number as nb } from 'app/core/services/function';
 import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { Salarie } from 'app/models/salarie.model';
 import * as XLSX from 'xlsx';
@@ -80,18 +81,18 @@ export class ImportComponent implements OnInit {
                 salarie.deb11 = d["DEB11"];
                 salarie.fin12 = d["FIN12"];
                 salarie.fin13das = d["FIN13DAS"];
-                salarie.brute = d["BRUT"]+'';
+                salarie.brute = nb(d["BRUT"]);
                 salarie.avlog = d["AVLOG"];
                 salarie.av_nour = d["AV NOUR"]; 
                 salarie.prim_impo = d["PRIM IMPO"]; 
                 salarie.brut_conge = d["BRUT CONGE"]; 
                 salarie.total_20_a_24 = d["TOTAL 20 à 24"]; 
-                salarie.tcs = (d["TCS"]+'').replace(/ /g,''); 
-                salarie.irpp = (d["IRPP"]+'').replace(/ /g,''); 
-                salarie.fnh = (d["FNH"]+'').replace(/ /g,''); 
-                salarie.cfp = (d["CFP"]+'').replace(/ /g,''); 
-                salarie.total_26_a_29 = d["TOTAL26 à 29"]; 
-                salarie.ind_non_impo = d["IND NON IMPO"];
+                salarie.tcs = nb(d["TCS"]); 
+                salarie.irpp = nb(d["IRPP"]+''); 
+                salarie.fnh = nb(d["FNH"]+''); 
+                salarie.cfp = nb(d["CFP"]+''); 
+                salarie.total_26_a_29 = nb(d["TOTAL26 à 29"]); 
+                salarie.ind_nonimpo = d["IND NON IMPO"];
 
                 this.salaries.push(salarie);
             })

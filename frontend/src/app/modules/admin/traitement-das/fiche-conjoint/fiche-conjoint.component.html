@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Fiche CONJOINT(E)</h2>
+<mat-dialog-content class="  sm:p-6 w-200">
+    <form class=" " [formGroup]="dasSalarieForm">
+
+
+        <div class="flex flex-col w-full ">
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Matricule</mat-label>
+                    <input matInput [formControlName]="'matricule'">
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>NIF du Conjoint</mat-label>
+                    <input matInput [formControlName]="'nif_conjoint'">
+                </mat-form-field>
+            </div>
+
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Nom</mat-label>
+                    <input matInput [formControlName]="'nom_conjoint'">
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Prénom(s)</mat-label>
+                    <input matInput [formControlName]="'prenom_conjoint'">
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Nom de jeune fille</mat-label>
+                    <input matInput [formControlName]="'nom_jeune_fille_conjoint'">
+                </mat-form-field>
+            </div>
+
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Profession</mat-label>
+                    <input matInput [formControlName]="'profession_conjoint'">
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Employeur</mat-label>
+                    <input matInput [formControlName]="'employeur_conjoint'">
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="w-1/3 pr-2">
+                    <mat-label>Téléphone</mat-label>
+                    <input matInput [formControlName]="'telephone_conjoint'">
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Code postal</mat-label>
+                    <input matInput [formControlName]="'code_postal_conjoint'">
+                </mat-form-field>
+                <mat-form-field class="w-1/3 pl-2">
+                    <mat-label>Ville</mat-label>
+                    <input matInput [formControlName]="'ville_conjoint'">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial>Annuler</button>
+    <button mat-button (click)="onSubmit()" [disabled]="!dasSalarieForm.valid">
+        {{'Enregister'}}</button>
+</mat-dialog-actions>

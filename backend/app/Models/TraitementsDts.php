@@ -19,6 +19,8 @@ class TraitementsDts extends Model
         'avance',
         'reste',
         'numero_dts',
+        'signataire',
+        'qualite'
        ];
     
 }

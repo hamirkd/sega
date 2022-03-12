@@ -35,6 +35,7 @@ import { saveAs } from 'file-saver';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { TraitementDas } from 'app/models/traitement-das.model';
+import { FicheConjointComponent } from '../fiche-conjoint/fiche-conjoint.component';
 
 @Component({
     selector: 'app-list',
@@ -107,6 +108,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.traitementDas = new TraitementDas(data); 
         },err=>{
             this.traitementDas = new TraitementDas({});
+            this.traitementDas.annee=this._anneeService.activeAnnee;
+            this.traitementDas.societe_id=this._societeService.activeSociete.id
         });
         
     }
@@ -175,8 +178,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.traitementDas.av_eau_elec = 0;
                 this.traitementDas.av_nourriture = 0;
                 this.traitementDas.brut_conge = 0;
-                this.traitementDas.ind_impo = 0;
-                this.traitementDas.ind_nonimpo = 0;
+                this.traitementDas.prime_impo = 0;
+                this.traitementDas.prime_non_impo = 0;
                 this.dataSource.data = [];
                 this.table.renderRows();
             }
@@ -184,10 +187,9 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit(salarie: Salarie): void {
-        this.dialogRef = this._matDialog.open(AddSalarieComponent, {
+        this.dialogRef = this._matDialog.open(FicheConjointComponent, {
             data: {
-                salarie: salarie,
-                action: 'edit',
+                salarie: salarie
             },
         });
 
@@ -219,22 +221,23 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.traitementDas.av_eau_elec = 0;
                 this.traitementDas.av_nourriture = 0;
                 this.traitementDas.brut_conge = 0;
-                this.traitementDas.ind_impo = 0;
-                this.traitementDas.ind_nonimpo = 0;
+                this.traitementDas.prime_impo = 0;
+                this.traitementDas.prime_non_impo = 0;
                 salaries.forEach((s) => {
                     
-                    this.traitementDas.irpp = this.traitementDas.irpp + Number(s.irpp);
-                    this.traitementDas.tcs = this.traitementDas.tcs + Number(s.tcs);
-                    this.traitementDas.fnh = this.traitementDas.fnh + Number(s.fnh);
-                    this.traitementDas.brut_presence = this.traitementDas.brut_presence + Number(s.brut_presence);
-                    this.traitementDas.av_eau_elec = this.traitementDas.av_eau_elec + Number(s.av_eau_elec);
-                    this.traitementDas.av_nourriture = this.traitementDas.av_nourriture + Number(s.av_nourriture);
-                    this.traitementDas.brut_conge = this.traitementDas.brut_conge + Number(s.brut_conge);
-                    this.traitementDas.ind_impo = this.traitementDas.ind_impo + Number(s.ind_impo);
-                    this.traitementDas.ind_nonimpo = this.traitementDas.ind_nonimpo + Number(s.ind_nonimpo);
+                    this.traitementDas.irpp = this.traitementDas.irpp + s.irpp;
+                    this.traitementDas.tcs = this.traitementDas.tcs + s.tcs;
+                    this.traitementDas.fnh = this.traitementDas.fnh + s.fnh;
+                    this.traitementDas.brut_presence = this.traitementDas.brut_presence + s.salaire_brut;
+                    this.traitementDas.av_eau_elec = 0;
+                    this.traitementDas.av_nourriture = this.traitementDas.av_nourriture + s.av_nour;
+                    this.traitementDas.brut_conge = this.traitementDas.brut_conge + s.brut_conge;
+                    this.traitementDas.prime_impo = this.traitementDas.prime_impo + s.prim_impo;
+                    this.traitementDas.prime_non_impo = this.traitementDas.prime_non_impo + s.primes_non_impo;
 
                 });
-                this._traitementDas.saveManySalariesInTraitementDas({salaries:salaries,annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
+                this._traitementDas.saveManySalariesInTraitementDas({traitementDas:this.traitementDas,
+                    salaries:salaries,annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
                 .subscribe(d=>{
                     console.log(d);
                     this._updateList();

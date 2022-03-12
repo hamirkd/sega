@@ -57,7 +57,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
             link : '/donnees-de-base-retenue'
         },
     ]
-},
+    },
 
     {
         id   : 'paies',
@@ -74,7 +74,35 @@ export const compactNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
-    }
+    }, 
+    {
+        id   : 'traitement',
+        title: 'Gestion des déclarations',
+        type    : 'collapsable',
+        icon : 'heroicons_outline:currency-dollar',
+     
+    children: [
+        
+        {
+            id   : 'Traitements DTS',
+            title: 'DTS',
+            type : 'basic',
+            link : '/traitement-dts'
+        },
+        {
+            id   : 'Traitements DAS',
+            title: 'DAS',
+            type : 'basic',
+            link : '/traitement-das'
+        },
+        {
+            id   : 'donnees-de-base-retenue',
+            title: 'DRS',
+            type : 'basic',
+            link : '/donnees-de-base-retenue'
+        },
+    ]
+    },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
@@ -83,7 +111,35 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
-    }
+    }, 
+    {
+        id   : 'traitement',
+        title: 'Gestion des déclarations',
+        type    : 'collapsable',
+        icon : 'heroicons_outline:currency-dollar',
+     
+    children: [
+        
+        {
+            id   : 'Traitements DTS',
+            title: 'DTS',
+            type : 'basic',
+            link : '/traitement-dts'
+        },
+        {
+            id   : 'Traitements DAS',
+            title: 'DAS',
+            type : 'basic',
+            link : '/traitement-das'
+        },
+        {
+            id   : 'donnees-de-base-retenue',
+            title: 'DRS',
+            type : 'basic',
+            link : '/donnees-de-base-retenue'
+        },
+    ]
+    },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
@@ -92,5 +148,33 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:chart-pie',
         link : '/example'
-    }
+    }, 
+    {
+        id   : 'traitement',
+        title: 'Gestion des déclarations',
+        type    : 'collapsable',
+        icon : 'heroicons_outline:currency-dollar',
+     
+    children: [
+        
+        {
+            id   : 'Traitements DTS',
+            title: 'DTS',
+            type : 'basic',
+            link : '/traitement-dts'
+        },
+        {
+            id   : 'Traitements DAS',
+            title: 'DAS',
+            type : 'basic',
+            link : '/traitement-das'
+        },
+        {
+            id   : 'donnees-de-base-retenue',
+            title: 'DRS',
+            type : 'basic',
+            link : '/donnees-de-base-retenue'
+        },
+    ]
+    },
 ];

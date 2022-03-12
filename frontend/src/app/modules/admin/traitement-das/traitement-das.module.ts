@@ -33,12 +33,14 @@ import {  LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { ListQuittanceComponent } from './list-quittances/list-quittances.component';
 registerLocaleData(localeFr);
 
 const routes: Routes = [
     { path: '', component: ListComponent },
     { path: 'add', component: AddComponent },
     { path: 'import', component: ImportComponent },
+    { path: 'quittances', component: ListQuittanceComponent },
     { path: ':id', component: ShowComponent },
 ];
 
@@ -47,7 +49,7 @@ const routes: Routes = [
         { provide: LOCALE_ID, useValue: 'fr-FR'},],
     declarations: [
         TraitementDASComponent,
-        ListComponent,
+        ListComponent,ListQuittanceComponent,
         AddComponent,
         ShowComponent,ImportComponent
     ],

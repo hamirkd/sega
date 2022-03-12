@@ -11,6 +11,8 @@ export class TraitementDts{
      avance:number;
      reste:number;
      numero_dts:string;
+     signataire:string;
+     qualite:string;
 
     constructor(decl:any){
         this.id=decl.id;
@@ -24,6 +26,8 @@ export class TraitementDts{
         this.avance=decl.avance;
         this.reste=decl.reste;
         this.numero_dts=decl.numero_dts;
+        this.signataire=decl.signataire;
+        this.qualite=decl.qualite;
     }
 
     copy?(decl:any){
@@ -37,6 +41,8 @@ export class TraitementDts{
         this.avance=decl.avance;
         this.reste=decl.reste;
         this.numero_dts=decl.numero_dts;
+        this.signataire=decl.signataire;
+        this.qualite=decl.qualite;
     }
 
  }

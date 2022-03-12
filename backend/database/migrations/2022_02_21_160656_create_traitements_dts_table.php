@@ -25,6 +25,8 @@ class CreateTraitementsDtsTable extends Migration
             $table->integer('avance')->nullable();
             $table->integer('reste')->nullable();
             $table->string('numero_dts',100)->nullable();
+            $table->string('signataire',100)->nullable();
+            $table->string('qualite',100)->nullable();
             $table->timestamps();
         });
     }
