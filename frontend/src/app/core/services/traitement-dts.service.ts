@@ -81,9 +81,13 @@ export class TraitementDtsService {
     console.log(d);
     return this.apiService.post('api/traitement-dts/getByTrimestreAnnee', d);
   }
+  
+  getSalarieById(id:number): 
+  Observable<any> {
+    return this.apiService.get('api/traitement-dts/getSalarieById/'+id);
+  }
 
   saveManySalariesInTraitementDts(traitementDasSalarie:{salaries,trimestre,annee,societe_id}): Observable<any> {
-    console.log(traitementDasSalarie);
     return this.apiService.post('api/traitement-dts/saveManySalariesInTraitementDts',traitementDasSalarie);
   }
   

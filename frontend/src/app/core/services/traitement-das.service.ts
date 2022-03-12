@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SalarieComplement } from 'app/models/salarie-complement-1.model';
 import { TraitementDas } from 'app/models/traitement-das.model';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
@@ -52,10 +53,19 @@ get(id): Observable<TraitementDas> {
     return this.apiService.post('api/traitement-das/getByAnnee', d);
   }
 
-  saveManySalariesInTraitementDas(traitementDasSalarie:{salaries,annee,societe_id}): Observable<any> {
-    console.log(traitementDasSalarie);
+  saveManySalariesInTraitementDas(traitementDasSalarie:{traitementDas,salaries,annee,societe_id}): Observable<any> {
     return this.apiService.post('api/traitement-das/saveManySalariesInTraitementDas',traitementDasSalarie);
   }
+  
+  updateSalarie(salarie: SalarieComplement): Observable<any> {
+      return this.apiService.put('api/traitement-das/updateSalarie/'+salarie.id, salarie);
+  }
+  
+  getSalariesById(id:number): 
+  Observable<any> {
+    return this.apiService.get('api/traitement-das/getSalariesById/'+id);
+  }
+
   getSalariesByAnneeSociete(traitementDasSalarie:{annee,societe_id}): Observable<any> {
     console.log(traitementDasSalarie);
     return this.apiService.post('api/traitement-das/getSalariesByAnneeSociete',traitementDasSalarie);
