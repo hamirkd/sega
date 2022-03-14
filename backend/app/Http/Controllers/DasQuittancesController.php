@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DasQuittance;
 
 class DasQuittancesController extends Controller
 {
@@ -34,7 +35,7 @@ class DasQuittancesController extends Controller
      */
     public function store(Request $request)
     {
-        $dasQuittance = DasQuittances::where("societe_id",$request->societe_id)
+        $dasQuittance = DasQuittance::where("societe_id",$request->societe_id)
                 ->where("mois",$request->mois)
                 ->where("annee",$request->annee)
                 ->first();
@@ -42,7 +43,7 @@ class DasQuittancesController extends Controller
             $dasQuittance->update($request->all());
         }
         else{
-            DasQuittances::create($request->all());
+            DasQuittance::create($request->all());
         }
         return response()->json([
             'message' => 'La quittance a été modifiée',
@@ -51,8 +52,15 @@ class DasQuittancesController extends Controller
     }
 
     public function getAll(Request $request){
-        return DasQuittances::where("societe_id",$request->societe_id)
-                ->where("annee",$request->annee);
+        return DasQuittance::where("societe_id",$request->societe_id)
+                ->where("annee",$request->annee)->get();
+    }
+
+    public function getByMoisAnnee(Request $request){
+        return DasQuittance::where("societe_id",$request->societe_id)
+                ->where("annee",$request->annee)
+                ->where("mois",$request->mois)
+                ->firstOrFail();
     }
 
     /**
@@ -95,8 +103,8 @@ class DasQuittancesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DasQuittance $dasQuittance)
     {
-        //
+        $dasQuittance->delete();
     }
 }

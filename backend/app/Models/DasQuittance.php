@@ -5,25 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DeclarationsRetenue extends Model
+class DasQuittance extends Model
 {
     use HasFactory;
     
     protected $fillable = [
-        'mois',
-        'annee',
         'societe_id',
-        'mode_reglement',
-        'numero_cheque',
-        'iban',
-        'bic',
-        'date_versement',
-        'date_signature',
-        'lieu_signature',
-        'irpp',
-        'tcs',
-        'fnh',
-        'cfp',
+        'annee',
+        'mois',
+        'montant',
+        'date_quittance',
+        'n_quittance',
+        'nature',
        ];
     
 //    public function getSocieteAttribute()

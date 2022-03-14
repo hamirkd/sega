@@ -1,9 +1,7 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
- import { AddComponent } from '../add/add.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AddComponent } from '../add/add.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { _DATA } from './data';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
 import { MatTable } from '@angular/material/table';
@@ -13,7 +11,8 @@ import { SocieteService } from 'app/core/services/societe.service';
 import { _DATA_RUBRIQUES } from 'app/core/data-test/data-rubriques';
 import { DasQuittancesService } from 'app/core/services/das-quittances.service';
 import { AnneeService } from 'app/core/services/annee.service';
-import { DasQuittances } from 'app/models/das-quittance.model';
+import { DasQuittance } from 'app/models/das-quittance.model';
+import { AddQuittanceComponent } from '../add-quittances/add-quittances.component';
 
 @Component({
   selector: 'app-list-quittances',
@@ -33,7 +32,7 @@ export class ListQuittanceComponent implements OnInit {
   dataSource = [];
   dialogRef: any;
   data:Societe = new Societe({});
-  @ViewChild(MatTable) table: MatTable<DasQuittances>;
+  @ViewChild(MatTable) table: MatTable<DasQuittance>;
   
   constructor(
     private _fuseConfirmationService: FuseConfirmationService,
@@ -55,10 +54,9 @@ export class ListQuittanceComponent implements OnInit {
   add(): void
   {
 
-      this.dialogRef = this._matDialog.open(AddComponent, {
+      this.dialogRef = this._matDialog.open(AddQuittanceComponent, {
         data: {
-            dasQuittances: {},
-            action: 'new',
+            dasQuittance: {}
         }});
 
       this.dialogRef.afterClosed()
@@ -73,10 +71,10 @@ export class ListQuittanceComponent implements OnInit {
 
   
 
-edit(rubrique: DasQuittances): void {
-    this.dialogRef = this._matDialog.open(AddComponent, {
+edit(dasQuittance: DasQuittance): void {
+    this.dialogRef = this._matDialog.open(AddQuittanceComponent, {
         data: {
-            rubrique: rubrique,
+            dasQuittance: dasQuittance,
             action: 'edit',
         },
     });
@@ -88,16 +86,13 @@ edit(rubrique: DasQuittances): void {
         this._updateDataSource();
     });
 }
+ 
 
-importerListeDasQuittancess(): void {
-    
-}
-
-supprimer(quittance: DasQuittances) {
+supprimer(quittance: DasQuittance) {
     this.dialogRef = this._fuseConfirmationService.open({
         title: 'Suppression de quittance',
         message:
-            'Voulez-vous supprimer la quittance ' +
+            'Voulez-vous supprimer la quittance du mois ' +
             quittance.mois +' ?',
     });
     this.dialogRef.afterClosed().subscribe((response) => {

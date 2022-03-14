@@ -34,6 +34,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { ListQuittanceComponent } from './list-quittances/list-quittances.component';
+import { AddQuittanceComponent } from './add-quittances/add-quittances.component';
 registerLocaleData(localeFr);
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
     { path: 'add', component: AddComponent },
     { path: 'import', component: ImportComponent },
     { path: 'quittances', component: ListQuittanceComponent },
+    { path: 'quittances/add', component: AddQuittanceComponent },
     { path: ':id', component: ShowComponent },
 ];
 
@@ -51,7 +53,7 @@ const routes: Routes = [
         TraitementDASComponent,
         ListComponent,ListQuittanceComponent,
         AddComponent,
-        ShowComponent,ImportComponent
+        ShowComponent,ImportComponent,AddQuittanceComponent
     ],
     imports: [
       CommonModule,

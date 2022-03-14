@@ -91,21 +91,12 @@
 
                         <div class="flex flex-col items-center w-full mb-10" *ngIf="!dataSource.length">
                             <div class="flex items-center mt-8 sm:mt-16 p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-                                <button class="" mat-flat-button (click)="importerListeRubriques()">
-                                    Importer les rubriques
+                                <button class="" mat-flat-button (click)="add()">
+                                    <mat-icon svgIcon="heroicons_solid:plus"></mat-icon>
+                                    <span class="ml-2">Ajouter</span>
                                 </button>
                             </div>
                         </div>
-
-                        <div class="flex flex-col items-center w-full mb-10" *ngIf="dataSource.length>2">
-                            <div class="flex items-center mt-8 sm:mt-16 p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-                                <button class="" mat-flat-button (click)="toutvider()">
-                                    Vider les rubriques
-                                </button>
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
             </div>

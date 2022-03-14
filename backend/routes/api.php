@@ -84,5 +84,6 @@ Route::middleware('auth:api')->group(function() {
     /** Das Quittances */
     Route::apiResource('das-quittances', 'App\Http\Controllers\DasQuittancesController');
     Route::post('das-quittances/getAll', [DasQuittancesController::class,'getAll']);
-
+    Route::post('das-quittances/getByMoisAnnee', [DasQuittancesController::class,'getByMoisAnnee']);
+     
 });

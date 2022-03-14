@@ -15,7 +15,6 @@ class CreateDasQuittancesTable extends Migration
     {
         Schema::create('das_quittances', function (Blueprint $table) {
             $table->id();
-            $table->integer('traitements_dts_salaries_id');
             $table->integer('societe_id');
             $table->integer('annee');
             $table->integer('mois');

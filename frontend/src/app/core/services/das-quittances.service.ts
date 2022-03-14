@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DasQuittances } from 'app/models/das-quittance.model';
+import { DasQuittance } from 'app/models/das-quittance.model';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { SocieteService } from './societe.service';
@@ -13,31 +13,28 @@ export class DasQuittancesService {
   constructor(private _societeService:SocieteService,private apiService: ApiService) { }
   
   
-  getAlls(): Observable<DasQuittances[]> {
+  getAlls(): Observable<DasQuittance[]> {
     return this.apiService.get('api/das-quittances');
 }
   
-getAllByCurrentSociete(data:{annee,societe_id}): Observable<DasQuittances[]> {
-
+getAllByCurrentSociete(data:{annee,societe_id}): Observable<DasQuittance[]> {
   return this.apiService.post('api/das-quittances/getAll',data);
 }
   
-get(id): Observable<DasQuittances> {
+get(id): Observable<DasQuittance> {
   return this.apiService.get('api/das-quittances/'+id);
 }
 
-  add(dasQuittances: DasQuittances): Observable<DasQuittances> {
-    const societe_id = this._societeService.activeSociete.id;
-    dasQuittances.societe_id = societe_id;
-    console.log(dasQuittances)
+  add(dasQuittances: DasQuittance): Observable<DasQuittance> {
+    console.log(dasQuittances);
       return this.apiService.post('api/das-quittances', dasQuittances);
   }
 
-  update(dasQuittances: DasQuittances): Observable<DasQuittances> {
-      const societe_id = this._societeService.activeSociete.id;
-      dasQuittances.societe_id = societe_id;
-      return this.apiService.put('api/das-quittances/'+dasQuittances.id , dasQuittances);
-  }
+  // update(dasQuittances: DasQuittance): Observable<DasQuittance> {
+  //     const societe_id = this._societeService.activeSociete.id;
+  //     dasQuittances.societe_id = societe_id;
+  //     return this.apiService.put('api/das-quittances/'+dasQuittances.id , dasQuittances);
+  // }
 
   
   edit11(d:{mois,annee,societe_id}): Observable<any> {
@@ -50,7 +47,6 @@ get(id): Observable<DasQuittances> {
   
   getByMoisAnnee(d:{societe_id,mois,annee}): 
   Observable<any> {
-    console.log(d);
     return this.apiService.post('api/das-quittances/getByMoisAnnee', d);
   }
 
@@ -64,7 +60,7 @@ get(id): Observable<DasQuittances> {
   }
   
   
-  delete(dasQuittances: DasQuittances): Observable<any> {
+  delete(dasQuittances: DasQuittance): Observable<any> {
       return this.apiService.delete('api/das-quittances/'+ dasQuittances.id);
   }
 }
