@@ -17,6 +17,7 @@ import { _DATA_SOCIETE } from '../list/_data';
 export class ShowComponent implements OnInit {
     _d = { isEdit: false };
     dialogRef: any;
+    id:any
     constructor(
         private _matDialog: MatDialog,
         private societeService: SocieteService,
@@ -25,15 +26,20 @@ export class ShowComponent implements OnInit {
         this.route.params.subscribe((params) => {
             console.log(params);
             if (params['id']) {
-                this.societeService.get(params['id']).subscribe((data) => {
-                    this.data = data;
-                });
+                this.id = params['id'];
             }
         });
     }
     data: Societe = new Societe({});
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.societeService.get(this.id).subscribe((data) => {
+            this.data = data;
+            console.log("====>",this.data)
+        },err=>{
+            console.log("====>",err)
+        });
+    }
 
     edit() {
         this.dialogRef = this._matDialog.open(AddComponent, {
@@ -43,15 +49,8 @@ export class ShowComponent implements OnInit {
             },
         });
 
-        this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
-            if (!response) {
-                return;
-            }
-            const s = new Societe(this.data);
-            s.copy(response.getRawValue());
-            // this.societeService.update(s).subscribe(data=>{
-            //   console.log(data);
-            // })
+        this.dialogRef.afterClosed().subscribe((response: any) => {
+            this.ngOnInit(); 
         });
     }
 
@@ -62,15 +61,8 @@ export class ShowComponent implements OnInit {
                 action: 'edit',
             },
         });
-        this.dialogRef.afterClosed().subscribe((response: FormGroup) => {
-            if (!response) {
-                return;
-            }
-            const s = new Societe(this.data);
-            s.copy(response.getRawValue());
-            // this.societeService.update(s).subscribe(data=>{
-            //   console.log(data);
-            // })
+        this.dialogRef.afterClosed().subscribe((response: any) => {
+            this.ngOnInit();
         });
     }
 }

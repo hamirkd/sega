@@ -39,8 +39,12 @@ get(id): Observable<TraitementDas> {
   }
 
   
-  edit11(d:{annee,societe_id}): Observable<any> {
-    return this.apiService.post2('api/traitement-das/edit11', d);
+  editID20(d:{annee,societe_id}): Observable<any> {
+    return this.apiService.post2('api/traitement-das/editID20', d);
+  }
+  editID19(d:{annee,societe_id,salarie_id}): Observable<any> {
+    console.log(d)
+    return this.apiService.post2('api/traitement-das/editID19', d);
   }
   
   edit10xls(d:{annee,societe_id}): Observable<any> {

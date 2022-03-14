@@ -133,6 +133,9 @@
                                                 <button class="hidden sm:inline-flex ml-3" mat-icon-button (click)="supprimer(element)">
                                                     <mat-icon svgIcon="heroicons_solid:x"></mat-icon> 
                                                 </button>
+                                                <button class="hidden sm:inline-flex ml-3" mat-icon-button (click)="editID19(element)">
+                                                    ID19
+                                                </button>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -175,20 +178,8 @@
                              <span class="ml-2">Quittances de versement</span>
                         </button>
 
-                        <button class="mt-2 w-50" mat-stroked-button (click)="importerListeSalaries()">
-                             <span class="ml-2">Editer ID21 + ID22</span>
-                        </button>
-
-                        <button class="mt-2 w-50" mat-stroked-button (click)="toutvider()">
+                        <button class="mt-2 w-50" mat-stroked-button (click)="editID20()">
                              <span class="ml-2">Editer ID20</span>
-                        </button>
-
-
-                        <button class="mt-2 w-50" mat-stroked-button (click)="edit11()">
-                            <span class="ml-2">Editer l'ID19</span>
-                       </button>
-                        <button class="mt-2 w-50" mat-stroked-button (click)="edit10()">
-                             <span class="ml-2">Editer l'ID19 (en XLS)</span>
                         </button>
                     </div>
                 </div>

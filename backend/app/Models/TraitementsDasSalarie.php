@@ -35,7 +35,7 @@ class TraitementsDasSalarie extends Model
         'av_nour',
         'prim_impo',
         'brut_conge',
-        'total_brute',
+        'total_brut',
         'total',
         'primes_non_impo',
         'deb10',

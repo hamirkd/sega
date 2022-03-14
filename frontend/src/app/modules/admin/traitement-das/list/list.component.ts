@@ -339,11 +339,37 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit11() {
-        this._traitementDas.edit11({
+        this._traitementDas.editID20({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
             saveAs(d,`ETAT_ID11_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}_${this.moisActif.value}.docx`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+    editID19(salarie: SalarieComplement){
+        this._traitementDas.editID19({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id,salarie_id:salarie.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`EDIT_ID19_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+    editID20(){
+        this._traitementDas.editID20({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`EDIT_ID20_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
 
         },err=>{
             // Lorsque c'est un fichier, une erreur est générée, parce 

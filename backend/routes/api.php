@@ -66,6 +66,8 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-das/getSalariesByAnneeSociete', [TraitementsDasController::class,'getSalariesByAnneeSociete']);
     Route::get('traitement-das/getSalariesById/{id}', [TraitementsDasController::class,'getSalariesById']);
     Route::put('traitement-das/updateSalarie/{id}', [TraitementsDasController::class,'updateSalarie']);
+    Route::post('traitement-das/editID20', [TraitementsDasController::class,'editID20']);
+    Route::post('traitement-das/editID19', [TraitementsDasController::class,'editID19']);
     
 
     /** Traitement DTS */

@@ -56,7 +56,7 @@ class CreateTraitementsDasSalariesTable extends Migration
             $table->integer('prim_impo')->nullable();
             $table->integer('brut_conge')->nullable();
             $table->integer('salaire_brut')->nullable();
-            $table->integer('total_brute')->nullable();
+            $table->integer('total_brut')->nullable();
             $table->integer('total')->nullable();
             $table->integer('primes_non_impo')->nullable();
             $table->integer('deb10')->nullable();

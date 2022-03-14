@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MBence\OpenTBSBundle\Services\OpenTBS;
 use App\Models\TraitementsDas;
 use App\Models\TraitementsDasSalarie;
+use App\Models\Societe;
 
 class TraitementsDasController extends Controller
 {
@@ -158,5 +160,124 @@ class TraitementsDasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function editID20(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
+        ->where("annee",$request->annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        $nbr_inferieur = 0;
+        $nbr_superieur = 0;
+        $montant_inferieur = 0;
+        $montant_superieur = 0;
+        foreach($traitementsDasSalarie as $d)
+        {
+
+            $revenuMensuel = $d->total_brut/($d->fin13das-$d->deb11);
+            if($revenuMensuel<1000000){
+                $nbr_inferieur = $nbr_inferieur+1;
+                $montant_inferieur = $montant_inferieur + $d->total_brut;
+            }
+            else {
+                $nbr_superieur = $nbr_superieur+1;
+                $montant_superieur = $montant_superieur + $d->total_brut;
+            }
+            
+        }
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('EDITID20.xlsx');
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        $TBS->MergeField('s.nif', $societe['nif']);
+        $TBS->MergeField('das.nbr_inferieur', $nbr_inferieur);
+        $TBS->MergeField('das.montant_inferieur', $montant_inferieur);
+        $TBS->MergeField('das.nbr_superieur', $nbr_superieur);
+        $TBS->MergeField('das.montant_superieur', $montant_superieur);
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+
+
+        $TBS->Show(OPENTBS_DOWNLOAD, 'EDITID20_'.strtoupper($raison_sociale).'_'.$annee.'.XLSX');
+    
+    }
+
+    
+
+    public function editID19(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee;
+        $salarie_id = $request->salarie_id;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$request->societe_id)
+        ->where("annee",$request->annee)
+        ->firstOrFail();
+        $tDasSalarie = TraitementsDasSalarie::where("id",$salarie_id)
+        ->firstOrFail();
+
+        $societe['nif'] = preg_replace('/\s+/', '', $societe['nif']);
+
+        
+         
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('EDITID19.xlsx');
+
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        for($i=0;$i<8;$i++){
+            if(strlen($societe['nif'])<$i+1){
+                $TBS->MergeField('nif'.$i, '');
+            }
+            else {
+                $TBS->MergeField('nif'.$i, $societe['nif'][$i]);
+            }
+        }
+        $TBS->MergeField('s.ville', $societe['ville']);
+        $TBS->MergeField('s.code_postal', $societe['code_postal']);
+        $TBS->MergeField('s.telephone', $societe['telephone']);
+        $TBS->MergeField('s.quartier', $societe['quartier']);
+        $TBS->MergeField('s.fax', $societe['fax']);
+        $TBS->MergeField('annee', $annee);
+        $TBS->MergeField('today', date('d/m/Y'));
+
+        $TBS->MergeField('d.nif', $tDasSalarie['nif']);
+        $nomprenom = strtoupper(utf8_decode($tDasSalarie['nom']))." ".utf8_decode($tDasSalarie['prenom']);
+        $TBS->MergeField('d.nomprenom', $nomprenom);
+        $TBS->MergeField('d.emploi_occupe', $tDasSalarie['emploi_occupe']);
+        $TBS->MergeField('d.telephone', $tDasSalarie['telephone']);
+        $TBS->MergeField('d.code_postal', $tDasSalarie['code_postal']);
+        $TBS->MergeField('d.ville', $tDasSalarie['ville']);
+        $TBS->MergeField('d.situation_familiale', $tDasSalarie['situation_familiale']);
+        $TBS->MergeField('d.enfants', $tDasSalarie['enfants']);
+        $TBS->MergeField('d.deb10', $tDasSalarie['deb10']);
+        $TBS->MergeField('d.deb11', $tDasSalarie['deb11']);
+        $TBS->MergeField('d.deb12', $tDasSalarie['deb12']);
+        $TBS->MergeField('d.deb13das', $tDasSalarie['deb13das']);
+        $TBS->MergeField('d.nif_conjoint', $tDasSalarie['nif_conjoint']);
+        $nomprenom_conjoint = strtoupper(utf8_decode($tDasSalarie['nom_conjoint']))." ".utf8_decode($tDasSalarie['prenom_conjoint']);
+        $TBS->MergeField('d.nomprenom_conjoint', $tDasSalarie['nomprenom_conjoint']);
+        $TBS->MergeField('d.nom_jeune_fille_conjoint', $tDasSalarie['nom_jeune_fille_conjoint']);
+        $TBS->MergeField('d.profession_conjoint', $tDasSalarie['profession_conjoint']);
+        $TBS->MergeField('d.employeur_conjoint', $tDasSalarie['employeur_conjoint']);
+        $TBS->MergeField('d.telephone_conjoint', $tDasSalarie['telephone_conjoint']);
+        $TBS->MergeField('d.code_postal_conjoint', $tDasSalarie['code_postal_conjoint']);
+        $TBS->MergeField('d.ville_conjoint', $tDasSalarie['ville_conjoint']);
+        $TBS->MergeField('d.salaire_brut', $tDasSalarie['salaire_brut']);
+        $TBS->MergeField('d.brut_conge', $tDasSalarie['brut_conge']);
+        $TBS->MergeField('d.avlog', $tDasSalarie['avlog']);
+        $TBS->MergeField('d.av_nour', $tDasSalarie['av_nour']);
+        $TBS->MergeField('d.prim_impo', $tDasSalarie['prim_impo']);
+        $TBS->MergeField('d.tcs', $tDasSalarie['tcs']);
+        $TBS->MergeField('d.irpp', $tDasSalarie['irpp']);
+        $TBS->MergeField('d.primes_non_impo', $tDasSalarie['primes_non_impo']);
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+        $TBS->Show(OPENTBS_DOWNLOAD, 'EDITID19_'.strtoupper($raison_sociale).'_'.$annee.'.XLSX');
+    
     }
 }

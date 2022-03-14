@@ -21,13 +21,7 @@ import {
     templateUrl: './add-quittances.component.html',
     styleUrls: ['./add-quittances.component.scss'],
     providers: [
-        // The locale would typically be provided on the root module of your application. We do it at
-        // the component level here, due to limitations of our example generation script.
         {provide: MAT_DATE_LOCALE, useValue: 'fr'},
-    
-        // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
-        // `MatMomentDateModule` in your applications root module. We provide it at the component level
-        // here, due to limitations of our example generation script.
         {
           provide: DateAdapter,
           useClass: MomentDateAdapter,
@@ -72,22 +66,6 @@ export class AddQuittanceComponent implements OnInit {
         this.dasQuittanceForm = this.createDasQuittanceForm();
         this.dasQuittance.societe_id = this.societe.id;
         this.dasQuittance.annee = this.annee;
-        
-        // this._dasQuittanceService.getByMoisAnnee(this.dasQuittance).subscribe(data=>{
-        //     this.dasQuittanceForm = this.createDasQuittanceForm();
-        //     this.dasQuittanceForm.setValue({
-        //         annee:data.annee,
-        //         mois:data.mois,
-        //         societe:this.societe.raison_sociale,
-        //         montant:data.montant,
-        //         societe_id:data.societe_id,
-        //         n_quittance:data.n_quittance,
-        //         nature:data.nature, 
-        //         date_quittance:data.date_quittance
-        //      })
-        // },err=>{
-        //     this.dasQuittanceForm = this.createDasQuittanceForm();
-        // });
     }
     dasQuittanceForm :FormGroup
 

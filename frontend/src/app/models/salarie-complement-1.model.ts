@@ -82,6 +82,7 @@ export class SalarieComplement extends Salarie {
         this.brut_conge = salarie.brut_conge;
         this.total_20_a_24 = salarie.total_20_a_24;
         this.salaire_brut = salarie.salaire_brut;
+        this.total_brut = salarie.total_brut;
         this.tcs = salarie.tcs;
         this.irpp = salarie.irpp;
         this.fnh = salarie.fnh;
@@ -142,6 +143,8 @@ export class SalarieComplement extends Salarie {
         this.detail_situ_fam = salarie.detail_situ_fam;
         this.nationalite = salarie.nationalite;
         this.salaire_brut = salarie.salaire_brut;
+        this.total_brut = salarie.total_brut;
+
         this.n_statistique = salarie.n_statistique;
         this.age = salarie.age;
         this.sexe = salarie.sexe;

@@ -98,6 +98,7 @@ export class ImportComponent implements OnInit {
                 salarie.primes_non_impo = f_convert_to_number(d["PRIMES NON IMPO"]);
                 this.salaries.push(salarie);
             })
+            console.log(this.salaries);
 
             
             this.close();
