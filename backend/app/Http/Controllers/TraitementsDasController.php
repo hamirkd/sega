@@ -260,7 +260,7 @@ class TraitementsDasController extends Controller
         $TBS->MergeField('d.deb13das', $tDasSalarie['deb13das']);
         $TBS->MergeField('d.nif_conjoint', $tDasSalarie['nif_conjoint']);
         $nomprenom_conjoint = strtoupper(utf8_decode($tDasSalarie['nom_conjoint']))." ".utf8_decode($tDasSalarie['prenom_conjoint']);
-        $TBS->MergeField('d.nomprenom_conjoint', $tDasSalarie['nomprenom_conjoint']);
+        $TBS->MergeField('d.nomprenom_conjoint', $nomprenom_conjoint);
         $TBS->MergeField('d.nom_jeune_fille_conjoint', $tDasSalarie['nom_jeune_fille_conjoint']);
         $TBS->MergeField('d.profession_conjoint', $tDasSalarie['profession_conjoint']);
         $TBS->MergeField('d.employeur_conjoint', $tDasSalarie['employeur_conjoint']);
@@ -280,4 +280,339 @@ class TraitementsDasController extends Controller
         $TBS->Show(OPENTBS_DOWNLOAD, 'EDITID19_'.strtoupper($raison_sociale).'_'.$annee.'.XLSX');
     
     }
+
+    
+
+    public function editID21(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee; 
+         
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        $i=1;
+        $societe['nif'] = preg_replace('/\s+/', '', $societe['nif']);
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+        $data =[];
+        $b=0;
+        $saModel = clone $traitementsDasSalarie[0];
+            $saModel['traitements_das_id']="";
+            $saModel['matricule']="";
+            $saModel['nif']="";
+            $saModel['nom']="";
+            $saModel['prenom']="";
+            $saModel['emploi']="";
+            $saModel['niveau']="";
+            $saModel['nationalite']="";
+            $saModel['age']="";
+            $saModel['sexe']="";
+            $saModel['enfants']="";
+            $saModel['telephone']="";
+            $saModel['code_postal']="";
+            $saModel['ville']="";
+            $saModel['emploi_occupe']="";
+            $saModel['situation_familiale']="";
+            $saModel['irpp']=0;
+            $saModel['tcs']=0;
+            $saModel['fnh']=0;
+            $saModel['cfp']=0;
+            $saModel['brute']=0;
+            $saModel['avlog']=0;
+            $saModel['salaire_brut']=0;
+            $saModel['av_nour']=0;
+            $saModel['prim_impo']=0;
+            $saModel['brut_conge']=0;
+            $saModel['total_brut']=0;
+            $saModel['total']=0;
+            $saModel['primes_non_impo']=0;
+            $saModel['deb10']="";
+            $saModel['deb11']="";
+            $saModel['fin12']="";
+            $saModel['fin13das']="";
+            $saModel['nif_conjoint']="";
+            $saModel['nom_conjoint']="";
+            $saModel['prenom_conjoint']="";
+            $saModel['nom_jeune_fille_conjoint']="";
+            $saModel['profession_conjoint']="";
+            $saModel['employeur_conjoint']="";
+            $saModel['telephone_conjoint']="";
+            $saModel['code_postal_conjoint']="";
+            $saModel['ville_conjoint']="";
+            $saModel['nomprenom']="";
+            $saModel['ordre']="";
+            $sa = clone $saModel;
+            $sa2 = clone $sa;
+            $sa3 = clone $sa;
+            $totalPrev = 0;
+            $saTotalPrev = clone $sa;
+        for($i=0;$i<count($traitementsDasSalarie);$i++){
+            
+            
+            // FirstPage 
+            if(count($data)==42){
+                $sa['nomprenom'] = "TOTAUX A REPORTER SUR LA FEUILLE SUIVANTE";
+                 
+                $data[] = clone $sa;
+                $saTotalPrev = clone $sa;
+                $sa = clone $saModel;
+            }
+            else
+            if(((count($data)-42-$b)%73)==0){
+                // echo (count($data)-45-$b).'|';
+                $sa['nomprenom'] = "TOTAUX";
+                $data[] = clone $sa;
+                $sa2 = clone $saTotalPrev;
+                $sa2['nomprenom'] = "TOTAUX REPORTES DE LA FEUILLE PRECEDENTE";
+                $sa3['nomprenom'] = "TOTAUX A REPORTER SUR LA FEUILLE SUIVANTE";
+                
+
+                $sa3['salaire_brut'] = $sa['salaire_brut'] + $saTotalPrev['salaire_brut'];
+                $sa3['irpp'] = $sa['irpp'] + $saTotalPrev['irpp'];
+                $sa3['tcs'] = $sa['tcs'] + $saTotalPrev['tcs'];
+                $sa3['fnh'] = $sa['fnh'] + $saTotalPrev['fnh'];
+                $sa3['cfp'] = $sa['cfp'] + $saTotalPrev['cfp'];
+                $sa3['brute'] = $sa['brute'] + $saTotalPrev['brute'];
+                $sa3['avlog'] = $sa['avlog'] + $saTotalPrev['avlog'];
+                $sa3['av_nour'] = $sa['av_nour'] + $saTotalPrev['av_nour'];
+                $sa3['prim_impo'] = $sa['prim_impo'] + $saTotalPrev['prim_impo'];
+                $sa3['brut_conge'] = $sa['brut_conge'] + $saTotalPrev['brut_conge'];
+                $sa3['total_brut'] = $sa['total_brut'] + $saTotalPrev['total_brut'];
+                $sa3['total'] = $sa['total'] + $saTotalPrev['total'];
+                $sa3['primes_non_impo'] = $sa['primes_non_impo'] + $saTotalPrev['primes_non_impo'];
+
+                $saTotalPrev = clone $sa3;
+                $sa = clone $saModel;
+                $data[] = clone $sa2;
+                $data[] = clone $sa3;
+                $b++;
+                $b++;
+            } 
+            $sa['salaire_brut'] = $sa['salaire_brut'] + $traitementsDasSalarie[$i]['salaire_brut'];
+            $sa['irpp'] = $sa['irpp'] + $traitementsDasSalarie[$i]['irpp'];
+            $sa['tcs'] = $sa['tcs'] + $traitementsDasSalarie[$i]['tcs'];
+            $sa['fnh'] = $sa['fnh'] + $traitementsDasSalarie[$i]['fnh'];
+            $sa['cfp'] = $sa['cfp'] + $traitementsDasSalarie[$i]['cfp'];
+            $sa['brute'] = $sa['brute'] + $traitementsDasSalarie[$i]['brute'];
+            $sa['avlog'] = $sa['avlog'] + $traitementsDasSalarie[$i]['avlog'];
+            $sa['av_nour'] = $sa['av_nour'] + $traitementsDasSalarie[$i]['av_nour'];
+            $sa['prim_impo'] = $sa['prim_impo'] + $traitementsDasSalarie[$i]['prim_impo'];
+            $sa['brut_conge'] = $sa['brut_conge'] + $traitementsDasSalarie[$i]['brut_conge'];
+            $sa['total_brut'] = $sa['total_brut'] + $traitementsDasSalarie[$i]['total_brut'];
+            $sa['total'] = $sa['total'] + $traitementsDasSalarie[$i]['total'];
+            $sa['primes_non_impo'] = $sa['primes_non_impo'] + $traitementsDasSalarie[$i]['primes_non_impo'];
+             
+            $data[] = $traitementsDasSalarie[$i];
+            
+        }
+        $sa['nomprenom'] = "TOTAUX";
+        $data[] = clone $sa;
+        $sa2 = clone $saTotalPrev;
+        $sa2['nomprenom'] = "TOTAUX REPORTES DE LA FEUILLE PRECEDENTE";
+        $totalPrev = $sa3['salaire_brut'];
+        $sa['salaire_brut'] = 0;
+        $data[] = clone $sa2;
+
+        // return;
+        
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('EDITID21.xlsx');
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        for($i=0;$i<7;$i++){
+            if(strlen($societe['nif'])<$i+1){
+                $TBS->MergeField('nif'.$i, '');
+            }
+            else {
+                $TBS->MergeField('nif'.$i, $societe['nif'][$i]);
+            }
+        }
+        $TBS->MergeField('annee', $annee);
+        
+        $TBS->MergeBlock('d',$data);
+
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+        $TBS->Show(OPENTBS_DOWNLOAD, 'EDITID21_'.strtoupper($raison_sociale).'_'.$annee.'.XLSX');
+    
+    }
+
+    
+    
+    
+
+    public function editID21_(){
+
+        $societe_id = 2;
+        $annee = 2021;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        $i=1;
+        $societe['nif'] = preg_replace('/\s+/', '', $societe['nif']);
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+        $data =[];
+        $b=0;
+        $saModel = clone $traitementsDasSalarie[0];
+            $saModel['traitements_das_id']="";
+            $saModel['matricule']="";
+            $saModel['nif']="";
+            $saModel['nom']="";
+            $saModel['prenom']="";
+            $saModel['emploi']="";
+            $saModel['niveau']="";
+            $saModel['nationalite']="";
+            $saModel['age']="";
+            $saModel['sexe']="";
+            $saModel['enfants']="";
+            $saModel['telephone']="";
+            $saModel['code_postal']="";
+            $saModel['ville']="";
+            $saModel['emploi_occupe']="";
+            $saModel['situation_familiale']="";
+            $saModel['irpp']=0;
+            $saModel['tcs']=0;
+            $saModel['fnh']=0;
+            $saModel['cfp']=0;
+            $saModel['brute']=0;
+            $saModel['avlog']=0;
+            $saModel['salaire_brut']=0;
+            $saModel['av_nour']=0;
+            $saModel['prim_impo']=0;
+            $saModel['brut_conge']=0;
+            $saModel['total_brut']=0;
+            $saModel['total']=0;
+            $saModel['primes_non_impo']=0;
+            $saModel['deb10']="";
+            $saModel['deb11']="";
+            $saModel['fin12']="";
+            $saModel['fin13das']="";
+            $saModel['nif_conjoint']="";
+            $saModel['nom_conjoint']="";
+            $saModel['prenom_conjoint']="";
+            $saModel['nom_jeune_fille_conjoint']="";
+            $saModel['profession_conjoint']="";
+            $saModel['employeur_conjoint']="";
+            $saModel['telephone_conjoint']="";
+            $saModel['code_postal_conjoint']="";
+            $saModel['ville_conjoint']="";
+            $saModel['nomprenom']="";
+            $saModel['ordre']="";
+            $sa = clone $saModel;
+            $sa2 = clone $sa;
+            $sa3 = clone $sa;
+            $totalPrev = 0;
+            $saTotalPrev = clone $sa;
+        for($i=0;$i<count($traitementsDasSalarie);$i++){
+            
+            
+            // FirstPage 
+            if(count($data)==42){
+                $sa['nomprenom'] = "TOTAUX A REPORTER SUR LA FEUILLE SUIVANTE";
+                 
+                $data[] = clone $sa;
+                $saTotalPrev = clone $sa;
+                $sa = clone $saModel;
+            }
+            else
+            if(((count($data)-42-$b)%73)==0){
+                // echo (count($data)-45-$b).'|';
+                $sa['nomprenom'] = "TOTAUX";
+                $data[] = clone $sa;
+                $sa2 = clone $saTotalPrev;
+                $sa2['nomprenom'] = "TOTAUX REPORTES DE LA FEUILLE PRECEDENTE";
+                $sa3['nomprenom'] = "TOTAUX A REPORTER SUR LA FEUILLE SUIVANTE";
+                
+
+                $sa3['salaire_brut'] = $sa['salaire_brut'] + $saTotalPrev['salaire_brut'];
+                $sa3['irpp'] = $sa['irpp'] + $saTotalPrev['irpp'];
+                $sa3['tcs'] = $sa['tcs'] + $saTotalPrev['tcs'];
+                $sa3['fnh'] = $sa['fnh'] + $saTotalPrev['fnh'];
+                $sa3['cfp'] = $sa['cfp'] + $saTotalPrev['cfp'];
+                $sa3['brute'] = $sa['brute'] + $saTotalPrev['brute'];
+                $sa3['avlog'] = $sa['avlog'] + $saTotalPrev['avlog'];
+                $sa3['av_nour'] = $sa['av_nour'] + $saTotalPrev['av_nour'];
+                $sa3['prim_impo'] = $sa['prim_impo'] + $saTotalPrev['prim_impo'];
+                $sa3['brut_conge'] = $sa['brut_conge'] + $saTotalPrev['brut_conge'];
+                $sa3['total_brut'] = $sa['total_brut'] + $saTotalPrev['total_brut'];
+                $sa3['total'] = $sa['total'] + $saTotalPrev['total'];
+                $sa3['primes_non_impo'] = $sa['primes_non_impo'] + $saTotalPrev['primes_non_impo'];
+
+                $saTotalPrev = clone $sa3;
+                $sa = clone $saModel;
+                $data[] = clone $sa2;
+                $data[] = clone $sa3;
+                $b++;
+                $b++;
+            } 
+            $sa['salaire_brut'] = $sa['salaire_brut'] + $traitementsDasSalarie[$i]['salaire_brut'];
+            $sa['irpp'] = $sa['irpp'] + $traitementsDasSalarie[$i]['irpp'];
+            $sa['tcs'] = $sa['tcs'] + $traitementsDasSalarie[$i]['tcs'];
+            $sa['fnh'] = $sa['fnh'] + $traitementsDasSalarie[$i]['fnh'];
+            $sa['cfp'] = $sa['cfp'] + $traitementsDasSalarie[$i]['cfp'];
+            $sa['brute'] = $sa['brute'] + $traitementsDasSalarie[$i]['brute'];
+            $sa['avlog'] = $sa['avlog'] + $traitementsDasSalarie[$i]['avlog'];
+            $sa['av_nour'] = $sa['av_nour'] + $traitementsDasSalarie[$i]['av_nour'];
+            $sa['prim_impo'] = $sa['prim_impo'] + $traitementsDasSalarie[$i]['prim_impo'];
+            $sa['brut_conge'] = $sa['brut_conge'] + $traitementsDasSalarie[$i]['brut_conge'];
+            $sa['total_brut'] = $sa['total_brut'] + $traitementsDasSalarie[$i]['total_brut'];
+            $sa['total'] = $sa['total'] + $traitementsDasSalarie[$i]['total'];
+            $sa['primes_non_impo'] = $sa['primes_non_impo'] + $traitementsDasSalarie[$i]['primes_non_impo'];
+             
+            $data[] = $traitementsDasSalarie[$i];
+            
+        }
+        $sa['nomprenom'] = "TOTAUX";
+        $data[] = clone $sa;
+        $sa2 = clone $saTotalPrev;
+        $sa2['nomprenom'] = "TOTAUX REPORTES DE LA FEUILLE PRECEDENTE";
+        $totalPrev = $sa3['salaire_brut'];
+        $sa['salaire_brut'] = 0;
+        $data[] = clone $sa2;
+
+        // return;
+        
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('EDITID21.xlsx');
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+        for($i=0;$i<7;$i++){
+            if(strlen($societe['nif'])<$i+1){
+                $TBS->MergeField('nif'.$i, '');
+            }
+            else {
+                $TBS->MergeField('nif'.$i, $societe['nif'][$i]);
+            }
+        }
+        $TBS->MergeField('annee', $annee);
+        
+        $TBS->MergeBlock('d',$data);
+
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+        $TBS->Show(OPENTBS_DOWNLOAD, 'EDITID21_'.strtoupper($raison_sociale).'_'.$annee.'.XLSX');
+    
+    }
+
+    
 }

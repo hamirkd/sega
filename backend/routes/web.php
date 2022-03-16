@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TraitementsDtsController;
+use App\Http\Controllers\TraitementsDasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +21,6 @@ Route::get('/', function () {
 //     return view('admin/admin-user/index');
 // });
 Route::get('/test', function () {
-    $binance = new TraitementsDtsController();
-   $binance->editDTS_CNSSxls2();
+    $binance = new TraitementsDasController();
+   $binance->editID21_();
 });
