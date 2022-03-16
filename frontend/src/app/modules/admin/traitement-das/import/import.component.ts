@@ -65,7 +65,7 @@ export class ImportComponent implements OnInit {
                 let salarie = new SalarieComplement({});
                 salarie.matricule = d["Matricule"];
                 salarie.n_statistique = d["N°STATISTIQUE"];
-                salarie.nif = d["NIF"];
+                salarie.nif = d["N°STATISTIQUE"];
                 salarie.nom = d["NOMS"];
                 salarie.prenom = d["PRENOMS"];
                 salarie.emploi = d["CODE EMPLOI"];
