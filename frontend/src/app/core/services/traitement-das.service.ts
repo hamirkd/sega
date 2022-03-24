@@ -39,6 +39,10 @@ get(id): Observable<TraitementDas> {
   }
 
   
+  editID22(d:{annee,societe_id}): Observable<any> {
+    console.log(d)
+    return this.apiService.post2('api/traitement-das/editID22', d);
+  }
   editID21(d:{annee,societe_id}): Observable<any> {
     return this.apiService.post2('api/traitement-das/editID21', d);
   }

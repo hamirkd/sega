@@ -394,4 +394,21 @@ export class ListComponent implements OnInit, AfterViewInit {
         })
     }
 
+    editID22(){
+        this._traitementDas.editID22({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d:Blob)=>{
+            console.log(d);
+            if(d.type =="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            saveAs(d,`EDIT_ID22_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
+            else {
+                console.log("error")
+            }
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+
 }

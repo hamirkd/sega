@@ -30,7 +30,7 @@ export class ApiService {
     
     post2(url:string, data:any): Observable<any>{
       console.log(url)
-      return this._httpClient.post(url,data,{responseType: 'blob'});
+      return this._httpClient.post(url,data,{responseType: 'blob',reportProgress:true});
     }
 
 }
