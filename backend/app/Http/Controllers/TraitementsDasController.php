@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use MBence\OpenTBSBundle\Services\OpenTBS;
+use App\Models\DasQuittance;
 use App\Models\TraitementsDas;
 use App\Models\TraitementsDasSalarie;
 use App\Models\Societe;
+
+use PHPExcel_IOFactory;
+use PHPExcel_Cell; 
 
 class TraitementsDasController extends Controller
 {
@@ -448,6 +452,74 @@ class TraitementsDasController extends Controller
     }
 
     
+
+    public function editID22(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee;
+         
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        $i=1;
+        $societe['nif'];
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+        }
+        $dasQuittance = [];
+        for($i=1;$i<=12;$i++){
+            
+            $q = new DasQuittance();
+            $q['mois']=$i;
+            $q['montant']=0;
+            $q['date_quittance']="";
+            $q['n_quittance']="";
+            $q['nature']="";
+            $qq = DasQuittance::where("societe_id",$request->societe_id)
+                ->where("annee",$request->annee)
+                ->where("mois",$i)
+                ->first();
+            if(isset($qq)){
+                $dasQuittance[] = $qq;
+            }
+            else {
+                $dasQuittance[] = $q;
+            }
+        }
+        
+        $TBS = new OpenTBS();
+        // load your template
+        $TBS->LoadTemplate('EDITID22.xlsx');
+        $TBS->MergeField('s.raison_sociale', utf8_decode($societe['raison_sociale']));
+         
+        $TBS->MergeField('s.nif', $societe['nif']); 
+        $TBS->MergeField('today', date('d/m/Y'));
+        $TBS->MergeField('s.ville', $societe['ville']);
+        
+        $TBS->MergeField('annee', $annee);
+        $TBS->MergeField('totalsalarie', count($traitementsDasSalarie));
+        
+        $TBS->MergeBlock('d',$traitementsDasSalarie);
+        for($i=1;$i<=12;$i++){
+            $q = $dasQuittance[$i-1];
+            $TBS->MergeField('q.mois'.$i, $q['mois']);
+            $TBS->MergeField('q.montant'.$i, $q['montant']);
+            $TBS->MergeField('q.date_quittance'.$i, $q['date_quittance']);
+            $TBS->MergeField('q.n_quittance'.$i, $q['n_quittance']);
+        }
+
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+        $TBS->Show(OPENTBS_DOWNLOAD, 'EDITID22_'.strtoupper($raison_sociale).'_'.$annee.'.XLSX');
+    
+    }
+
+    
     
     
 
@@ -614,5 +686,78 @@ class TraitementsDasController extends Controller
     
     }
 
+    public function test2(){
+         
+        $app_obj = new COM("CrystalRuntime.Application") or Die ("Did not open");
+        $etat="crystal/ID23.rpt"; // donner le chemain du rapport
+        $rpt_obj=$app_obj->OpenReport($etat);
+        // Passage des paramètres
+        $rpt_obj->RecordSelectionFormula = "{nom_table.nom_du_champ1} =$varnum and {nom_table.nom_du_champ2}="."'". $var_string."'"."";
+
+        $rpt_obj->ExportOptions->DiskFileName="C:\...\nomFichier.pdf"; // chemain ou mettre le fichier pdf
+        $rpt_obj->ExportOptions->PDFExportAllPages=true;
+        $rpt_obj->ExportOptions->DestinationType=1; // Export to File
+        $rpt_obj->ExportOptions->FormatType=31; // Type: PDF
+        $rpt_obj->Export(false);
+        $my_pdf="C:\...\nomFichier.pdf";
+        // Ouverture du fichier PDF
+        header('Content-type: application/pdf');
+        header('Content-Length: $len');
+        //header('Content-Disposition: inline; filename="'.$my_pdf.'"');
+        header('Last-Modified: '.gmdate('D, d M Y H:i:s') . ' GMT');
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+        header('Cache-Control: pre-check=0, post-check=0, max-age=0');
+        header('Pragma: anytextexeptno-cache', true);
+        header('Cache-control: private');
+        header('Expires: 0');
+        header('Content-Disposition: inline; filename="'.$my_pdf.'"');
+        
+        readfile($my_pdf);
+    }
+
+    public function test3(){
+            //Ouverture du rapport
+    #######################################
+    //merci futurist LOL
+    #########################################
+    //pour mis a jour de la base depuis crystal report
+    //il faut mettre cela
+    $db = 'intranet'; //nom de la base de données
+    $host = 'localhost'; // nom de la machine hôte
+    $user = 'root'; // nom de l'utilisateur
+    $pwd = '';// mot de passe
     
-}
+    $dsn = "mysql:dbname=$db;host=$host";
+    // $app_obj = new PDO($dsn, $user, $pwd);
+    ##################################
+    
+    $app_obj = new \COM("CrystalRuntime.Application") or Die ("Did not open");
+    $etat="C:\\wamp\\www\\requete\\utilisateur.rpt"; // donner le chemain du rapport
+    $rpt_obj=$app_obj->OpenReport($etat);
+ 
+ 
+    $rpt_obj->RecordSelectionFormula = "{nom_table.nom_du_champ1} =$varnum and {nom_table.nom_du_champ2}="."'". $var_string."'";
+ 
+ 
+ 
+    $rpt_obj->ExportOptions->DiskFileName="C:\\wamp\\www\\requete\\nomFichier.pdf"; // chemain ou mettre le fichier pdf
+    $rpt_obj->ExportOptions->PDFExportAllPages=true;
+    $rpt_obj->ExportOptions->DestinationType=1; // Export to File
+    $rpt_obj->ExportOptions->FormatType=31; // Type: PDF
+    $rpt_obj->Export(false);
+    $this->redir("requete/\pdf2.html"); 
+    }
+ 
+ 
+ 
+  
+    function redir($url){ 
+        echo "<script language=\"javascript\">"; 
+        echo "window.location='$url';"; 
+        //echo "window.open('$url','menuchd','toolbar=1, location=1, directories=0, status=0, scrollbars=1, resizable=1, copyhistory=0, menuBar=1, width=700, height=600, left=200, top=50');"; 
+        
+        
+        
+        echo "</script>"; 
+        }  
+} 

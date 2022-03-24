@@ -69,6 +69,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('traitement-das/editID20', [TraitementsDasController::class,'editID20']);
     Route::post('traitement-das/editID19', [TraitementsDasController::class,'editID19']);
     Route::post('traitement-das/editID21', [TraitementsDasController::class,'editID21']);
+    Route::post('traitement-das/editID22', [TraitementsDasController::class,'editID22']);
     
 
     /** Traitement DTS */

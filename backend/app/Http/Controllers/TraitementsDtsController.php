@@ -588,6 +588,8 @@ class TraitementsDtsController extends Controller
         $TBS->MergeField('dts.alloc_familiale', $traitementsDts->alloc_familiale);
         $TBS->MergeField('dts.ristourne', $traitementsDts->ristourne);
         $TBS->MergeField('dts.autre_deduc', $traitementsDts->autre_deduc);
+        // $TBS->MergeField('dts.signataire', isset($traitementsDts->signataire)?$traitementsDts->signataire:"");
+        $TBS->MergeField('dts.qualite', isset($traitementsDts->qualite)?utf8_decode($traitementsDts->qualite):"");
         $TBS->MergeField('today', date('d/m/Y'));
         
         setlocale(LC_TIME, 'French');
