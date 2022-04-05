@@ -384,6 +384,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log(d);
             if(d.type =="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
+            else if(d.type =="application/xml")
+            saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.xml`);
             else {
                 console.log("error")
             }
@@ -401,6 +403,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log(d);
             if(d.type =="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             saveAs(d,`EDIT_ID22_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
+            else if(d.type =="application/xml")
+            saveAs(d,`EDIT_ID22_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.xml`);
             else {
                 console.log("error")
             }

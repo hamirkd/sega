@@ -25,14 +25,17 @@
                 </mat-form-field>
                 <mat-form-field class="w-1/2 pl-2">
                     <mat-label>Numéro quittance</mat-label>
-                    <input matInput [formControlName]="'n_quittance'">
+                    <input matInput [formControlName]="'n_quittance'" required>
                 </mat-form-field>
             </div>
 
             <div class="flex">
                 <mat-form-field class="w-1/2 pr-2 pr-2">
                     <mat-label>Nature</mat-label>
-                    <input matInput [formControlName]="'nature'">
+                    <mat-select matInput [formControlName]="'nature'" required>
+                        <mat-option value="ANNEE EN COURS">ANNEE EN COURS</mat-option>
+                        <mat-option value="REGULARISATION">REGULARISATION</mat-option>
+                    </mat-select>
                 </mat-form-field>
                 <mat-form-field class="w-1/2 pl-2">
                     <mat-label>Date quittance </mat-label>

@@ -291,6 +291,31 @@ class TraitementsDasController extends Controller
 
         $societe_id = $request->societe_id;
         $annee = $request->annee; 
+        
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        $i=1; 
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+        $dasQuittance = []; 
+        require_once ("ID21.php");
+    }
+
+    
+
+    public function editID21_old(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee; 
          
         $societe = Societe::findOrFail($societe_id);
         $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
@@ -454,6 +479,43 @@ class TraitementsDasController extends Controller
     
 
     public function editID22(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        
+        $dasQuittance = [];
+        for($i=1;$i<=12;$i++){
+            
+            $q = new DasQuittance();
+            $q['mois']=$i;
+            $q['montant']=0;
+            $q['date_quittance']="";
+            $q['n_quittance']="";
+            $q['nature']="";
+            $qq = DasQuittance::where("societe_id",$societe_id)
+                ->where("annee",$annee)
+                ->where("mois",$i)
+                ->first();
+            if(isset($qq)){
+                $dasQuittance[] = $qq;
+            }
+            else {
+                $dasQuittance[] = $q;
+            }
+        }
+        require_once ("ID22.php"); 
+    
+    }
+
+    
+
+    public function editID22_old(Request $request){
 
         $societe_id = $request->societe_id;
         $annee = $request->annee;
@@ -760,4 +822,76 @@ class TraitementsDasController extends Controller
         
         echo "</script>"; 
         }  
+
+        public function test4(){
+            $societe_id = 2;
+            $annee = 2021;
+             
+            $societe = Societe::findOrFail($societe_id);
+            $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+            ->where("annee",$annee)
+            ->firstOrFail();
+            $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+            
+            
+            $dasQuittance = [];
+            for($i=1;$i<=12;$i++){
+                
+                $q = new DasQuittance();
+                $q['mois']=$i;
+                $q['montant']=0;
+                $q['date_quittance']="";
+                $q['n_quittance']="";
+                $q['nature']="";
+                $qq = DasQuittance::where("societe_id",$societe_id)
+                    ->where("annee",$annee)
+                    ->where("mois",$i)
+                    ->first();
+                if(isset($qq)){
+                    $dasQuittance[] = $qq;
+                }
+                else {
+                    $dasQuittance[] = $q;
+                }
+            }
+            require_once ("ID22.php");
+        }
+
+        
+
+    public function test5(){
+        // $societe_id = 1;
+        // $annee = 2021;
+        $societe_id = 2;
+        $annee = 2021;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        $i=1; 
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+        $dasQuittance = []; 
+        require_once ("ID21.php");
+    }
+
 } 
+function subArray($start,$br,$array){
+    $array2 = [];
+    if(!isset($array[$start])){
+        return $array2;
+    }
+    $taille = count($array)<($start+$nbr)?count($array):($start+$nbr);
+    for($i=$start;$i<$taille;$i++){
+        $array2[] = $array[$i];
+    }
+
+    return $array2;
+}
