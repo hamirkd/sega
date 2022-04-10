@@ -86,5 +86,10 @@ get(id): Observable<TraitementDas> {
   
   delete(traitementDas: TraitementDas): Observable<any> {
       return this.apiService.delete('api/traitement-das/'+ traitementDas.id);
+  } 
+  
+  deleteManySalariesInTraitementDas(traitementDasSalarie:{ids:number[]}): Observable<any> {
+    console.log(traitementDasSalarie);
+    return this.apiService.post('api/traitement-das/deleteManySalariesInTraitementDas',traitementDasSalarie);
   }
 }

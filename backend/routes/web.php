@@ -22,5 +22,5 @@ Route::get('/', function () {
 // });
 Route::get('/test', function () {
     $binance = new TraitementsDasController();
-   $binance->test4();
+   $binance->test7();
 });

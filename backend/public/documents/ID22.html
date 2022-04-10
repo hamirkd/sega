@@ -1,31 +1,3 @@
-<?php
-header('Content-type: application/xml');
-$filename = 'ID22.xml';
-header('Content-Disposition: attachment; filename='.$filename);
-
-function subArray($start,$nbr,$array){
-  $array2 = [];
-  if(!isset($array[$start])){
-      return $array2;
-  }
-  $taille = count($array)<($start+$nbr)?count($array):($start+$nbr);
-  for($i=$start;$i<$taille;$i++){
-      $array2[] = $array[$i];
-  }
-
-  return $array2;
-}
-function sumArrayColumn($column,$array){
-  $sum = 0;
-    if(count($array)==0){
-      return $sum;
-    }
-    foreach($array as $ar){
-      $sum = $sum + $ar[$column];
-    }
-    return $sum;
-}
-?>
 <?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
@@ -1355,7 +1327,7 @@ function sumArrayColumn($column,$array){
     <Cell ss:StyleID="s76"/>
     <Cell ss:StyleID="s76"/>
     <Cell ss:StyleID="s77"><Data ss:Type="String">Exercice ……</Data></Cell>
-    <Cell ss:StyleID="s78"><Data ss:Type="Number"><?=$annee?></Data></Cell>
+    <Cell ss:StyleID="s78"><Data ss:Type="Number">2021</Data></Cell>
     <Cell ss:StyleID="s77"><Data ss:Type="String">(au titre duquel les retenues ont été effectuées)</Data></Cell>
     <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s79"/>
@@ -1420,7 +1392,7 @@ function sumArrayColumn($column,$array){
     <Cell ss:StyleID="s66"/>
     <Cell ss:MergeAcross="3" ss:StyleID="s95"><Data ss:Type="String">BP 37 / 45 - Libreville</Data></Cell>
     <Cell ss:StyleID="s66"/>
-    <Cell ss:StyleID="s96"><Data ss:Type="String">NOM DE L'ENTREPRISE OU RAISON SOCIALE : <?=$societe['raison_sociale'];?></Data></Cell>
+    <Cell ss:StyleID="s96"><Data ss:Type="String">NOM DE L'ENTREPRISE OU RAISON SOCIALE : USBASE</Data></Cell>
     <Cell ss:StyleID="s97"/>
     <Cell ss:StyleID="s97"/>
     <Cell ss:StyleID="s97"/>
@@ -1439,7 +1411,7 @@ function sumArrayColumn($column,$array){
     <Cell ss:MergeAcross="3" ss:StyleID="s101"><Data ss:Type="String">Tel : 79.53.76/77</Data></Cell>
     <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s82"><Data ss:Type="String">NIF  :</Data></Cell>
-    <Cell ss:MergeAcross="1" ss:StyleID="m1771919230996"><Data ss:Type="String"><?= $societe['nif'];?></Data></Cell>
+    <Cell ss:MergeAcross="1" ss:StyleID="m1771919230996"><Data ss:Type="String">5	6	3	6	8	3	M</Data></Cell>
     <Cell ss:StyleID="s108"/>
     <Cell ss:StyleID="s108"/>
     <Cell ss:StyleID="s66"/>
@@ -1488,7 +1460,7 @@ function sumArrayColumn($column,$array){
     <Cell ss:StyleID="s112"><Data ss:Type="String">Nombre de salariés : </Data></Cell>
     <Cell ss:StyleID="s93"/>
     <Cell ss:StyleID="s66"/>
-    <Cell ss:StyleID="s113"><Data ss:Type="Number"><?= count($traitementsDasSalarie);?></Data></Cell>
+    <Cell ss:StyleID="s113"><Data ss:Type="Number">408</Data></Cell>
     <Cell ss:StyleID="s89"/>
     <Cell ss:StyleID="s93"/>
    </Row>
@@ -1572,541 +1544,506 @@ function sumArrayColumn($column,$array){
     <Cell ss:Index="4" ss:StyleID="s191"><Data ss:Type="String">Logt, Eau, Elect …&#10;(2)</Data></Cell>
     <Cell ss:StyleID="s191"><Data ss:Type="String">Nourriture&#10;(3)</Data></Cell>
     <Cell ss:Index="15" ss:StyleID="s185"/>
-    <Cell ss:StyleID="s186"><Data ss:Type="Number"><?= $dasQuittance[0]['mois']?></Data></Cell>
-    <Cell ss:StyleID="s192"><Data ss:Type="Number"><?= $dasQuittance[0]['montant']?></Data></Cell>
-    <Cell ss:StyleID="s193">
-    <?php if($dasQuittance[0]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[0]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:StyleID="s192"><Data ss:Type="String"><?= $dasQuittance[0]['n_quittance']?></Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(0,36,$traitementsDasSalarie);?>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">1</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s195"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[1]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[1]['montant']?></Data></Cell>
-    
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[1]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[1]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[1]['n_quittance']?></Data></Cell>
+    <Cell ss:StyleID="s192"><Data ss:Type="Number">250000</Data></Cell>
+    <Cell ss:StyleID="s193">
+          <Data ss:Type="DateTime">2022-04-03</Data>
+          </Cell>
+    <Cell ss:StyleID="s192"><Data ss:Type="String">523652M</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>     <Cell ss:StyleID="s186"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">77232722</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
+    <Cell ss:StyleID="s195"/>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">550000</Data></Cell>
+    
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
+            <Data ss:Type="DateTime">2022-04-04</Data>
+          </Cell>
+    
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String">632541M</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0" ss:StyleID="s65">
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">2</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s195"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*1,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">3</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[2]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[2]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
 
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[2]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[2]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[2]['n_quittance']?></Data></Cell>
+          </Cell>
+        <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*2,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">4</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*3,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">5</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>    
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[3]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[3]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
 
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[3]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[3]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[3]['n_quittance']?></Data></Cell>
+          </Cell>
+        <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*4,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">6</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*5,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">7</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[4]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[4]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
 
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[4]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[4]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-        <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[4]['n_quittance']?></Data></Cell>
+          </Cell>
+        <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*6,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">8</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*7,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">9</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[5]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[5]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
 
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[5]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[5]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[5]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
     
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*8,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">10</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*9,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">11</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[6]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[6]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[6]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[6]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[6]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*10,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">12</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*11,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">13</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[7]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[7]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[7]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[7]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[7]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*12,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">14</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*13,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">15</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[8]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[8]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[8]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[8]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[8]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*14,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">16</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*15,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">17</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[9]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[9]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[9]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[9]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[9]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*16,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">18</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*17,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">19</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[10]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[10]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[10]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[10]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[10]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*18,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">20</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*19,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">21</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number"><?= $dasQuittance[11]['mois']?></Data></Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number"><?= $dasQuittance[11]['montant']?></Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230640"><Data ss:Type="Number">12</Data></Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230660"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771919230680">
-      <?php if($dasQuittance[11]['date_quittance']!=""){?>
-      <Data ss:Type="DateTime"><?= date('Y-m-d',strtotime($dasQuittance[11]['date_quittance']))?></Data>
-      <?php }?>
-    </Cell>
-    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"><?= $dasQuittance[11]['n_quittance']?></Data></Cell>
+          </Cell>
+    <Cell ss:MergeDown="1" ss:StyleID="m1771919230700"><Data ss:Type="String"></Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*20,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">22</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="15" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*21,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">23</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     <Cell ss:MergeDown="1" ss:StyleID="m1771927811360"><Data ss:Type="String">REG</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771927811380"
-     ss:Formula="=R[2]C-SUM(R[-23]C:R[-1]C)"><Data ss:Type="Number">0</Data></Cell>
+     ss:Formula="=R[8]C[-4]-R[2]C"><Data ss:Type="Number">0</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="m1771927811400"/>
     <Cell ss:MergeDown="1" ss:StyleID="m1771927811420"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*22,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">24</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="15" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*23,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">25</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     <Cell ss:MergeDown="1" ss:StyleID="s198"><Data ss:Type="String">TOTAL</Data></Cell>
     <Cell ss:MergeDown="1" ss:StyleID="s220" ss:Formula="=R[6]C[-4]"><Data
@@ -2115,162 +2052,115 @@ function sumArrayColumn($column,$array){
     <Cell ss:MergeDown="1" ss:StyleID="s183"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*24,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">26</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*25,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">27</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     <Cell ss:MergeAcross="3" ss:StyleID="m1771927814064"><Data ss:Type="String">Le total des versements (col.12) doit être</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*26,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">28</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     <Cell ss:MergeAcross="3" ss:StyleID="m1771927814084"><Data ss:Type="String">égal à celui des retenues (col.10). A défaut,</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="15.75" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*27,49,$traitementsDasSalarie);?>
+    <Cell ss:StyleID="s66"/>
     <Cell ss:StyleID="s186"><Data ss:Type="Number">29</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
     <Cell ss:MergeAcross="3" ss:StyleID="m1771927814104"><Data ss:Type="String">produire une note expplicative.</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="18" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php $data = subArray(36+49*28,49,$traitementsDasSalarie);?>
-    <Cell ss:StyleID="s186"><Data ss:Type="Number">30</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s66"/>
+    <Cell ss:StyleID="s186"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:MergeAcross="3" ss:StyleID="s238"><Data ss:Type="String"><?=$societe['ville'].' le '.date('d/m/Y')?></Data></Cell>
+    <Cell ss:MergeAcross="3" ss:StyleID="s238"><Data ss:Type="String">LIBREVILLE le 04/04/2022</Data></Cell>
    </Row>
-   <?php 
-   $nbligne = intval(count($traitementsDasSalarie)/49)+1;
-   if($nbligne>=31){
-   ?>
    <Row ss:AutoFitHeight="0" ss:Height="15" ss:StyleID="s65">
-    <Cell ss:StyleID="s66"/> <?php 
-    $data = subArray(36+49*29,49,$traitementsDasSalarie);
-    ?>
-    <Cell ss:StyleID="s186"><Data ss:Type="Number">31</Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('salaire_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('avlog',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('av_nour',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('prim_impo',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('brut_conge',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total_brut',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('tcs',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('irpp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('fnh',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('cfp',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('total',$data)?></Data></Cell>
-    <Cell ss:StyleID="s194"><Data ss:Type="Number"><?= sumArrayColumn('primes_non_impo',$data)?></Data></Cell>
+    <Cell ss:StyleID="s66"/>
+    <Cell ss:StyleID="s186"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s194"><Data ss:Type="Number">12</Data></Cell>
     <Cell ss:StyleID="s195"/>
     <Cell ss:StyleID="s247"><Data ss:Type="String">Cachet et signature de l'employeur</Data></Cell>
     <Cell ss:StyleID="s248"/>
     <Cell ss:StyleID="s248"/>
     <Cell ss:StyleID="s249"/>
    </Row>
-     <?php }
-    else {
-     ?>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:StyleID="s250"/>
-    <Cell ss:StyleID="s254"><Data ss:Type="String">TOTAUX</Data></Cell>
-    <Cell ss:StyleID="s255" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s256" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s257" ss:Formula="=SUM(R[-30]C:R[-1]C)"><Data
-      ss:Type="Number">0</Data></Cell>
-    <Cell ss:StyleID="s195"/>
-    <Cell ss:StyleID="s247"><Data ss:Type="String">Cachet et signature de l'employeur</Data></Cell>
-    <Cell ss:StyleID="s248"/>
-    <Cell ss:StyleID="s248"/>
-    <Cell ss:StyleID="s249"/>
-   </Row>
-   <?php 
-    }
-
-    for($i=32;$i<$nbligne;$i++){
-   ?>
    <Row ss:AutoFitHeight="0">
     <Cell ss:StyleID="s250"/>
     <Cell ss:StyleID="s251"><Data ss:Type="Number">9</Data></Cell>
@@ -2287,12 +2177,343 @@ function sumArrayColumn($column,$array){
     <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
     <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
    </Row>
-   <?php } 
-   
-   if($nbligne>=32){
-   ?>
-
-  
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">12</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">13</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">14</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">15</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">16</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">17</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">18</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">19</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">20</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">21</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">22</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">23</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">24</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">25</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">26</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">27</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+    <Cell ss:StyleID="s65"/>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">28</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s251"><Data ss:Type="Number">29</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:StyleID="s250"/>
+    <Cell ss:StyleID="s253"><Data ss:Type="Number">30</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s252"><Data ss:Type="Number">12</Data></Cell>
+   </Row>
    <Row ss:AutoFitHeight="0">
     <Cell ss:StyleID="s250"/>
     <Cell ss:StyleID="s254"><Data ss:Type="String">TOTAUX</Data></Cell>
@@ -2320,7 +2541,6 @@ function sumArrayColumn($column,$array){
     <Cell ss:StyleID="s257" ss:Formula="=SUM(R[-30]C:R[-2]C)"><Data
       ss:Type="Number">348</Data></Cell>
    </Row>
-   <?php }?>
    <Row ss:AutoFitHeight="0">
     <Cell ss:StyleID="s250"/>
     <Cell ss:StyleID="s250"/>

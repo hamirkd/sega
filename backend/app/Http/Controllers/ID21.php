@@ -1534,25 +1534,11 @@ $nbpage = intval(count($traitementsDasSalarie)/49)+1;
     <Cell ss:StyleID="s74"/>
     <Cell ss:StyleID="s74"/>
     <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s75"><Data ss:Type="String">  DECLARATION DES TRAITEMENTS, SALAIRES, PENSIONS VERSEES, ETC … </Data></Cell>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
-    <Cell ss:StyleID="s76"/>
+    <Cell ss:StyleID="s75" ss:MergeAcross="14"><Data ss:Type="String">  DECLARATION DES TRAITEMENTS, SALAIRES, PENSIONS VERSEES, ETC … </Data></Cell>
+    
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s77"><Data ss:Type="String">(art. 90 du CGI)</Data></Cell>
-    <Cell ss:Index="27" ss:StyleID="s67"/>
+    <Cell ss:StyleID="s77" ss:MergeAcross="1"><Data ss:Type="String">(art. 90 du CGI)</Data></Cell>
     <Cell ss:StyleID="s78"/>
     <Cell ss:StyleID="s79"/>
     <Cell ss:StyleID="s80"/>
@@ -1572,7 +1558,7 @@ $nbpage = intval(count($traitementsDasSalarie)/49)+1;
     <Cell ss:StyleID="s67"/>
     <Cell ss:StyleID="s82"><Data ss:Type="String">Exercice ……</Data></Cell>
     <Cell ss:StyleID="s83"/>
-    <Cell ss:StyleID="s84"><Data ss:Type="Number">2020</Data></Cell>
+    <Cell ss:StyleID="s84"><Data ss:Type="Number"><?=$annee?></Data></Cell>
     <Cell ss:StyleID="s85"><Data ss:Type="String">. . . . . . . . . .</Data></Cell>
     <Cell ss:StyleID="s82"><Data ss:Type="String">(au titre duquel les retenues ont été effectuées)</Data></Cell>
     <Cell ss:StyleID="s82"/>
@@ -1678,25 +1664,9 @@ $nbpage = intval(count($traitementsDasSalarie)/49)+1;
     <Cell ss:MergeAcross="2" ss:StyleID="s103"><Data ss:Type="String">BP 37 / 45 - Libreville</Data></Cell>
     <Cell ss:StyleID="s99"/>
     <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s104"><Data ss:Type="String">NOM DE L'ENTREPRISE OU RAISON SOCIALE : ORANGE BURKINA FASO</Data></Cell>
-    <Cell ss:StyleID="s105"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s107"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s106"/>
-    <Cell ss:StyleID="s108"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s99"/>
-    <Cell ss:StyleID="s101"/>
+    <Cell ss:StyleID="s104"  ss:MergeAcross="15"><Data ss:Type="String">NOM DE L'ENTREPRISE OU RAISON SOCIALE : ORANGE BURKINA FASO</Data></Cell>
     <Cell ss:StyleID="s109"/>
-    <Cell ss:StyleID="s110"><Data ss:Type="String">(art. 90 du CGI)</Data></Cell>
-    <Cell ss:StyleID="s110"/>
+    <Cell ss:StyleID="s110" ss:MergeAcross="1"><Data ss:Type="String">(art. 90 du CGI)</Data></Cell>
     <Cell ss:StyleID="s111"/>
     <Cell ss:StyleID="s111"/>
     <Cell ss:StyleID="s101"/>
@@ -1798,22 +1768,10 @@ $nbpage = intval(count($traitementsDasSalarie)/49)+1;
     <Cell ss:StyleID="s99"/>
     <Cell ss:StyleID="s99"/>
     <Cell ss:StyleID="s99"/>
-    <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s123"><Data ss:Type="String">La présente déclaration est à déposer avant le 30 avril simultanément aux déclarations n° ID01 ou ID14 </Data></Cell>
-    <Cell ss:StyleID="s124"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s89"/>
-    <Cell ss:StyleID="s125"/>
-    <Cell ss:StyleID="s126"/>
-    <Cell ss:StyleID="s127"/>
-    <Cell ss:StyleID="s127"/>
+    <Cell ss:StyleID="s67"/> 
+    <Cell ss:MergeAcross="12" ss:StyleID="s123"><Data ss:Type="String">La présente déclaration est à déposer avant le 30 avril simultanément aux déclarations n° ID01 ou ID14 </Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:StyleID="s88"/>
-    <Cell ss:StyleID="s116"/>
+    <Cell ss:StyleID="s122"/>
     <Cell ss:StyleID="s96"/>
     <Cell ss:StyleID="s101"/>
     <Cell ss:StyleID="s67"/>
@@ -2356,21 +2314,9 @@ $nbpage = intval(count($traitementsDasSalarie)/49)+1;
     <Cell ss:StyleID="s99"/>
     <Cell ss:StyleID="s99"/>
     <Cell ss:StyleID="s67"/>
-    <Cell ss:StyleID="s123"><Data ss:Type="String">La présente déclaration est à déposer avant le 30 avril simultanément aux déclarations n° ID01 ou ID14 </Data></Cell>
-    <Cell ss:StyleID="s124"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s82"/>
-    <Cell ss:StyleID="s89"/>
-    <Cell ss:StyleID="s125"/>
-    <Cell ss:StyleID="s126"/>
-    <Cell ss:StyleID="s127"/>
-    <Cell ss:StyleID="s127"/>
+    <Cell ss:MergeAcross="12" ss:StyleID="s123"><Data ss:Type="String">La présente déclaration est à déposer avant le 30 avril simultanément aux déclarations n° ID01 ou ID14 </Data></Cell>
     <Cell ss:StyleID="s88"/>
-    <Cell ss:StyleID="s88"/>
-    <Cell ss:StyleID="s116"/>
+    <Cell ss:StyleID="s122"/>
     <Cell ss:StyleID="s96"/>
     <Cell ss:StyleID="s101"/>
     <Cell ss:StyleID="s67"/>

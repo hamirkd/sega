@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-dompdf": "^1.0",
         "doctrine/dbal": "^2.6.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -16,8 +17,11 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "mbence/opentbs-bundle": "^1.9",
+        "mpdf/mpdf": "^8.0",
+        "nahidulhasan/html2pdf": "^1.4",
         "nextapps/laravel-swagger-ui": "^0.3.0",
         "phpoffice/phpexcel": "^1.8",
+        "spipu/html2pdf": "^5.2",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

@@ -1,12 +1,10 @@
 import {
     AfterViewInit,
-    ChangeDetectorRef,
     Component,
     OnInit,
     ViewChild,
 } from '@angular/core';
 import { AddComponent } from '../add/add.component';
-import { AddComponent as AddSalarieComponent } from '../../salaries/add/add.component';
 
 import {
     animate,
@@ -17,7 +15,6 @@ import {
 } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { _DATA_SOCIETE } from '../../societes/list/_data';
 import { ImportComponent } from '../import/import.component';
 import { FuseConfirmationService } from '@fuse/services/confirmation';
@@ -32,8 +29,6 @@ import { AnneeService } from 'app/core/services/annee.service';
 import { TraitementDasService } from 'app/core/services/traitement-das.service';
 import { Societe } from 'app/models/societe.model';
 import { saveAs } from 'file-saver';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'environments/environment';
 import { TraitementDas } from 'app/models/traitement-das.model';
 import { FicheConjointComponent } from '../fiche-conjoint/fiche-conjoint.component';
 
@@ -86,16 +81,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     ];
     moisActif: { id; value };
     traitementDas:TraitementDas = new TraitementDas({});
-    constructor(private http: HttpClient,
-        private _changeDetectorRef: ChangeDetectorRef,
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
+    constructor(
         private _matDialog: MatDialog,
         private _fuseConfirmationService: FuseConfirmationService,
         private _salarieService: SalarieService,
         private _societeService: SocieteService,
         private _anneeService: AnneeService,
-        private _traitementDas: TraitementDasService
+        private _traitementDasService: TraitementDasService
     ) {
         this.dataSource = new MatTableDataSource<SalarieComplement>([]);
         // this._updateList();
@@ -103,7 +95,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     initData(){
-        this._traitementDas.getByAnnee({annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
+        this._traitementDasService.getByAnnee({annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
         .subscribe(data=>{
             this.traitementDas = new TraitementDas(data); 
         },err=>{
@@ -130,7 +122,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     _updateList() {
         this.dataSource.data = [];
-        this._traitementDas.getSalariesByAnneeSociete({annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id}).subscribe(
+        this._traitementDasService.getSalariesByAnneeSociete({annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id}).subscribe(
             (data) => {
                  this.dataSource.data=data;
                  this.table.renderRows();
@@ -161,7 +153,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             this._updateList();
         });
-    }
+    } 
+    
 
     toutvider() {
         this.dialogRef = this._fuseConfirmationService.open({
@@ -171,20 +164,22 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
         this.dialogRef.afterClosed().subscribe((response) => {
             if (response === 'confirmed') {
-                this.traitementDas.irpp = 0;
-                this.traitementDas.tcs = 0;
-                this.traitementDas.fnh = 0;
-                this.traitementDas.brut_presence = 0;
-                this.traitementDas.av_eau_elec = 0;
-                this.traitementDas.av_nourriture = 0;
-                this.traitementDas.brut_conge = 0;
-                this.traitementDas.prime_impo = 0;
-                this.traitementDas.prime_non_impo = 0;
-                this.dataSource.data = [];
-                this.table.renderRows();
+                this.masterToggle();
+                console.log();
+                let ids:number[]=[];
+                this.selection.selected.forEach(d=>{
+                    ids.push(d.id);
+                });
+
+                this._traitementDasService.deleteManySalariesInTraitementDas({ids:ids}).subscribe(d=>{
+                    this.selection.clear();
+                    this._updateList();
+                    this.initData();
+                })
             }
         });
     }
+
 
     edit(salarie: Salarie): void {
         this.dialogRef = this._matDialog.open(FicheConjointComponent, {
@@ -236,7 +231,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     this.traitementDas.prime_non_impo = this.traitementDas.prime_non_impo + s.primes_non_impo;
 
                 });
-                this._traitementDas.saveManySalariesInTraitementDas({traitementDas:this.traitementDas,
+                this._traitementDasService.saveManySalariesInTraitementDas({traitementDas:this.traitementDas,
                     salaries:salaries,annee:this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id})
                 .subscribe(d=>{
                     console.log(d);
@@ -286,33 +281,29 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         this.selection.select(...this.dataSource.data);
     }
+    
     supprimer_element() {
         this.dialogRef = this._fuseConfirmationService.open({
             title: 'Suppression de salarié',
             message: 'Voulez-vous supprimer les salariés sélectionner ?',
         });
         this.dialogRef.afterClosed().subscribe((response) => {
-            console.log(response);
+
             if (response === 'confirmed') {
-                this.selection.selected.forEach((salarie) => {
-                    this.dataSource.data.splice(
-                        this.dataSource.data.findIndex(
-                            (s) => s.matricule == salarie.matricule
-                        ),
-                        1
-                    );
-                    // this.dataSource.data = []
+                let ids:number[]=[];
+                this.selection.selected.forEach(d=>{
+                    ids.push(d.id);
                 });
-                const tempo = JSON.parse(JSON.stringify(this.dataSource.data));
-                this.dataSource.data = [];
-                setTimeout(() => {
-                    this.dataSource.data = tempo;
+
+                this._traitementDasService.deleteManySalariesInTraitementDas({ids:ids}).subscribe(d=>{
                     this.selection.clear();
-                    this.table.renderRows();
-                }, 0);
+                    this._updateList();
+                    this.initData();
+                })
             }
         });
     }
+
 
     /** The label for the checkbox on the passed row */
     checkboxLabel(row?: SalarieComplement): string {
@@ -323,9 +314,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             row.matricule + 1
         }`;
     }
-
     edit10() {
-        this._traitementDas.edit10xls({
+        this._traitementDasService.edit10xls({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
@@ -339,7 +329,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     edit11() {
-        this._traitementDas.editID20({
+        this._traitementDasService.editID20({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
@@ -352,7 +342,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         })
     }
     editID19(salarie: SalarieComplement){
-        this._traitementDas.editID19({
+        this._traitementDasService.editID19({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id,salarie_id:salarie.id
         }).subscribe((d)=>{
             console.log(d);
@@ -365,7 +355,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         })
     }
     editID20(){
-        this._traitementDas.editID20({
+        this._traitementDasService.editID20({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d)=>{
             console.log(d);
@@ -378,7 +368,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         })
     }
     editID21(){
-        this._traitementDas.editID21({
+        this._traitementDasService.editID21({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d:Blob)=>{
             console.log(d);
@@ -397,7 +387,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     editID22(){
-        this._traitementDas.editID22({
+        this._traitementDasService.editID22({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
         }).subscribe((d:Blob)=>{
             console.log(d);
@@ -414,5 +404,5 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log(err);
         })
     }
-
+    
 }

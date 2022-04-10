@@ -11,6 +11,11 @@ use App\Models\Societe;
 
 use PHPExcel_IOFactory;
 use PHPExcel_Cell; 
+use PDF;
+use Spipu\Html2Pdf\Html2Pdf;
+use Dompdf\Dompdf;
+
+
 
 class TraitementsDasController extends Controller
 {
@@ -166,6 +171,16 @@ class TraitementsDasController extends Controller
         //
     }
 
+    
+    /**
+     * Supprimer un salarié ou une liste de salarié
+     */
+    public function deleteManySalariesInTraitementDas(Request $request){
+        foreach($request->ids as $id){
+            TraitementsDasSalarie::where("id",$id)->delete();
+        }
+    }
+
     public function editID20(Request $request){
 
         $societe_id = $request->societe_id;
@@ -308,6 +323,29 @@ class TraitementsDasController extends Controller
         }
         $dasQuittance = []; 
         require_once ("ID21.php");
+    }
+
+    public function editID21PDF(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee; 
+        
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        $i=1; 
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+        $dasQuittance = []; 
+        require_once ("ID21PDF.php");
     }
 
     
@@ -880,6 +918,70 @@ class TraitementsDasController extends Controller
         }
         $dasQuittance = []; 
         require_once ("ID21.php");
+    }
+
+    public function test6(){
+        
+        $societe_id = 1;
+        $annee = 2021;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        $i=1; 
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+
+        // require_once ("ID21PDF.php");
+        // $html2pdf = new Html2Pdf();
+        // $html2pdf->writeHTML('<h1>HelloWorld</h1>This is my first test');
+        // $html2pdf->output();
+
+        ob_start();
+        include("ID21PDF.php");
+        $content = ob_get_clean();
+
+        try
+        {
+            $html2pdf = new HTML2PDF('L', 'A2', 'fr');
+            $html2pdf->pdf->setDisplayMode('fullwidth');
+            $html2pdf->writeHTML($content);
+            $html2pdf->Output('Rapport-generale-garanties-'.date("Ymd-His").'.pdf');
+        }
+        catch(HTML2PDF_exception $e) {
+            echo $e;
+            exit;
+        }
+    }
+
+    public function test7(){
+        
+        $societe_id = 1;
+        $annee = 2021;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        $i=1; 
+         foreach($traitementsDasSalarie as $d)
+        {
+            $d['ordre']=$i;$i++;
+            if(!isset($d['nif']))  
+            $d['nif']='';
+            
+            $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
+        }
+
+        include("ID21PDF.php"); 
+        
     }
 
 } 
