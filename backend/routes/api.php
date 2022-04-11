@@ -67,12 +67,13 @@ Route::middleware('auth:api')->group(function() {
     Route::get('traitement-das/getSalariesById/{id}', [TraitementsDasController::class,'getSalariesById']);
     Route::put('traitement-das/updateSalarie/{id}', [TraitementsDasController::class,'updateSalarie']);
     Route::post('traitement-das/editID20', [TraitementsDasController::class,'editID20']);
+    Route::post('traitement-das/editID20PDF', [TraitementsDasController::class,'editID20PDF']);
     Route::post('traitement-das/editID19', [TraitementsDasController::class,'editID19']);
     Route::post('traitement-das/editID21', [TraitementsDasController::class,'editID21']);
     Route::post('traitement-das/editID21PDF', [TraitementsDasController::class,'editID21PDF']);
     Route::post('traitement-das/editID22', [TraitementsDasController::class,'editID22']);
     
-    Route::post('traitement-das/deleteManySalariesInTraitementDas', [TraitementsDtsController::class,'deleteManySalariesInTraitementDas']);
+    Route::post('traitement-das/deleteManySalariesInTraitementDas', [TraitementsDasController::class,'deleteManySalariesInTraitementDas']);
 
 
     /** Traitement DTS */

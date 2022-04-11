@@ -227,6 +227,56 @@ class TraitementsDasController extends Controller
 
     
 
+    public function editID20PDF(Request $request){
+
+        $societe_id = $request->societe_id;
+        $annee = $request->annee;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        $nbr_inferieur = 0;
+        $nbr_superieur = 0;
+        $montant_inferieur = 0;
+        $montant_superieur = 0;
+        foreach($traitementsDasSalarie as $d)
+        {
+
+            $revenuMensuel = $d->total_brut/($d->fin13das-$d->deb11);
+            if($revenuMensuel<1000000){
+                $nbr_inferieur = $nbr_inferieur+1;
+                $montant_inferieur = $montant_inferieur + $d->total_brut;
+            }
+            else {
+                $nbr_superieur = $nbr_superieur+1;
+                $montant_superieur = $montant_superieur + $d->total_brut;
+            }
+            
+        }
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+        
+        ob_start();
+        include("ID20PDF.php");
+        $content = ob_get_clean();
+
+        try
+        {
+            $html2pdf = new HTML2PDF('L', 'A3', 'fr');
+            // $html2pdf->pdf->setDisplayMode('fullwidth');
+            $html2pdf->writeHTML($content);
+            $html2pdf->Output('ID21.pdf');
+        }
+        catch(HTML2PDF_exception $e) {
+            echo $e;
+            exit;
+        }
+    
+    }
+
+    
+
     public function editID19(Request $request){
 
         $societe_id = $request->societe_id;
@@ -345,7 +395,24 @@ class TraitementsDasController extends Controller
             $d['nomprenom'] = strtoupper(utf8_decode($d['nom']))." ".utf8_decode($d['prenom']);
         }
         $dasQuittance = []; 
-        require_once ("ID21PDF.php");
+
+        // require_once ("ID21PDF.php");
+        
+        ob_start();
+        include("ID21PDF.php");
+        $content = ob_get_clean();
+
+        try
+        {
+            $html2pdf = new HTML2PDF('L', 'A2', 'fr');
+            $html2pdf->pdf->setDisplayMode('fullwidth');
+            $html2pdf->writeHTML($content);
+            $html2pdf->Output('ID21.pdf');
+        }
+        catch(HTML2PDF_exception $e) {
+            echo $e;
+            exit;
+        }
     }
 
     
@@ -982,6 +1049,55 @@ class TraitementsDasController extends Controller
 
         include("ID21PDF.php"); 
         
+    }
+
+    
+    public function test8(){
+
+        $societe_id = 1;
+        $annee = 2021;
+        $societe = Societe::findOrFail($societe_id);
+        $traitementsDas = TraitementsDas::where("societe_id",$societe_id)
+        ->where("annee",$annee)
+        ->firstOrFail();
+        $traitementsDasSalarie = TraitementsDasSalarie::where("traitements_das_id",$traitementsDas->id)->get();
+        
+        $nbr_inferieur = 0;
+        $nbr_superieur = 0;
+        $montant_inferieur = 0;
+        $montant_superieur = 0;
+        foreach($traitementsDasSalarie as $d)
+        {
+
+            $revenuMensuel = $d->total_brut/($d->fin13das-$d->deb11);
+            if($revenuMensuel<1000000){
+                $nbr_inferieur = $nbr_inferieur+1;
+                $montant_inferieur = $montant_inferieur + $d->total_brut;
+            }
+            else {
+                $nbr_superieur = $nbr_superieur+1;
+                $montant_superieur = $montant_superieur + $d->total_brut;
+            }
+            
+        }
+        $raison_sociale = utf8_decode($societe['raison_sociale']);
+        
+        ob_start();
+        include("ID20PDF.php");
+        $content = ob_get_clean();
+
+        try
+        {
+            $html2pdf = new HTML2PDF('L', 'A3', 'fr');
+            // $html2pdf->pdf->setDisplayMode('fullwidth');
+            $html2pdf->writeHTML($content);
+            $html2pdf->Output('ID21.pdf');
+        }
+        catch(HTML2PDF_exception $e) {
+            echo $e;
+            exit;
+        }
+    
     }
 
 } 

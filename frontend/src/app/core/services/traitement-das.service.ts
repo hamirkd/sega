@@ -46,9 +46,16 @@ get(id): Observable<TraitementDas> {
   editID21(d:{annee,societe_id}): Observable<any> {
     return this.apiService.post2('api/traitement-das/editID21', d);
   }
+
+  editID21PDF(d:{annee,societe_id}): Observable<any> {
+    return this.apiService.post2('api/traitement-das/editID21PDF', d);
+  }
   
   editID20(d:{annee,societe_id}): Observable<any> {
     return this.apiService.post2('api/traitement-das/editID20', d);
+  }
+  editID20PDF(d:{annee,societe_id}): Observable<any> {
+    return this.apiService.post2('api/traitement-das/editID20PDF', d);
   }
   editID19(d:{annee,societe_id,salarie_id}): Observable<any> {
     console.log(d)

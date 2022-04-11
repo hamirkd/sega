@@ -367,6 +367,20 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log(err);
         })
     }
+    
+    editID20PDF(){
+        this._traitementDasService.editID20PDF({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d)=>{
+            console.log(d);
+            saveAs(d,`ID20_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.pdf`);
+
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
     editID21(){
         this._traitementDasService.editID21({
             annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
@@ -376,6 +390,27 @@ export class ListComponent implements OnInit, AfterViewInit {
             saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
             else if(d.type =="application/xml")
             saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.xml`);
+            else {
+                console.log("error")
+            }
+        },err=>{
+            // Lorsque c'est un fichier, une erreur est générée, parce 
+            //que angular s'attends à recevoir des données sous json
+            console.log(err);
+        })
+    }
+
+    editID21PDF(){
+        this._traitementDasService.editID21PDF({
+            annee: this._anneeService.activeAnnee,societe_id:this._societeService.activeSociete.id
+        }).subscribe((d:Blob)=>{
+            console.log(d);
+            if(d.type =="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+            saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.XLSX`);
+            else if(d.type =="application/xml")
+            saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.xml`);
+            else if(d.type =="application/pdf")
+            saveAs(d,`EDIT_ID21_${this.data.raison_sociale.toUpperCase()}_${this._anneeService.activeAnnee}.pdf`);
             else {
                 console.log("error")
             }
